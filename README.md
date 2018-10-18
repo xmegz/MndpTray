@@ -1,8 +1,10 @@
 # MndpTray
 MNDP Mikrotik Neighbor Discovery Protocol Tray Application
 
-Periodic sends Windows host information over Mndp, Mikrotik routers see it.
+## Functions:
 
-Listens to Mndp messsages and put them to list
+* Periodic sends Windows host information over Mndp, Mikrotik routers see it.
 
-Blocking winbox discovery function when running
+* Listens to Mndp messsages and put them to list
+
+* Blocking winbox discovery function when running
