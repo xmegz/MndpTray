@@ -4,8 +4,10 @@ using System.IO;
 using System.Net.NetworkInformation;
 using System.Text;
 
-namespace MndpTray
+namespace MndpTray.Protocol
 {
+    using static MndpDebug;
+
     /// <summary>
     /// Mikrotik discovery message
     /// </summary>
@@ -13,34 +15,36 @@ namespace MndpTray
     {
         #region Consts
 
-        private const UInt16 TLV_TYPE_BOARD_NAME = 12;
-        private const UInt16 TLV_TYPE_IDENTITY = 5;
-        private const UInt16 TLV_TYPE_INTERFACE_NAME = 16;
-        private const UInt16 TLV_TYPE_MAC_ADDRESS = 1;
-        private const UInt16 TLV_TYPE_PLATFORM = 8;
-        private const UInt16 TLV_TYPE_SOFTWAREID = 11;
-        private const UInt16 TLV_TYPE_UNPACK = 14;
-        private const UInt16 TLV_TYPE_UPTIME = 10;
-        private const UInt16 TLV_TYPE_VERSION = 7;
+        private const ushort TLV_TYPE_BOARD_NAME = 12;
+        private const ushort TLV_TYPE_IDENTITY = 5;
+        private const ushort TLV_TYPE_INTERFACE_NAME = 16;
+        private const ushort TLV_TYPE_MAC_ADDRESS = 1;
+        private const ushort TLV_TYPE_PLATFORM = 8;
+        private const ushort TLV_TYPE_SOFTWAREID = 11;
+        private const ushort TLV_TYPE_UNPACK = 14;
+        private const ushort TLV_TYPE_UPTIME = 10;
+        private const ushort TLV_TYPE_VERSION = 7;
 
         #endregion Consts
 
         #region Props
 
-        public String BoardName { get; set; }
-        public String Identity { get; set; }
-        public String InterfaceName { get; set; }
-        public String MacAddress { get; set; }
-        public String Platform { get; set; }
-        public UInt16 Sequence { get; set; }
-        public String SoftwareId { get; set; }
+        public string BoardName { get; set; }
+        public string Identity { get; set; }
+        public string InterfaceName { get; set; }
+        public string MacAddress { get; set; }
+        public string Platform { get; set; }
+        public ushort Sequence { get; set; }
+        public string SoftwareId { get; set; }
         public byte Ttl { get; set; }
         public byte Type { get; set; }
         public byte Unpack { get; set; }
         public TimeSpan Uptime { get; set; }
-        public String Version { get; set; }
+        public string Version { get; set; }
 
         #endregion Props
+
+        #region Methods
 
         public bool Read(byte[] data)
         {
@@ -101,13 +105,13 @@ namespace MndpTray
                     }
                 }
 
-                Debug("{0} Read, {1}", nameof(MndpMessage), this.ToString());
+                Debug("{0} Read,\r\n{1}\r\n", nameof(MndpMessage), this.ToString());
 
                 return true;
             }
             catch (Exception ex)
             {
-                Debug("{0} Read, Exception: {1}", nameof(MndpMessage), ex.ToString());
+                DebugException(nameof(MndpMessage), nameof(Read), ex);
             }
 
             return false;
@@ -117,18 +121,18 @@ namespace MndpTray
         {
             var sb = new StringBuilder();
 
-            sb.AppendFormat("{0}:{1}, ", nameof(this.Type), this.Type);
-            sb.AppendFormat("{0}:{1}, ", nameof(this.Ttl), this.Ttl);
-            sb.AppendFormat("{0}:{1}, ", nameof(this.Sequence), this.Sequence);
-            sb.AppendFormat("{0}:{1}, ", nameof(this.MacAddress), this.MacAddress);
-            sb.AppendFormat("{0}:{1}, ", nameof(this.Identity), this.Identity);
-            sb.AppendFormat("{0}:{1}, ", nameof(this.Version), this.Version);
-            sb.AppendFormat("{0}:{1}, ", nameof(this.Platform), this.Platform);
-            sb.AppendFormat("{0}:{1}, ", nameof(this.Uptime), this.Uptime.ToString());
-            sb.AppendFormat("{0}:{1}, ", nameof(this.SoftwareId), this.SoftwareId);
-            sb.AppendFormat("{0}:{1}, ", nameof(this.BoardName), this.BoardName);
-            sb.AppendFormat("{0}:{1}, ", nameof(this.Unpack), this.Unpack);
-            sb.AppendFormat("{0}:{1}, ", nameof(this.InterfaceName), this.InterfaceName);
+            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.Type), this.Type);
+            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.Ttl), this.Ttl);
+            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.Sequence), this.Sequence);
+            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.MacAddress), this.MacAddress);
+            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.Identity), this.Identity);
+            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.Version), this.Version);
+            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.Platform), this.Platform);
+            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.Uptime), this.Uptime.ToString());
+            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.SoftwareId), this.SoftwareId);
+            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.BoardName), this.BoardName);
+            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.Unpack), this.Unpack);
+            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.InterfaceName), this.InterfaceName);
 
             return sb.ToString();
         }
@@ -137,7 +141,7 @@ namespace MndpTray
         {
             try
             {
-                Debug("{0} Write, {1}", nameof(MndpMessage), this.ToString());
+                Debug("{0} Write,\r\n{1}\r\n", nameof(MndpMessage), this.ToString());
 
                 var tlvMessage = new TlvMessage()
                 {
@@ -148,7 +152,7 @@ namespace MndpTray
 
                 var enc = Encoding.GetEncoding(1250);
 
-                for (ushort i = 0; i < 16; i++)
+                for (ushort i = 0; i <= 16; i++)
                 {
                     switch (i)
                     {
@@ -200,25 +204,28 @@ namespace MndpTray
             }
             catch (Exception ex)
             {
-                Debug("{0} Write, Exception: {1}", nameof(MndpMessage), ex.ToString());
+                DebugException(nameof(MndpMessage), nameof(Write), ex);
             }
 
             return null;
         }
 
-        private static void Debug(string format, params object[] args)
-        {
-            System.Diagnostics.Debug.WriteLine(format + "\r\n", args);
-        }
+        #endregion Methods
 
         /// <summary>
         /// Type , Length , Value
         /// </summary>
         protected class Tlv
         {
-            public ushort Length;
-            public ushort Type;
-            public byte[] Value;
+            #region Props
+
+            public ushort Length { get; set; }
+            public ushort Type { get; set; }
+            public byte[] Value { get; set; }
+
+            #endregion Props
+
+            #region Methods
 
             public Tlv()
             {
@@ -255,7 +262,7 @@ namespace MndpTray
                 }
                 catch (Exception ex)
                 {
-                    Debug("{0} Read, Exception: {1}", nameof(Tlv), ex.ToString());
+                    DebugException(nameof(Tlv), nameof(Read), ex);
                 }
 
                 return false;
@@ -287,11 +294,13 @@ namespace MndpTray
                 }
                 catch (Exception ex)
                 {
-                    Debug("{0} Write, Exception: {1}", nameof(Tlv), ex.ToString());
+                    DebugException(nameof(Tlv), nameof(Write), ex);
                 }
 
                 return false;
             }
+
+            #endregion Methods
         }
 
         /// <summary>
@@ -299,10 +308,16 @@ namespace MndpTray
         /// </summary>
         protected class TlvMessage
         {
-            public List<Tlv> Items = new List<Tlv>();
-            public ushort Sequence;
-            public byte Ttl;
-            public byte Type;
+            #region Props
+
+            public List<Tlv> Items { get; set; } = new List<Tlv>();
+            public ushort Sequence { get; set; }
+            public byte Ttl { get; set; }
+            public byte Type { get; set; }
+
+            #endregion Props
+
+            #region Methods
 
             public bool Read(BinaryReader br)
             {
@@ -343,7 +358,7 @@ namespace MndpTray
                 }
                 catch (Exception ex)
                 {
-                    Debug("{0} Read, Exception: {1}", nameof(TlvMessage), ex.ToString());
+                    DebugException(nameof(TlvMessage), nameof(Read), ex);
                 }
 
                 return false;
@@ -374,7 +389,7 @@ namespace MndpTray
                 }
                 catch (Exception ex)
                 {
-                    Debug("{0} Write, Exception: {1}", nameof(TlvMessage), ex.ToString());
+                    DebugException(nameof(TlvMessage), nameof(Write), ex);
                 }
 
                 return false;
@@ -397,6 +412,8 @@ namespace MndpTray
 
                 return true;
             }
+
+            #endregion Methods
         }
     }
 
@@ -408,11 +425,13 @@ namespace MndpTray
         #region Props
 
         public DateTime ReceiveDateTime { get; set; }
-        public String SenderAddress { get; set; }
-        public TimeSpan Age { get { return DateTime.Now - ReceiveDateTime; } }
+        public string SenderAddress { get; set; }
+        public string BroadcastAddress { get; set; }
+        public double Age { get { return (DateTime.Now - ReceiveDateTime).TotalSeconds; } }
 
         #endregion Props
 
+        #region Methods
         public object Clone()
         {
             return this.MemberwiseClone();
@@ -422,11 +441,14 @@ namespace MndpTray
         {
             var sb = new StringBuilder();
 
-            sb.AppendFormat("{0}:{1}, ", nameof(this.SenderAddress), this.SenderAddress);
-            sb.AppendFormat("{0}:{1}, ", nameof(this.ReceiveDateTime), this.ReceiveDateTime);
+            sb.AppendFormat("\t{0}:{1},\r\n", nameof(this.ReceiveDateTime), this.ReceiveDateTime);
+            sb.AppendFormat("\t{0}:{1},\r\n", nameof(this.SenderAddress), this.SenderAddress);            
+            sb.AppendFormat("\t{0}:{1},\r\n", nameof(this.BroadcastAddress), this.BroadcastAddress);
             sb.Append(base.ToString());
 
             return sb.ToString();
         }
+
+        #endregion
     }
 }

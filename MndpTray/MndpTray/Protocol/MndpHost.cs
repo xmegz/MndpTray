@@ -6,105 +6,90 @@ using System.Management;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
+using System.Threading;
 
-namespace MndpTray
+namespace MndpTray.Protocol
 {
-    public static class MndpHost
+    using static MndpDebug;
+
+    public class MndpHost
     {
-        #region props
-        public static String BoardName { get; }
-        public static String Identity { get; }
-        public static List<MndpInterface> InterfaceInfo { get { return GetBroadcastAddress(); } }
-        public static String Platform { get; }
-        public static UInt16 Sequence { get { return GetSequence(); } }       
-        public static String SoftwareId { get; }
-        public static TimeSpan Uptime { get { return GetUpTime(); } }
-        public static String Version { get; }
-        #endregion props
-
-
-        private static UInt64 _sequence = 0;
-        private static object _sequenceLock = new object();
+        #region Static
 
         static MndpHost()
         {
-            BoardName = GetManufacturerName();
-            Identity = Environment.MachineName;
-            Platform = (Environment.Is64BitProcess) ? "Amd64" : "X86";
-            SoftwareId = Environment.UserName;
-            Version = GetReleaseId();
+            Instance = new MndpHost();
         }
 
-        public static void SendMessage()
+        public static MndpHost Instance { get; }
+
+        #endregion Static
+
+        #region Utils
+
+        private static string _getSoftwareId(string from = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion", string valueName = "DigitalProductId")
         {
+            string possible_chars = "BCDFGHJKMPQRTVWXY2346789";
+
+            RegistryKey hive = null;
+            RegistryKey key = null;
             try
             {
-                var lInterfaceInfo = MndpHost.InterfaceInfo;
-                var sequence = MndpHost.Sequence;
+                var result = string.Empty;
+                hive = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, Environment.MachineName);
+                key = hive.OpenSubKey(from, false);
+                var k = RegistryValueKind.Unknown;
+                try { k = key.GetValueKind(valueName); }
+                catch (Exception) { }
 
-                foreach (var i in lInterfaceInfo)
+                if (k == RegistryValueKind.Unknown)
                 {
-                    var msg = new MndpMessageEx();
-
-                    msg.BoardName = MndpHost.BoardName;
-                    msg.Identity = MndpHost.Identity;
-                    msg.InterfaceName = i.InterfaceName;
-                    msg.MacAddress = i.MacAddress;
-                    msg.Platform = MndpHost.Platform;
-                    msg.ReceiveDateTime = DateTime.Now;
-                    msg.SenderAddress = i.Address;
-                    msg.Sequence = sequence;
-                    msg.SoftwareId = MndpHost.SoftwareId;
-                    msg.Ttl = 0;
-                    msg.Type = 0;
-                    msg.Unpack = 0;
-                    msg.Uptime = MndpHost.Uptime;
-                    msg.Version = MndpHost.Version;
-
-                    MndpListener.Instance.Send(msg);
+                    key.Close();
+                    hive.Close();
+                    hive = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+                    key = hive.OpenSubKey(from, false);
+                    try { k = key.GetValueKind(valueName); }
+                    catch (Exception) { }
                 }
-            }
-            catch { }
-        }
 
-
-        private static UInt16 GetSequence()
-        {
-            lock (_sequenceLock)
-            {
-                _sequence++;
-                return (UInt16)_sequence;
-            }
-        }
-
-        private static List<MndpInterface> GetBroadcastAddress()
-        {
-            List<MndpInterface> lmi = new List<MndpInterface>();
-
-            try
-            {
-                foreach (var i in NetworkInterface.GetAllNetworkInterfaces()
-                                                  .Where(a => a.OperationalStatus == OperationalStatus.Up && a.NetworkInterfaceType != NetworkInterfaceType.Loopback && a.GetPhysicalAddress().ToString().Length>=12)                                                  
-                                                  .ToList())
-                    foreach (var ua in i.GetIPProperties().UnicastAddresses)
+                if (k == RegistryValueKind.Binary)
+                {
+                    var pivot = 0;
+                    var bytes = (byte[])key.GetValue(valueName);
+                    var ints = new int[16];
+                    for (var i = 52; i < 67; ++i) ints[i - 52] = bytes[i];
+                    for (var i = 0; i < 25; ++i)
                     {
-                        if (ua.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && ua.IPv4Mask != null)
+                        pivot = 0;
+                        for (var j = 14; j >= 0; --j)
                         {
-                            var addressInt = BitConverter.ToInt32(ua.Address.GetAddressBytes(), 0);
-                            var maskInt = BitConverter.ToInt32(ua.IPv4Mask.GetAddressBytes(), 0);
-                            var broadcastInt = addressInt | ~maskInt;
-                            var broadcast = new IPAddress(BitConverter.GetBytes(broadcastInt));
-
-                            lmi.Add(new MndpInterface(ua.Address.ToString(),i.Name, i.GetPhysicalAddress().ToString(), broadcast.ToString()));
+                            pivot <<= 8;
+                            pivot ^= ints[j];
+                            ints[j] = ((int)Math.Truncate(pivot / 24.0));
+                            pivot %= 24;
+                        }
+                        result = possible_chars[pivot] + result;
+                        if ((i % 5 == 4) && (i != 24))
+                        {
+                            result = "-" + result;
                         }
                     }
+                }
+                return result;
             }
-            catch { }
-
-            return lmi;
+            catch (Exception ex)
+            {
+                DebugException(nameof(MndpHost), nameof(_getSoftwareId), ex);
+                return null;
+            }
+            finally
+            {
+                key?.Close();
+                hive?.Close();
+            }
         }
 
-        private static String GetManufacturerName()
+        private static string _getPlatform()
         {
             try
             {
@@ -118,18 +103,80 @@ namespace MndpTray
                     }
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                DebugException(nameof(MndpHost), nameof(_getPlatform), ex);
+            }
 
             return String.Empty;
         }
 
-        private static string GetReleaseId()
+        private static string _getIdentity()
+        {
+            try
+            {
+                return System.Net.Dns.GetHostEntry("").HostName;
+            }
+            catch (Exception ex)
+            {
+                DebugException(nameof(MndpHost), nameof(_getIdentity), ex);
+            }
+
+            return Environment.MachineName;
+        }
+
+        private static List<MndpInterface> _getMndpInterfaces()
+        {
+            var ret = new List<MndpInterface>();
+
+            try
+            {
+                var interfaces = NetworkInterface.GetAllNetworkInterfaces()
+                                          .Where(a => a.OperationalStatus == OperationalStatus.Up && a.NetworkInterfaceType != NetworkInterfaceType.Loopback && a.GetPhysicalAddress().ToString().Length >= 12)
+                                          .ToList();
+
+                foreach (var @interface in interfaces)
+                    foreach (var unicastAddress in @interface.GetIPProperties().UnicastAddresses)
+                    {
+                        if (unicastAddress.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && unicastAddress.IPv4Mask != null)
+                        {
+                            var addressInt = BitConverter.ToInt32(unicastAddress.Address.GetAddressBytes(), 0);
+                            var maskInt = BitConverter.ToInt32(unicastAddress.IPv4Mask.GetAddressBytes(), 0);
+                            var broadcastInt = addressInt | ~maskInt;
+                            var broadcast = new IPAddress(BitConverter.GetBytes(broadcastInt));
+
+                            ret.Add(new MndpInterface(unicastAddress.Address.ToString(), @interface.Name, @interface.GetPhysicalAddress().ToString(), broadcast.ToString()));
+                        }
+                    }
+            }
+            catch (Exception ex)
+            {
+                DebugException(nameof(MndpHost), nameof(_getMndpInterfaces), ex);
+            }
+
+            return ret;
+        }
+
+        private static string _getBoardName()
+        {
+            return "x86";
+        }
+
+        private static TimeSpan _getUpTime()
+        {
+            return TimeSpan.FromMilliseconds(GetTickCount64());
+        }
+
+        private static string _getVersion()
         {
             try
             {
                 return Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName", "").ToString();
             }
-            catch { }
+            catch (Exception ex)
+            {
+                DebugException(nameof(MndpHost), nameof(_getVersion), ex);
+            }
 
             return String.Empty;
         }
@@ -137,29 +184,136 @@ namespace MndpTray
         [DllImport("kernel32")]
         private static extern UInt64 GetTickCount64();
 
-        private static TimeSpan GetUpTime()
+        #endregion Utils
+
+        #region Consts
+
+        private const uint SEND_INTERVAL = 60;
+
+        #endregion Consts
+
+        #region Variables
+
+        private bool _sendNow;
+        private Thread _sendThread;
+
+        #endregion Variables
+
+        #region Methods
+
+        public void SendNow()
         {
-            return TimeSpan.FromMilliseconds(GetTickCount64());
+            this._sendNow = true;
         }
 
-        public class MndpInterface
+        public bool Start()
         {
-            public MndpInterface(string address,string interfaceName, string macAddress, string broadcastAddress)
+            try
             {
-                this.Address = address;
+                var t = new Thread(_sendMethod);
+                t.Start();
+                this._sendThread = t;
+            }
+            catch (Exception ex)
+            {
+                DebugException(nameof(MndpHost), nameof(Start), ex);
+            }
+
+            return false;
+        }
+
+        public bool Stop()
+        {
+            try
+            {
+                if (this._sendThread != null)
+                {
+                    this._sendThread.Abort();
+                    this._sendThread = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                DebugException(nameof(MndpHost), nameof(Stop), ex);
+            }
+
+            return false;
+        }
+
+        private void _sendMethod()
+        {
+            try
+            {
+                ulong sequence = 0;
+                DateTime nextSend = DateTime.Now;
+
+                MndpMessageEx msg = new MndpMessageEx();
+
+                msg.BoardName = _getBoardName();
+                msg.Identity = _getIdentity();
+                msg.Platform = _getPlatform();
+                msg.SoftwareId = _getSoftwareId();
+                msg.Version = _getVersion();
+                msg.Ttl = 0;
+                msg.Type = 0;
+                msg.Unpack = 0;
+
+                while (true)
+                {
+                    Thread.Sleep(100);
+
+                    if ((nextSend < DateTime.Now) || (this._sendNow))
+                    {
+                        nextSend = DateTime.Now.AddSeconds(SEND_INTERVAL);
+                        this._sendNow = false;
+
+                        var interfaces = _getMndpInterfaces();
+
+                        msg.Sequence = (ushort)(sequence++);
+                        msg.Uptime = _getUpTime();
+
+                        foreach (var i in interfaces)
+                        {
+                            msg.BroadcastAddress = i.BroadcastAddress;
+                            msg.InterfaceName = i.InterfaceName;
+                            msg.MacAddress = i.MacAddress;
+                            msg.SenderAddress = i.SenderAddress;
+
+                            MndpSender.Instance.Send((MndpMessageEx)msg.Clone());
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                DebugException(nameof(MndpHost), nameof(_sendMethod), ex);
+            }
+        }
+
+        #endregion Methods
+
+        protected class MndpInterface
+        {
+            #region Props
+
+            public String BroadcastAddress { get; }
+            public String InterfaceName { get; }
+            public String MacAddress { get; }
+            public String SenderAddress { get; }
+
+            #endregion Props
+
+            #region Methods
+
+            public MndpInterface(string address, string interfaceName, string macAddress, string broadcastAddress)
+            {
+                this.SenderAddress = address;
                 this.InterfaceName = interfaceName;
                 this.MacAddress = macAddress;
                 this.BroadcastAddress = broadcastAddress;
             }
 
-            #region props
-
-            public String Address { get; }
-            public String BroadcastAddress { get; }
-            public String InterfaceName { get; }
-            public String MacAddress { get; }
-
-            #endregion props
-        }      
+            #endregion Methods
+        }
     }
 }

@@ -1,7 +1,9 @@
-﻿using System;
+﻿using MndpTray.Protocol;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace MndpTray
@@ -11,51 +13,54 @@ namespace MndpTray
         public ListForm()
         {
             InitializeComponent();
+            this.Text = String.Concat(this.Text, " Version: ", Assembly.GetEntryAssembly().GetName().Version.ToString());
         }
 
         private void Receive_Timer(object sender, EventArgs e)
         {
-            List<MndpMessageEx> listMsg = MndpListener.Instance.GetMessages().Select(a=>a.Value).ToList();
-
-            Dictionary<string, DataGridViewRow> dictRow = new Dictionary<string, DataGridViewRow>();
-
-            foreach (DataGridViewRow i in this.dgvGrid.Rows)
+            try
             {
-                if (i.Tag!=null)                 
-                    dictRow[(string)i.Tag] = i;
-            }
+                List<MndpMessageEx> listMsg = MndpListener.Instance.GetMessages().Select(a => a.Value).ToList();
 
-            this.dgvGrid.SuspendLayout();
+                Dictionary<string, DataGridViewRow> dictRow = new Dictionary<string, DataGridViewRow>();
 
-            foreach (MndpMessageEx i in listMsg)
-            {
-                if (dictRow.ContainsKey(i.MacAddress))
+                foreach (DataGridViewRow i in this.dgvGrid.Rows)
                 {
-                    var row = dictRow[i.MacAddress];
-                    row.SetValues(i.SenderAddress, i.MacAddress, i.Identity, i.Version, i.Platform, i.Uptime, i.SoftwareId, i.BoardName, i.InterfaceName);
-                    dictRow.Remove(i.MacAddress);
+                    if (i.Tag != null)
+                        dictRow[(string)i.Tag] = i;
                 }
-                else
+
+                this.dgvGrid.SuspendLayout();
+
+                foreach (MndpMessageEx i in listMsg)
                 {
-                    var row = new DataGridViewRow();
+                    if (dictRow.ContainsKey(i.MacAddress))
+                    {
+                        var row = dictRow[i.MacAddress];
+                        row.SetValues(i.SenderAddress, i.MacAddress, i.Identity, i.Platform, i.Version, i.BoardName, i.InterfaceName, i.SoftwareId, i.Age.ToString("F0"), i.Uptime);
+                        dictRow.Remove(i.MacAddress);
+                    }
+                    else
+                    {
+                        var row = new DataGridViewRow();
 
-                    row.CreateCells(this.dgvGrid, i.SenderAddress, i.MacAddress, i.Identity, i.Version, i.Platform, i.Uptime, i.SoftwareId, i.BoardName, i.InterfaceName);
-                    row.Tag = i.MacAddress;
-                    this.dgvGrid.Rows.Add(row);                    
+                        row.CreateCells(this.dgvGrid, i.SenderAddress, i.MacAddress, i.Identity, i.Platform, i.Version, i.BoardName, i.InterfaceName, i.SoftwareId, i.Age.ToString("F0"), i.Uptime);
+                        row.Tag = i.MacAddress;
+                        this.dgvGrid.Rows.Add(row);
+                    }
                 }
-            }
 
-            foreach (DataGridViewRow i in dictRow.Values)
+                foreach (DataGridViewRow i in dictRow.Values)
+                {
+                    this.dgvGrid.Rows.Remove(i);
+                }
+                
+                this.dgvGrid.ResumeLayout();
+            }
+            catch (Exception ex)
             {
-                this.dgvGrid.Rows.Remove(i);
+                MndpDebug.DebugException(nameof(ListForm), nameof(Receive_Timer), ex);
             }
-
-            this.dgvGrid.ResumeLayout();
-        }
-
-        private void SendTimer_Tick(object sender, EventArgs e)
-        {
-            MndpHost.SendMessage();
-        }
+        }     
     }
 }

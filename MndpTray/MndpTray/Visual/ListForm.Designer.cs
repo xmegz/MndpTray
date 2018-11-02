@@ -29,18 +29,21 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ListForm));
             this.ReceiveTimer = new System.Windows.Forms.Timer(this.components);
             this.dgvGrid = new System.Windows.Forms.DataGridView();
             this.IpAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MacAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Identity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Version = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Platform = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Uptime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SoftwareId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Version = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BoardName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.InterfaceName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SendTimer = new System.Windows.Forms.Timer(this.components);
+            this.SoftwareId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Age = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Uptime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,12 +63,13 @@
             this.IpAddress,
             this.MacAddress,
             this.Identity,
-            this.Version,
             this.Platform,
-            this.Uptime,
-            this.SoftwareId,
+            this.Version,
             this.BoardName,
-            this.InterfaceName});
+            this.InterfaceName,
+            this.SoftwareId,
+            this.Age,
+            this.Uptime});
             this.dgvGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvGrid.Location = new System.Drawing.Point(0, 0);
             this.dgvGrid.Name = "dgvGrid";
@@ -73,18 +77,18 @@
             this.dgvGrid.RowHeadersVisible = false;
             this.dgvGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvGrid.ShowEditingIcon = false;
-            this.dgvGrid.Size = new System.Drawing.Size(903, 478);
+            this.dgvGrid.Size = new System.Drawing.Size(994, 478);
             this.dgvGrid.TabIndex = 0;
             // 
             // IpAddress
             // 
-            this.IpAddress.HeaderText = "IpAddress";
+            this.IpAddress.HeaderText = "IP Address";
             this.IpAddress.Name = "IpAddress";
             this.IpAddress.ReadOnly = true;
             // 
             // MacAddress
             // 
-            this.MacAddress.HeaderText = "MacAddress";
+            this.MacAddress.HeaderText = "MAC Address";
             this.MacAddress.Name = "MacAddress";
             this.MacAddress.ReadOnly = true;
             // 
@@ -94,57 +98,65 @@
             this.Identity.Name = "Identity";
             this.Identity.ReadOnly = true;
             // 
-            // Version
-            // 
-            this.Version.HeaderText = "Version";
-            this.Version.Name = "Version";
-            this.Version.ReadOnly = true;
-            // 
             // Platform
             // 
             this.Platform.HeaderText = "Platform";
             this.Platform.Name = "Platform";
             this.Platform.ReadOnly = true;
             // 
-            // Uptime
+            // Version
             // 
-            this.Uptime.HeaderText = "Uptime";
-            this.Uptime.Name = "Uptime";
-            this.Uptime.ReadOnly = true;
-            // 
-            // SoftwareId
-            // 
-            this.SoftwareId.HeaderText = "SoftwareId";
-            this.SoftwareId.Name = "SoftwareId";
-            this.SoftwareId.ReadOnly = true;
+            this.Version.HeaderText = "Version";
+            this.Version.Name = "Version";
+            this.Version.ReadOnly = true;
             // 
             // BoardName
             // 
-            this.BoardName.HeaderText = "BoardName";
+            this.BoardName.HeaderText = "Board Name";
             this.BoardName.Name = "BoardName";
             this.BoardName.ReadOnly = true;
             // 
             // InterfaceName
             // 
-            this.InterfaceName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.InterfaceName.HeaderText = "InterfaceName";
+            this.InterfaceName.HeaderText = "Interface Name";
             this.InterfaceName.Name = "InterfaceName";
             this.InterfaceName.ReadOnly = true;
+            this.InterfaceName.Width = 125;
             // 
-            // SendTimer
+            // SoftwareId
             // 
-            this.SendTimer.Enabled = true;
-            this.SendTimer.Interval = 60000;
-            this.SendTimer.Tick += new System.EventHandler(this.SendTimer_Tick);
+            this.SoftwareId.HeaderText = "Software ID";
+            this.SoftwareId.Name = "SoftwareId";
+            this.SoftwareId.ReadOnly = true;
+            // 
+            // Age
+            // 
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.Age.DefaultCellStyle = dataGridViewCellStyle5;
+            this.Age.FillWeight = 75F;
+            this.Age.HeaderText = "Age (s)";
+            this.Age.Name = "Age";
+            this.Age.ReadOnly = true;
+            this.Age.Width = 75;
+            // 
+            // Uptime
+            // 
+            this.Uptime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.Uptime.DefaultCellStyle = dataGridViewCellStyle6;
+            this.Uptime.HeaderText = "Uptime";
+            this.Uptime.Name = "Uptime";
+            this.Uptime.ReadOnly = true;
             // 
             // ListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(903, 478);
+            this.ClientSize = new System.Drawing.Size(994, 478);
             this.Controls.Add(this.dgvGrid);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ListForm";
-            this.Text = "Neighbor List";
+            this.Text = "MndpTray - Neighbor List";
             ((System.ComponentModel.ISupportInitialize)(this.dgvGrid)).EndInit();
             this.ResumeLayout(false);
 
@@ -152,16 +164,16 @@
 
         #endregion
         private System.Windows.Forms.DataGridView dgvGrid;
+        public System.Windows.Forms.Timer ReceiveTimer;
         private System.Windows.Forms.DataGridViewTextBoxColumn IpAddress;
         private System.Windows.Forms.DataGridViewTextBoxColumn MacAddress;
         private System.Windows.Forms.DataGridViewTextBoxColumn Identity;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Version;
         private System.Windows.Forms.DataGridViewTextBoxColumn Platform;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Uptime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SoftwareId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Version;
         private System.Windows.Forms.DataGridViewTextBoxColumn BoardName;
         private System.Windows.Forms.DataGridViewTextBoxColumn InterfaceName;
-        public System.Windows.Forms.Timer SendTimer;
-        public System.Windows.Forms.Timer ReceiveTimer;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SoftwareId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Age;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Uptime;
     }
 }

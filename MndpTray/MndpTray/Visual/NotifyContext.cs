@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MndpTray.Protocol;
+using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace MndpTray
@@ -10,24 +12,29 @@ namespace MndpTray
 
         public NotifyContext()
         {
+            MndpDebug.Debug("--------------------START-----------------");
             this.InizializeComponets();
             this._listForm = new ListForm();
             MndpListener.Instance.Start();
-            MndpHost.SendMessage();
+            MndpHost.Instance.Start();
         }
 
         #region Event Handlers
 
         private void Send_Click(object sender, System.EventArgs e)
         {
-            MndpHost.SendMessage();
+            MndpHost.Instance.SendNow();
         }
 
         private void Exit_Click(object sender, EventArgs e)
         {
             MndpListener.Instance.Stop();
+            MndpHost.Instance.Stop();
             this._notifyIcon.Dispose();
             this._listForm.Close();
+
+            Thread.Sleep(100);
+            MndpDebug.Debug("--------------------END-----------------");
             this.ExitThread();
         }
 
