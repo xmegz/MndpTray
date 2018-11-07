@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace MndpTray
 {
     public partial class ListForm : Form
-    {        
+    {
         public ListForm()
         {
             InitializeComponent();
@@ -54,13 +54,13 @@ namespace MndpTray
                 {
                     this.dgvGrid.Rows.Remove(i);
                 }
-                
+
                 this.dgvGrid.ResumeLayout();
             }
             catch (Exception ex)
             {
-                MndpDebug.DebugException(nameof(ListForm), nameof(Receive_Timer), ex);
+                Debug.Exception(nameof(ListForm), nameof(Receive_Timer), ex);
             }
-        }     
+        }
     }
 }

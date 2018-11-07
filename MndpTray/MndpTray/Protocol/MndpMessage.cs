@@ -6,8 +6,6 @@ using System.Text;
 
 namespace MndpTray.Protocol
 {
-    using static MndpDebug;
-
     /// <summary>
     /// Mikrotik discovery message
     /// </summary>
@@ -105,13 +103,13 @@ namespace MndpTray.Protocol
                     }
                 }
 
-                Debug("{0} Read,\r\n{1}\r\n", nameof(MndpMessage), this.ToString());
+                Debug.Info("{0} Read,\r\n{1}\r\n", nameof(MndpMessage), this.ToString());
 
                 return true;
             }
             catch (Exception ex)
             {
-                DebugException(nameof(MndpMessage), nameof(Read), ex);
+                Debug.Exception(nameof(MndpMessage), nameof(Read), ex);
             }
 
             return false;
@@ -141,7 +139,7 @@ namespace MndpTray.Protocol
         {
             try
             {
-                Debug("{0} Write,\r\n{1}\r\n", nameof(MndpMessage), this.ToString());
+                Debug.Info("{0} Write,\r\n{1}\r\n", nameof(MndpMessage), this.ToString());
 
                 var tlvMessage = new TlvMessage()
                 {
@@ -204,7 +202,7 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                DebugException(nameof(MndpMessage), nameof(Write), ex);
+                Debug.Exception(nameof(MndpMessage), nameof(Write), ex);
             }
 
             return null;
@@ -258,11 +256,14 @@ namespace MndpTray.Protocol
                     this.Length = br.ReadUInt16Reverse();
                     this.Value = br.ReadBytes(this.Length);
 
+                    if (this.Length > 1400)
+                        throw new Exception("Tlv too long!");
+
                     return true;
                 }
                 catch (Exception ex)
                 {
-                    DebugException(nameof(Tlv), nameof(Read), ex);
+                    Debug.Exception(nameof(Tlv), nameof(Read), ex);
                 }
 
                 return false;
@@ -294,7 +295,7 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    DebugException(nameof(Tlv), nameof(Write), ex);
+                    Debug.Exception(nameof(Tlv), nameof(Write), ex);
                 }
 
                 return false;
@@ -342,7 +343,7 @@ namespace MndpTray.Protocol
                 {
                     if (data.Length < 8)
                     {
-                        Debug("{0} Read, Message Too Short", nameof(TlvMessage));
+                        Debug.Info("{0} Read, Message Too Short", nameof(TlvMessage));
                         return false;
                     }
 
@@ -358,7 +359,7 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    DebugException(nameof(TlvMessage), nameof(Read), ex);
+                    Debug.Exception(nameof(TlvMessage), nameof(Read), ex);
                 }
 
                 return false;
@@ -389,7 +390,7 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    DebugException(nameof(TlvMessage), nameof(Write), ex);
+                    Debug.Exception(nameof(TlvMessage), nameof(Write), ex);
                 }
 
                 return false;
@@ -424,14 +425,14 @@ namespace MndpTray.Protocol
     {
         #region Props
 
+        public double Age { get { return (DateTime.Now - ReceiveDateTime).TotalSeconds; } }
+        public string BroadcastAddress { get; set; }
         public DateTime ReceiveDateTime { get; set; }
         public string SenderAddress { get; set; }
-        public string BroadcastAddress { get; set; }
-        public double Age { get { return (DateTime.Now - ReceiveDateTime).TotalSeconds; } }
-
         #endregion Props
 
         #region Methods
+
         public object Clone()
         {
             return this.MemberwiseClone();
@@ -442,13 +443,13 @@ namespace MndpTray.Protocol
             var sb = new StringBuilder();
 
             sb.AppendFormat("\t{0}:{1},\r\n", nameof(this.ReceiveDateTime), this.ReceiveDateTime);
-            sb.AppendFormat("\t{0}:{1},\r\n", nameof(this.SenderAddress), this.SenderAddress);            
+            sb.AppendFormat("\t{0}:{1},\r\n", nameof(this.SenderAddress), this.SenderAddress);
             sb.AppendFormat("\t{0}:{1},\r\n", nameof(this.BroadcastAddress), this.BroadcastAddress);
             sb.Append(base.ToString());
 
             return sb.ToString();
         }
 
-        #endregion
+        #endregion Methods
     }
 }

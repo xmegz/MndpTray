@@ -6,8 +6,6 @@ using System.Net.Sockets;
 
 namespace MndpTray.Protocol
 {
-    using static MndpDebug;
-
     /// <summary>
     /// Mikrotik discovery message listener
     /// </summary>
@@ -40,6 +38,7 @@ namespace MndpTray.Protocol
         #endregion Fields
 
         #region Methods
+
         public Dictionary<string, MndpMessageEx> GetMessages()
         {
             var ret = new Dictionary<string, MndpMessageEx>();
@@ -55,7 +54,7 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                DebugException(nameof(MndpListener), nameof(Start), ex);
+                Debug.Exception(nameof(MndpListener), nameof(Start), ex);
             }
 
             return ret;
@@ -82,7 +81,7 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    DebugException(nameof(MndpListener), nameof(Start), ex);
+                    Debug.Exception(nameof(MndpListener), nameof(Start), ex);
 
                     try
                     {
@@ -111,7 +110,7 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                DebugException(nameof(MndpListener), nameof(Stop), ex);
+                Debug.Exception(nameof(MndpListener), nameof(Stop), ex);
             }
 
             return false;
@@ -156,7 +155,7 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                DebugException(nameof(MndpListener), nameof(_receive), ex);
+                Debug.Exception(nameof(MndpListener), nameof(_receive), ex);
             }
 
             try
@@ -166,9 +165,10 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                DebugException(nameof(MndpListener), nameof(_receive), ex);
+                Debug.Exception(nameof(MndpListener), nameof(_receive), ex);
             }
         }
-        #endregion
+
+        #endregion Methods
     }
 }

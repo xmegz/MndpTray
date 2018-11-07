@@ -12,35 +12,35 @@ namespace MndpTray
 
         public NotifyContext()
         {
-            MndpDebug.Debug("--------------------START-----------------");
+            Debug.Info("--------------------START-----------------");
             this.InizializeComponets();
             this._listForm = new ListForm();
             MndpListener.Instance.Start();
-            MndpHost.Instance.Start();
+            MndpSender.Instance.Start();
         }
 
         #region Event Handlers
 
-        private void Send_Click(object sender, System.EventArgs e)
-        {
-            MndpHost.Instance.SendNow();
-        }
-
         private void Exit_Click(object sender, EventArgs e)
         {
             MndpListener.Instance.Stop();
-            MndpHost.Instance.Stop();
+            MndpSender.Instance.Stop();
             this._notifyIcon.Dispose();
             this._listForm.Close();
 
             Thread.Sleep(100);
-            MndpDebug.Debug("--------------------END-----------------");
+            Debug.Info("--------------------END-----------------");
             this.ExitThread();
         }
 
         private void List_Click(object sender, EventArgs e)
         {
             this._listForm.ShowDialog();
+        }
+
+        private void Send_Click(object sender, System.EventArgs e)
+        {
+            MndpSender.Instance.SendHostInfoNow();
         }
 
         #endregion Event Handlers

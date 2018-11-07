@@ -74,9 +74,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Protocol\MndpDebug.cs" />
-    <Compile Include="Protocol\MndpExtensions.cs" />
-    <Compile Include="Protocol\MndpHost.cs" />
+    <Compile Include="Protocol\Debug.cs" />
+    <Compile Include="Protocol\Extensions.cs" />
+    <Compile Include="Protocol\Infos.cs" />
     <Compile Include="Protocol\MndpSender.cs" />
     <Compile Include="Visual\ListForm.cs">
       <SubType>Form</SubType>

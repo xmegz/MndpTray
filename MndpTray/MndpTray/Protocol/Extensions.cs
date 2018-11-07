@@ -12,7 +12,7 @@ namespace MndpTray.Protocol
             string file = Path.GetFileNameWithoutExtension(self.Location);
 
             file = Path.Combine(dir, file);
-            return  file + "." + extension;
+            return file + "." + extension;
         }
     }
 
