@@ -8,3 +8,6 @@ MNDP Mikrotik Neighbor Discovery Protocol Tray Application
 * Listens to MNDP messsages and put them to list
 
 * Blocking winbox discovery function when running
+
+## Screenshot
+![alt text](https://github.com/xmegz/MndpTray/blob/master/MndpTray/MndpTray/Images/screenshot.png)
