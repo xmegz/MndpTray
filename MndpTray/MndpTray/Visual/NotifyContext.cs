@@ -35,7 +35,11 @@ namespace MndpTray
 
         private void List_Click(object sender, EventArgs e)
         {
-            this._listForm.ShowDialog();
+            if (!this._listForm.Visible)            
+                this._listForm.ShowDialog();            
+            else            
+                this._listForm.WindowState = FormWindowState.Normal;            
+            
         }
 
         private void Send_Click(object sender, System.EventArgs e)

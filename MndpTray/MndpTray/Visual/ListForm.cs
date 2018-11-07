@@ -13,7 +13,7 @@ namespace MndpTray
         public ListForm()
         {
             InitializeComponent();
-            this.Text = String.Concat(this.Text, " Version: ", Assembly.GetEntryAssembly().GetName().Version.ToString());
+            this.Text = String.Concat(this.Text, " Version: ", Assembly.GetEntryAssembly().GetName().Version.ToString());            
         }
 
         private void Receive_Timer(object sender, EventArgs e)
