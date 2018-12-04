@@ -78,6 +78,12 @@
     <Compile Include="Protocol\Extensions.cs" />
     <Compile Include="Protocol\Infos.cs" />
     <Compile Include="Protocol\MndpSender.cs" />
+    <Compile Include="Visual\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visual\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Visual\ListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +105,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Visual\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Visual\ListForm.resx">
       <DependentUpon>ListForm.cs</DependentUpon>
     </EmbeddedResource>

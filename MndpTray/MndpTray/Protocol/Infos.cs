@@ -22,7 +22,7 @@ namespace MndpTray.Protocol
         {
             try
             {
-                return System.Net.Dns.GetHostEntry("").HostName;
+                return Dns.GetHostEntry("").HostName;
             }
             catch (Exception ex)
             {
@@ -152,7 +152,7 @@ namespace MndpTray.Protocol
             try
             {
                 var interfaces = NetworkInterface.GetAllNetworkInterfaces()
-                                          .Where(a => a.OperationalStatus == OperationalStatus.Up && a.NetworkInterfaceType != NetworkInterfaceType.Loopback && a.GetPhysicalAddress().ToString().Length >= 12)
+                                          .Where(a => (a.OperationalStatus == OperationalStatus.Up) && (a.NetworkInterfaceType != NetworkInterfaceType.Loopback) && (a.GetPhysicalAddress().ToString().Length >= 12))
                                           .ToList();
 
                 foreach (var @interface in interfaces)

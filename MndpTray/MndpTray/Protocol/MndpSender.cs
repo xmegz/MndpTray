@@ -33,6 +33,7 @@ namespace MndpTray.Protocol
 
         private Thread _hostInfoSendThread;
         private bool _sendHostInfoNow;
+        private bool _runMethod;
 
         #endregion Variables
 
@@ -84,8 +85,10 @@ namespace MndpTray.Protocol
             try
             {
                 var t = new Thread(_hostInfoSendMethod);
+                this._runMethod = true;
                 t.Start();
                 this._hostInfoSendThread = t;
+
             }
             catch (Exception ex)
             {
@@ -101,7 +104,25 @@ namespace MndpTray.Protocol
             {
                 if (this._hostInfoSendThread != null)
                 {
-                    this._hostInfoSendThread.Abort();
+                    this._runMethod = false;
+
+                    if (this._hostInfoSendThread.IsAlive == true)
+                    {                        
+                        this._runMethod = false;
+                        this._hostInfoSendThread.Join(1000);
+                    }
+
+                    if (this._hostInfoSendThread.IsAlive == true)
+                    {                        
+                        this._hostInfoSendThread.Interrupt();                     
+                        this._hostInfoSendThread.Join(1000);
+                    }
+                   
+                    if (this._hostInfoSendThread.IsAlive == true)
+                    {                        
+                        this._hostInfoSendThread.Abort();
+                    }
+
                     this._hostInfoSendThread = null;
                 }
             }
@@ -131,7 +152,7 @@ namespace MndpTray.Protocol
                 msg.Type = 0;
                 msg.Unpack = 0;
 
-                while (true)
+                while (this._runMethod)
                 {
                     Thread.Sleep(100);
 

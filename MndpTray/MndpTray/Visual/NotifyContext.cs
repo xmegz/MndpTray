@@ -8,6 +8,7 @@ namespace MndpTray
     public class NotifyContext : ApplicationContext
     {
         private ListForm _listForm;
+        private AboutBox _aboutBox;
         private NotifyIcon _notifyIcon;
 
         public NotifyContext()
@@ -15,6 +16,7 @@ namespace MndpTray
             Debug.Info("--------------------START-----------------");
             this.InizializeComponets();
             this._listForm = new ListForm();
+            this._aboutBox = new AboutBox();
             MndpListener.Instance.Start();
             MndpSender.Instance.Start();
         }
@@ -47,6 +49,14 @@ namespace MndpTray
             MndpSender.Instance.SendHostInfoNow();
         }
 
+        private void About_Click(object sender, System.EventArgs e)
+        {
+            if (!this._aboutBox.Visible)
+                this._aboutBox.ShowDialog();
+            else
+                this._aboutBox.WindowState = FormWindowState.Normal;
+        }
+
         #endregion Event Handlers
 
         #region Init
@@ -54,7 +64,7 @@ namespace MndpTray
         private void InizializeComponets()
         {
             this._notifyIcon = new NotifyIcon();
-            this._notifyIcon.Icon = MndpTray.Properties.Resources.favicon;
+            this._notifyIcon.Icon = MndpTray.Properties.Resources.favicon_ico;
             this._notifyIcon.Text = nameof(MndpTray);
             this._notifyIcon.Visible = true;
 
@@ -71,6 +81,13 @@ namespace MndpTray
             sendMenuStrip.Text = "Send";
             sendMenuStrip.Click += Send_Click;
             contextMenuStrip.Items.Add(sendMenuStrip);
+
+            contextMenuStrip.Items.Add(new ToolStripSeparator());
+
+            var aboutMenuStrip = new ToolStripMenuItem();
+            aboutMenuStrip.Text = "About";
+            aboutMenuStrip.Click += About_Click;
+            contextMenuStrip.Items.Add(aboutMenuStrip);
 
             contextMenuStrip.Items.Add(new ToolStripSeparator());
 
