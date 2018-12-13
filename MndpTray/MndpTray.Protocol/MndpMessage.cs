@@ -103,13 +103,13 @@ namespace MndpTray.Protocol
                     }
                 }
 
-                Debug.Info("{0} Read,\r\n{1}\r\n", nameof(MndpMessage), this.ToString());
+                MndpLog.Info("{0} Read,\r\n{1}\r\n", nameof(MndpMessage), this.ToString());
 
                 return true;
             }
             catch (Exception ex)
             {
-                Debug.Exception(nameof(MndpMessage), nameof(Read), ex);
+                MndpLog.Exception(nameof(MndpMessage), nameof(Read), ex);
             }
 
             return false;
@@ -139,7 +139,7 @@ namespace MndpTray.Protocol
         {
             try
             {
-                Debug.Info("{0} Write,\r\n{1}\r\n", nameof(MndpMessage), this.ToString());
+                MndpLog.Info("{0} Write,\r\n{1}\r\n", nameof(MndpMessage), this.ToString());
 
                 var tlvMessage = new TlvMessage()
                 {
@@ -202,7 +202,7 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Debug.Exception(nameof(MndpMessage), nameof(Write), ex);
+                MndpLog.Exception(nameof(MndpMessage), nameof(Write), ex);
             }
 
             return null;
@@ -263,7 +263,7 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    Debug.Exception(nameof(Tlv), nameof(Read), ex);
+                    MndpLog.Exception(nameof(Tlv), nameof(Read), ex);
                 }
 
                 return false;
@@ -295,7 +295,7 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    Debug.Exception(nameof(Tlv), nameof(Write), ex);
+                    MndpLog.Exception(nameof(Tlv), nameof(Write), ex);
                 }
 
                 return false;
@@ -343,7 +343,7 @@ namespace MndpTray.Protocol
                 {
                     if (data.Length < 8)
                     {
-                        Debug.Info("{0} Read, Message Too Short", nameof(TlvMessage));
+                        MndpLog.Info("{0} Read, Message Too Short", nameof(TlvMessage));
                         return false;
                     }
 
@@ -359,7 +359,7 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    Debug.Exception(nameof(TlvMessage), nameof(Read), ex);
+                    MndpLog.Exception(nameof(TlvMessage), nameof(Read), ex);
                 }
 
                 return false;
@@ -390,7 +390,7 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    Debug.Exception(nameof(TlvMessage), nameof(Write), ex);
+                    MndpLog.Exception(nameof(TlvMessage), nameof(Write), ex);
                 }
 
                 return false;

@@ -39,13 +39,14 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>embedded</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>
     </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Images\favicon.ico</ApplicationIcon>
@@ -74,10 +75,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Protocol\Debug.cs" />
-    <Compile Include="Protocol\Extensions.cs" />
-    <Compile Include="Protocol\Infos.cs" />
-    <Compile Include="Protocol\MndpSender.cs" />
+    <Compile Include="..\MndpTray.Protocol\Extensions.cs">
+      <Link>Protocol\Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\MndpTray.Protocol\MndpHostInfo.cs">
+      <Link>Protocol\MndpHostInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\MndpTray.Protocol\MndpListener.cs">
+      <Link>Protocol\MndpListener.cs</Link>
+    </Compile>
+    <Compile Include="..\MndpTray.Protocol\MndpLog.cs">
+      <Link>Protocol\MndpLog.cs</Link>
+    </Compile>
+    <Compile Include="..\MndpTray.Protocol\MndpMessage.cs">
+      <Link>Protocol\MndpMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\MndpTray.Protocol\MndpSender.cs">
+      <Link>Protocol\MndpSender.cs</Link>
+    </Compile>
     <Compile Include="Visual\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,8 +108,6 @@
     <Compile Include="Visual\NotifyContext.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Protocol\MndpMessage.cs" />
-    <Compile Include="Protocol\MndpListener.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

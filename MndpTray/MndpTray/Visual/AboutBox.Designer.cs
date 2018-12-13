@@ -178,7 +178,6 @@
             this.Name = "AboutBox";
             this.Padding = new System.Windows.Forms.Padding(9);
             this.ShowIcon = false;
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MndpTray - About";
             this.tableLayoutPanel.ResumeLayout(false);

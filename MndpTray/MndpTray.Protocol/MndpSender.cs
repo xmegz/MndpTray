@@ -29,13 +29,13 @@ namespace MndpTray.Protocol
 
         #endregion Const
 
-        #region Variables
+        #region Fields
 
-        private Thread _hostInfoSendThread;
+        private Thread _sendHostInfoThread;
+        private bool _sendHostInfoIsRunning;
         private bool _sendHostInfoNow;
-        private bool _runMethod;
 
-        #endregion Variables
+        #endregion Fields
 
         #region Methods
 
@@ -69,7 +69,7 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Debug.Exception(nameof(MndpSender), nameof(Send), ex);
+                MndpLog.Exception(nameof(MndpSender), nameof(Send), ex);
             }
 
             return false;
@@ -84,15 +84,14 @@ namespace MndpTray.Protocol
         {
             try
             {
-                var t = new Thread(_hostInfoSendMethod);
-                this._runMethod = true;
+                var t = new Thread(_sendHostInfoWork);
+                this._sendHostInfoIsRunning = true;
                 t.Start();
-                this._hostInfoSendThread = t;
-
+                this._sendHostInfoThread = t;
             }
             catch (Exception ex)
             {
-                Debug.Exception(nameof(MndpSender), nameof(Start), ex);
+                MndpLog.Exception(nameof(MndpSender), nameof(Start), ex);
             }
 
             return false;
@@ -102,39 +101,39 @@ namespace MndpTray.Protocol
         {
             try
             {
-                if (this._hostInfoSendThread != null)
+                if (this._sendHostInfoThread != null)
                 {
-                    this._runMethod = false;
+                    this._sendHostInfoIsRunning = false;
 
-                    if (this._hostInfoSendThread.IsAlive == true)
-                    {                        
-                        this._runMethod = false;
-                        this._hostInfoSendThread.Join(1000);
+                    if (this._sendHostInfoThread.IsAlive == true)
+                    {
+                        this._sendHostInfoIsRunning = false;
+                        this._sendHostInfoThread.Join(1000);
                     }
 
-                    if (this._hostInfoSendThread.IsAlive == true)
-                    {                        
-                        this._hostInfoSendThread.Interrupt();                     
-                        this._hostInfoSendThread.Join(1000);
-                    }
-                   
-                    if (this._hostInfoSendThread.IsAlive == true)
-                    {                        
-                        this._hostInfoSendThread.Abort();
+                    if (this._sendHostInfoThread.IsAlive == true)
+                    {
+                        this._sendHostInfoThread.Interrupt();
+                        this._sendHostInfoThread.Join(1000);
                     }
 
-                    this._hostInfoSendThread = null;
+                    if (this._sendHostInfoThread.IsAlive == true)
+                    {
+                        this._sendHostInfoThread.Abort();
+                    }
+
+                    this._sendHostInfoThread = null;
                 }
             }
             catch (Exception ex)
             {
-                Debug.Exception(nameof(MndpSender), nameof(Stop), ex);
+                MndpLog.Exception(nameof(MndpSender), nameof(Stop), ex);
             }
 
             return false;
         }
 
-        private void _hostInfoSendMethod()
+        private void _sendHostInfoWork()
         {
             try
             {
@@ -142,17 +141,18 @@ namespace MndpTray.Protocol
                 DateTime nextSend = DateTime.Now;
 
                 MndpMessageEx msg = new MndpMessageEx();
+                MndpHostInfo info = MndpHostInfo.Instance;
 
-                msg.BoardName = HostInfo.GetBoardName();
-                msg.Identity = HostInfo.GetIdentity();
-                msg.Platform = HostInfo.GetPlatform();
-                msg.SoftwareId = HostInfo.GetSoftwareId();
-                msg.Version = HostInfo.GetVersion();
+                msg.BoardName = info.BoardName;
+                msg.Identity = info.Identity;
+                msg.Platform = info.Platform;
+                msg.SoftwareId = info.SoftwareId;
+                msg.Version = info.Version;
                 msg.Ttl = 0;
                 msg.Type = 0;
                 msg.Unpack = 0;
 
-                while (this._runMethod)
+                while (this._sendHostInfoIsRunning)
                 {
                     Thread.Sleep(100);
 
@@ -161,10 +161,10 @@ namespace MndpTray.Protocol
                         nextSend = DateTime.Now.AddSeconds(HOST_INFO_SEND_INTERVAL);
                         this._sendHostInfoNow = false;
 
-                        var interfaces = InterfaceInfo.GetInfos();
+                        var interfaces = info.InterfaceInfos;
 
                         msg.Sequence = (ushort)(sequence++);
-                        msg.Uptime = HostInfo.GetUpTime();
+                        msg.Uptime = info.UpTime;
 
                         foreach (var i in interfaces)
                         {
@@ -180,7 +180,7 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Debug.Exception(nameof(MndpSender), nameof(_hostInfoSendMethod), ex);
+                MndpLog.Exception(nameof(MndpSender), nameof(_sendHostInfoWork), ex);
             }
         }
 

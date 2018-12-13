@@ -13,10 +13,11 @@ namespace MndpTray
 
         public NotifyContext()
         {
-            Debug.Info("--------------------START-----------------");
+        
             this.InizializeComponets();
             this._listForm = new ListForm();
             this._aboutBox = new AboutBox();
+            MndpLog.SetInfoAction(Program.Log);
             MndpListener.Instance.Start();
             MndpSender.Instance.Start();
         }
@@ -31,8 +32,7 @@ namespace MndpTray
             this._listForm.Close();
 
             Thread.Sleep(100);
-            Debug.Info("--------------------END-----------------");
-            this.ExitThread();
+            Application.Exit();
         }
 
         private void List_Click(object sender, EventArgs e)
@@ -40,7 +40,9 @@ namespace MndpTray
             if (!this._listForm.Visible)            
                 this._listForm.ShowDialog();            
             else            
-                this._listForm.WindowState = FormWindowState.Normal;            
+                this._listForm.WindowState = FormWindowState.Normal;
+
+            this._listForm.BringToFront();
             
         }
 
@@ -55,6 +57,8 @@ namespace MndpTray
                 this._aboutBox.ShowDialog();
             else
                 this._aboutBox.WindowState = FormWindowState.Normal;
+
+            this._aboutBox.BringToFront();
         }
 
         #endregion Event Handlers

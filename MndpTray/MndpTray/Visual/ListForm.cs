@@ -59,7 +59,7 @@ namespace MndpTray
             }
             catch (Exception ex)
             {
-                Debug.Exception(nameof(ListForm), nameof(Receive_Timer), ex);
+                Program.Log("{0}, {1} Exception:\r\n{2}", nameof(ListForm), nameof(Receive_Timer), ex.ToString());             
             }
         }
     }

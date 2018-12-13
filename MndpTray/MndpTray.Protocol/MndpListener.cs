@@ -54,7 +54,7 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Debug.Exception(nameof(MndpListener), nameof(Start), ex);
+                MndpLog.Exception(nameof(MndpListener), nameof(Start), ex);
             }
 
             return ret;
@@ -81,7 +81,7 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    Debug.Exception(nameof(MndpListener), nameof(Start), ex);
+                    MndpLog.Exception(nameof(MndpListener), nameof(Start), ex);
 
                     try
                     {
@@ -110,7 +110,7 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Debug.Exception(nameof(MndpListener), nameof(Stop), ex);
+                MndpLog.Exception(nameof(MndpListener), nameof(Stop), ex);
             }
 
             return false;
@@ -155,7 +155,7 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Debug.Exception(nameof(MndpListener), nameof(_receive), ex);
+                MndpLog.Exception(nameof(MndpListener), nameof(_receive), ex);
             }
 
             try
@@ -165,7 +165,7 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Debug.Exception(nameof(MndpListener), nameof(_receive), ex);
+                MndpLog.Exception(nameof(MndpListener), nameof(_receive), ex);
             }
         }
 
