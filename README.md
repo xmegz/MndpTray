@@ -14,3 +14,6 @@ MNDP Mikrotik Neighbor Discovery Protocol Tray Application
 * Windows 10, Windows 7
 * Single and multiple NIC
 * .NET 4.5.2
+
+## Standalone Library:
+*Install via Nuget: [https://www.nuget.org/packages/MndpTray.Protocol/](https://www.nuget.org/packages/MndpTray.Protocol/)
