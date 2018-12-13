@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <!--*-->
+    <id>MndpTray.Protocol</id>
+    <!--*-->
+    <version>1.4.0</version>
+    <title>MndpTray.Protocol</title>
+    <!--*-->
+    <authors>Pádár Tamás</authors>
+    <owners>Pádár Tamás</owners>
+    <licenseUrl>https://github.com/xmegz/MndpTray/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/xmegz/MndpTray</projectUrl>
+    <iconUrl>https://github.com/xmegz/MndpTray/blob/master/MndpTray/MndpTray/Images/favicon.ico</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <!--*-->
+    <description>Mikrotik Neighbor Discovery Protocol</description>
+    <!--*-->
+    <releaseNotes>First nuget release</releaseNotes>
+    <copyright>Copyright ©  2018</copyright>
+    <tags>Mikrotik Discovery Protocol</tags>
+    <dependencies>
+      <!--
+      <dependency id="SampleDependency" version="1.0" />
+-->
+    </dependencies>
+  </metadata>
+</package>
