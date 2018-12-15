@@ -244,7 +244,7 @@ namespace MndpTray.Protocol
             {
             }
 
-            public Tlv(ushort type, string data, Encoding enc) : this(type, data != null ? enc.GetBytes(data) : new byte[0])
+            public Tlv(ushort type, string data, Encoding encoding) : this(type, data != null ? encoding?.GetBytes(data) : new byte[0])
             {
             }
 
@@ -347,7 +347,7 @@ namespace MndpTray.Protocol
                         return false;
                     }
 
-                    using (MemoryStream ms = new MemoryStream(data))
+                    MemoryStream ms = new MemoryStream(data);
                     {
                         using (BinaryReader br = new BinaryReader(ms))
                         {
@@ -376,7 +376,7 @@ namespace MndpTray.Protocol
 
                 try
                 {
-                    using (MemoryStream ms = new MemoryStream())
+                    MemoryStream ms = new MemoryStream();
                     {
                         using (BinaryWriter bw = new BinaryWriter(ms))
                         {
@@ -425,10 +425,26 @@ namespace MndpTray.Protocol
     {
         #region Props
 
-        public double Age { get { return (DateTime.Now - ReceiveDateTime).TotalSeconds; } }
+        public double Age { get { return (DateTime.Now - this.ReceiveDateTime).TotalSeconds; } }
         public string BroadcastAddress { get; set; }
         public DateTime ReceiveDateTime { get; set; }
         public string SenderAddress { get; set; }
+        public string MacAddressDelimited {
+            get
+            {
+                if (this.MacAddress == null) return null;
+                StringBuilder sb = new StringBuilder();
+                                
+                for(int i=0;i<this.MacAddress.Length;i++)
+                {
+                    sb.Append(this.MacAddress[i]);
+                    if (i % 2 == 1) sb.Append(':');
+                }
+
+                if (sb.Length > 0) sb.Remove(sb.Length - 1, 1);
+                return sb.ToString();
+
+            } }
         #endregion Props
 
         #region Methods

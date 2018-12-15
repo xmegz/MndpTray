@@ -5,14 +5,13 @@ using System.Linq;
 using System.Management;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Runtime.InteropServices;
 
 namespace MndpTray.Protocol
 {
     /// <summary>
     /// Mikrotik discovery message host information provider
     /// </summary>
-    public class MndpHostInfo
+    public class MndpHostInfo : IMndpHostInfo
     {
         #region Static
 
@@ -22,9 +21,6 @@ namespace MndpTray.Protocol
         }
 
         public static MndpHostInfo Instance { get; }
-
-        [DllImport("kernel32")]
-        private static extern UInt64 GetTickCount64();
 
         #endregion Static
 
@@ -42,7 +38,7 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    MndpLog.Exception(nameof(MndpHostInfo), nameof(Identity), ex);
+                    MndpLog.Exception(nameof(MndpHostInfo), nameof(this.Identity), ex);
                 }
 
                 return Environment.MachineName;
@@ -78,7 +74,7 @@ namespace MndpTray.Protocol
                     }
                     catch (Exception ex)
                     {
-                        MndpLog.Exception(nameof(MndpHostInfo), nameof(InterfaceInfos), ex);
+                        MndpLog.Exception(nameof(MndpHostInfo), nameof(this.InterfaceInfos), ex);
                     }
 
                     return ret;
@@ -104,7 +100,7 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    MndpLog.Exception(nameof(MndpHostInfo), nameof(Platform), ex);
+                    MndpLog.Exception(nameof(MndpHostInfo), nameof(this.Platform), ex);
                 }
 
                 return String.Empty;
@@ -168,7 +164,7 @@ namespace MndpTray.Protocol
                     }
                     catch (Exception ex)
                     {
-                        MndpLog.Exception(nameof(MndpHostInfo), nameof(SoftwareId), ex);
+                        MndpLog.Exception(nameof(MndpHostInfo), nameof(this.SoftwareId), ex);
                         return null;
                     }
                     finally
@@ -184,7 +180,7 @@ namespace MndpTray.Protocol
         {
             get
             {
-                return TimeSpan.FromMilliseconds(GetTickCount64());
+                return TimeSpan.FromMilliseconds(NativeMethods.GetTickCount64());
             }
         }
 
@@ -198,7 +194,7 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    MndpLog.Exception(nameof(MndpHostInfo), nameof(Version), ex);
+                    MndpLog.Exception(nameof(MndpHostInfo), nameof(this.Version), ex);
                 }
 
                 return String.Empty;
@@ -218,7 +214,7 @@ namespace MndpTray.Protocol
             public String InterfaceName { get; }
             public String MacAddress { get; }
             public String SenderAddress { get; }
-            
+
             #endregion Props
 
             #region Methods
@@ -227,7 +223,7 @@ namespace MndpTray.Protocol
             {
                 this.BroadcastAddress = broadcastAddress;
                 this.InterfaceName = interfaceName;
-                this.MacAddress = macAddress;                
+                this.MacAddress = macAddress;
                 this.SenderAddress = senderAddress;
             }
 

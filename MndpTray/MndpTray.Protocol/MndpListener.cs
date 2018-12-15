@@ -32,7 +32,7 @@ namespace MndpTray.Protocol
 
         #region Fields
 
-        private ConcurrentDictionary<string, MndpMessageEx> _dictMessages = new ConcurrentDictionary<string, MndpMessageEx>();
+        private readonly ConcurrentDictionary<string, MndpMessageEx> _dictMessages = new ConcurrentDictionary<string, MndpMessageEx>();
         private UdpClient _udpClient;
 
         #endregion Fields
@@ -143,9 +143,11 @@ namespace MndpTray.Protocol
                     IPEndPoint ip = new IPEndPoint(IP_ADDRESS, UDP_PORT);
                     byte[] bytes = this._udpClient.EndReceive(ar, ref ip);
 
-                    var msg = new MndpMessageEx();
-                    msg.SenderAddress = ip.Address.ToString();
-                    msg.ReceiveDateTime = DateTime.Now;
+                    var msg = new MndpMessageEx
+                    {
+                        SenderAddress = ip.Address.ToString(),
+                        ReceiveDateTime = DateTime.Now
+                    };
 
                     if (msg.Read(bytes))
                     {
@@ -155,20 +157,19 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                MndpLog.Exception(nameof(MndpListener), nameof(_receive), ex);
+                MndpLog.Exception(nameof(MndpListener), nameof(this._receive), ex);
             }
 
             try
             {
                 if (this._udpClient != null)
-                    this._udpClient.BeginReceive(_receive, new object());
+                    this._udpClient.BeginReceive(this._receive, new object());
             }
             catch (Exception ex)
             {
-                MndpLog.Exception(nameof(MndpListener), nameof(_receive), ex);
+                MndpLog.Exception(nameof(MndpListener), nameof(this._receive), ex);
             }
         }
-
         #endregion Methods
     }
 }

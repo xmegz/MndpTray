@@ -32,6 +32,7 @@ namespace MndpTray.Protocol
         #region Fields
 
         private Thread _sendHostInfoThread;
+        private IMndpHostInfo _hostInfo;
         private bool _sendHostInfoIsRunning;
         private bool _sendHostInfoNow;
 
@@ -80,14 +81,15 @@ namespace MndpTray.Protocol
             this._sendHostInfoNow = true;
         }
 
-        public bool Start()
+        public bool Start(IMndpHostInfo hostInfo)
         {
             try
             {
-                var t = new Thread(_sendHostInfoWork);
+                var t = new Thread(this._sendHostInfoWork);
                 this._sendHostInfoIsRunning = true;
                 t.Start();
                 this._sendHostInfoThread = t;
+                this._hostInfo = hostInfo;
             }
             catch (Exception ex)
             {
@@ -123,6 +125,7 @@ namespace MndpTray.Protocol
                     }
 
                     this._sendHostInfoThread = null;
+                    this._hostInfo = null;
                 }
             }
             catch (Exception ex)
@@ -140,17 +143,17 @@ namespace MndpTray.Protocol
                 ulong sequence = 0;
                 DateTime nextSend = DateTime.Now;
 
-                MndpMessageEx msg = new MndpMessageEx();
-                MndpHostInfo info = MndpHostInfo.Instance;
-
-                msg.BoardName = info.BoardName;
-                msg.Identity = info.Identity;
-                msg.Platform = info.Platform;
-                msg.SoftwareId = info.SoftwareId;
-                msg.Version = info.Version;
-                msg.Ttl = 0;
-                msg.Type = 0;
-                msg.Unpack = 0;
+                MndpMessageEx msg = new MndpMessageEx
+                {
+                    BoardName = this._hostInfo.BoardName,
+                    Identity = this._hostInfo.Identity,
+                    Platform = this._hostInfo.Platform,
+                    SoftwareId = this._hostInfo.SoftwareId,
+                    Version = this._hostInfo.Version,
+                    Ttl = 0,
+                    Type = 0,
+                    Unpack = 0
+                };
 
                 while (this._sendHostInfoIsRunning)
                 {
@@ -161,10 +164,10 @@ namespace MndpTray.Protocol
                         nextSend = DateTime.Now.AddSeconds(HOST_INFO_SEND_INTERVAL);
                         this._sendHostInfoNow = false;
 
-                        var interfaces = info.InterfaceInfos;
+                        var interfaces = this._hostInfo.InterfaceInfos;
 
                         msg.Sequence = (ushort)(sequence++);
-                        msg.Uptime = info.UpTime;
+                        msg.Uptime = this._hostInfo.UpTime;
 
                         foreach (var i in interfaces)
                         {

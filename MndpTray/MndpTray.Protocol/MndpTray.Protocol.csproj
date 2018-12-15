@@ -28,6 +28,13 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -41,15 +48,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMndpHostInfo.cs" />
     <Compile Include="MndpLog.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="MndpHostInfo.cs" />
     <Compile Include="MndpListener.cs" />
     <Compile Include="MndpMessage.cs" />
     <Compile Include="MndpSender.cs" />
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="key.snk" />
     <None Include="package.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

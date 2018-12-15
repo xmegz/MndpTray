@@ -78,6 +78,9 @@
     <Compile Include="..\MndpTray.Protocol\Extensions.cs">
       <Link>Protocol\Extensions.cs</Link>
     </Compile>
+    <Compile Include="..\MndpTray.Protocol\IMndpHostInfo.cs">
+      <Link>Protocol\IMndpHostInfo.cs</Link>
+    </Compile>
     <Compile Include="..\MndpTray.Protocol\MndpHostInfo.cs">
       <Link>Protocol\MndpHostInfo.cs</Link>
     </Compile>
@@ -92,6 +95,9 @@
     </Compile>
     <Compile Include="..\MndpTray.Protocol\MndpSender.cs">
       <Link>Protocol\MndpSender.cs</Link>
+    </Compile>
+    <Compile Include="..\MndpTray.Protocol\NativeMethods.cs">
+      <Link>Protocol\NativeMethods.cs</Link>
     </Compile>
     <Compile Include="Visual\AboutBox.cs">
       <SubType>Form</SubType>

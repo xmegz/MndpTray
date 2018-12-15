@@ -7,8 +7,8 @@ namespace MndpTray
 {
     public class NotifyContext : ApplicationContext
     {
-        private ListForm _listForm;
-        private AboutBox _aboutBox;
+        private readonly ListForm _listForm;
+        private readonly AboutBox _aboutBox;
         private NotifyIcon _notifyIcon;
 
         public NotifyContext()
@@ -19,7 +19,7 @@ namespace MndpTray
             this._aboutBox = new AboutBox();
             MndpLog.SetInfoAction(Program.Log);
             MndpListener.Instance.Start();
-            MndpSender.Instance.Start();
+            MndpSender.Instance.Start(MndpHostInfo.Instance);
         }
 
         #region Event Handlers
@@ -67,40 +67,42 @@ namespace MndpTray
 
         private void InizializeComponets()
         {
-            this._notifyIcon = new NotifyIcon();
-            this._notifyIcon.Icon = MndpTray.Properties.Resources.favicon_ico;
-            this._notifyIcon.Text = nameof(MndpTray);
-            this._notifyIcon.Visible = true;
+            var notifyIcon = new NotifyIcon();
+            notifyIcon.Icon = MndpTray.Properties.Resources.favicon_ico;
+            notifyIcon.Text = nameof(MndpTray);
+            notifyIcon.Visible = true;
 
             var contextMenuStrip = new ContextMenuStrip();
 
             var listMenuStrip = new ToolStripMenuItem();
             listMenuStrip.Text = "List";
-            listMenuStrip.Click += List_Click;
+            listMenuStrip.Click += this.List_Click;
             contextMenuStrip.Items.Add(listMenuStrip);
 
             contextMenuStrip.Items.Add(new ToolStripSeparator());
 
             var sendMenuStrip = new ToolStripMenuItem();
             sendMenuStrip.Text = "Send";
-            sendMenuStrip.Click += Send_Click;
+            sendMenuStrip.Click += this.Send_Click;
             contextMenuStrip.Items.Add(sendMenuStrip);
 
             contextMenuStrip.Items.Add(new ToolStripSeparator());
 
             var aboutMenuStrip = new ToolStripMenuItem();
             aboutMenuStrip.Text = "About";
-            aboutMenuStrip.Click += About_Click;
+            aboutMenuStrip.Click += this.About_Click;
             contextMenuStrip.Items.Add(aboutMenuStrip);
 
             contextMenuStrip.Items.Add(new ToolStripSeparator());
 
             var exitMenuStrip = new ToolStripMenuItem();
             exitMenuStrip.Text = "Exit";
-            exitMenuStrip.Click += Exit_Click;
+            exitMenuStrip.Click += this.Exit_Click;
             contextMenuStrip.Items.Add(exitMenuStrip);
 
-            _notifyIcon.ContextMenuStrip = contextMenuStrip;
+            notifyIcon.ContextMenuStrip = contextMenuStrip;
+
+            this._notifyIcon = notifyIcon;
         }
 
         #endregion Init

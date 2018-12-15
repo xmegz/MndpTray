@@ -25,9 +25,9 @@ namespace MndpTray
         }
 
         #region Fields        
-        private static object LOG_FILE_LOCK = new object();
-        private static string LOG_FILE_NAME = GetLogFileName("log");
-        private static bool LOG_FILE_IS_ENABLED = File.Exists(LOG_FILE_NAME);
+        private static readonly object LOG_FILE_LOCK = new object();
+        private static readonly string LOG_FILE_NAME = GetLogFileName("log");
+        private static readonly bool LOG_FILE_IS_ENABLED = File.Exists(LOG_FILE_NAME);
         #endregion Fields
 
         #region Event Handlers
