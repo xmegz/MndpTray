@@ -20,14 +20,23 @@ namespace MndpTray.Protocol
             Instance = new MndpHostInfo();
         }
 
+        /// <summary>
+        /// Singleton instance
+        /// </summary>
         public static MndpHostInfo Instance { get; }
 
         #endregion Static
 
         #region Props
 
+        /// <summary>
+        /// Host board name (x86)
+        /// </summary>
         public string BoardName => "x86";
 
+        /// <summary>
+        /// Host indentity (Host dns name)
+        /// </summary>
         public string Identity
         {
             get
@@ -38,13 +47,16 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    MndpLog.Exception(nameof(MndpHostInfo), nameof(this.Identity), ex);
+                    Log.Exception(nameof(MndpHostInfo), nameof(this.Identity), ex);
                 }
 
                 return Environment.MachineName;
             }
         }
 
+        /// <summary>
+        /// Host interface info
+        /// </summary>
         public List<MndpInterfaceInfo> InterfaceInfos
         {
             get
@@ -74,7 +86,7 @@ namespace MndpTray.Protocol
                     }
                     catch (Exception ex)
                     {
-                        MndpLog.Exception(nameof(MndpHostInfo), nameof(this.InterfaceInfos), ex);
+                        Log.Exception(nameof(MndpHostInfo), nameof(this.InterfaceInfos), ex);
                     }
 
                     return ret;
@@ -82,6 +94,9 @@ namespace MndpTray.Protocol
             }
         }
 
+        /// <summary>
+        /// Host platform (From management object ComputerSystem.Manufacturer)
+        /// </summary>
         public string Platform
         {
             get
@@ -100,13 +115,16 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    MndpLog.Exception(nameof(MndpHostInfo), nameof(this.Platform), ex);
+                    Log.Exception(nameof(MndpHostInfo), nameof(this.Platform), ex);
                 }
 
                 return String.Empty;
             }
         }
 
+        /// <summary>
+        /// Host software id (From Registry DigitalProductId)
+        /// </summary>
         public string SoftwareId
         {
             get
@@ -164,7 +182,7 @@ namespace MndpTray.Protocol
                     }
                     catch (Exception ex)
                     {
-                        MndpLog.Exception(nameof(MndpHostInfo), nameof(this.SoftwareId), ex);
+                        Log.Exception(nameof(MndpHostInfo), nameof(this.SoftwareId), ex);
                         return null;
                     }
                     finally
@@ -176,6 +194,9 @@ namespace MndpTray.Protocol
             }
         }
 
+        /// <summary>
+        /// Host uptime (From 64-bit TickCount)
+        /// </summary>
         public TimeSpan UpTime
         {
             get
@@ -184,6 +205,9 @@ namespace MndpTray.Protocol
             }
         }
 
+        /// <summary>
+        /// Host software version (From Registry ProductName)
+        /// </summary>
         public string Version
         {
             get
@@ -194,7 +218,7 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    MndpLog.Exception(nameof(MndpHostInfo), nameof(this.Version), ex);
+                    Log.Exception(nameof(MndpHostInfo), nameof(this.Version), ex);
                 }
 
                 return String.Empty;
@@ -210,21 +234,46 @@ namespace MndpTray.Protocol
         {
             #region Props
 
+            /// <summary>
+            /// Interface brodcast IPv4 address
+            /// </summary>
+            /// <example>192.168.0.255</example>
             public String BroadcastAddress { get; }
+
+            /// <summary>
+            /// Interface name
+            /// </summary>
             public String InterfaceName { get; }
+
+            /// <summary>
+            /// Interface mac address
+            /// </summary>
+            /// <example>AABBCCDDEEFF</example>
             public String MacAddress { get; }
-            public String SenderAddress { get; }
+
+            /// <summary>
+            /// Interface Ipv4 unicast address
+            /// </summary>
+            /// <example>192.168.0.1</example>
+            public String UnicastAddress { get; }
 
             #endregion Props
 
             #region Methods
 
-            public MndpInterfaceInfo(string broadcastAddress, string interfaceName, string macAddress, string senderAddress)
+            /// <summary>
+            /// Constructor
+            /// </summary>
+            /// <param name="broadcastAddress">Interface broadcast address</param>
+            /// <param name="interfaceName">Interface name</param>
+            /// <param name="macAddress">Interface mac address 12 hexdigit</param>
+            /// <param name="unicastAddress">Interface unicast address</param>
+            public MndpInterfaceInfo(string broadcastAddress, string interfaceName, string macAddress, string unicastAddress)
             {
                 this.BroadcastAddress = broadcastAddress;
                 this.InterfaceName = interfaceName;
                 this.MacAddress = macAddress;
-                this.SenderAddress = senderAddress;
+                this.UnicastAddress = unicastAddress;
             }
 
             #endregion Methods

@@ -79,7 +79,7 @@
             this.labelWeb.TabStop = true;
             this.labelWeb.Text = "Web";
             this.labelWeb.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.labelWeb.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.labelWeb_LinkClicked);
+            this.labelWeb.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LabelWeb_LinkClicked);
             // 
             // logoPictureBox
             // 

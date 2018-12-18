@@ -17,6 +17,9 @@ namespace MndpTray.Protocol
             Instance = new MndpSender();
         }
 
+        /// <summary>
+        /// Sigleton instance
+        /// </summary>
         public static MndpSender Instance { get; }
 
         #endregion Static
@@ -40,6 +43,11 @@ namespace MndpTray.Protocol
 
         #region Methods
 
+        /// <summary>
+        /// Send message
+        /// </summary>
+        /// <param name="msg">Mndp message</param>
+        /// <returns>Is success?</returns>
         public bool Send(MndpMessageEx msg)
         {
             try
@@ -70,17 +78,25 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                MndpLog.Exception(nameof(MndpSender), nameof(Send), ex);
+                Log.Exception(nameof(MndpSender), nameof(Send), ex);
             }
 
             return false;
         }
 
+        /// <summary>
+        /// Sender thread notification to send immediately
+        /// </summary>
         public void SendHostInfoNow()
         {
             this._sendHostInfoNow = true;
         }
 
+        /// <summary>
+        /// Start sending process
+        /// </summary>
+        /// <param name="hostInfo">Current host information</param>
+        /// <returns>Is success?</returns>
         public bool Start(IMndpHostInfo hostInfo)
         {
             try
@@ -93,12 +109,16 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                MndpLog.Exception(nameof(MndpSender), nameof(Start), ex);
+                Log.Exception(nameof(MndpSender), nameof(Start), ex);
             }
 
             return false;
         }
 
+        /// <summary>
+        /// Stop sending process
+        /// </summary>
+        /// <returns>Is success?</returns>
         public bool Stop()
         {
             try
@@ -130,7 +150,7 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                MndpLog.Exception(nameof(MndpSender), nameof(Stop), ex);
+                Log.Exception(nameof(MndpSender), nameof(Stop), ex);
             }
 
             return false;
@@ -174,7 +194,7 @@ namespace MndpTray.Protocol
                             msg.BroadcastAddress = i.BroadcastAddress;
                             msg.InterfaceName = i.InterfaceName;
                             msg.MacAddress = i.MacAddress;
-                            msg.SenderAddress = i.SenderAddress;
+                            msg.UnicastAddress = i.UnicastAddress;
 
                             this.Send((MndpMessageEx)msg.Clone());
                         }
@@ -183,7 +203,7 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                MndpLog.Exception(nameof(MndpSender), nameof(_sendHostInfoWork), ex);
+                Log.Exception(nameof(MndpSender), nameof(_sendHostInfoWork), ex);
             }
         }
 

@@ -17,7 +17,7 @@ namespace MndpTray
             this.InizializeComponets();
             this._listForm = new ListForm();
             this._aboutBox = new AboutBox();
-            MndpLog.SetInfoAction(Program.Log);
+            Log.SetInfoAction(Program.Log);
             MndpListener.Instance.Start();
             MndpSender.Instance.Start(MndpHostInfo.Instance);
         }

@@ -5,7 +5,7 @@ namespace MndpTray.Protocol
     /// <summary>
     /// Mikrotik discovery message lib log and debug provider
     /// </summary>
-    public static class MndpLog
+    internal static class Log
     {
         #region Fields
 
@@ -15,7 +15,11 @@ namespace MndpTray.Protocol
 
         #region Methods
 
-        public static void SetInfoAction(Action<string, object[]> infoAction)
+        /// <summary>
+        /// Set Debug Format string style delegate
+        /// </summary>
+        /// <param name="infoAction"></param>
+        internal static void SetInfoAction(Action<string, object[]> infoAction)
         {
             _infoAction = infoAction;
         }

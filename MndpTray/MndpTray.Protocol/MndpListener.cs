@@ -18,6 +18,9 @@ namespace MndpTray.Protocol
             Instance = new MndpListener();
         }
 
+        /// <summary>
+        /// Singleton Instance
+        /// </summary>
         public static MndpListener Instance { get; }
 
         #endregion Static
@@ -39,6 +42,10 @@ namespace MndpTray.Protocol
 
         #region Methods
 
+        /// <summary>
+        /// Get received message dictionary (Key = Sender mac address)
+        /// </summary>
+        /// <returns>Is Sucess?</returns>
         public Dictionary<string, MndpMessageEx> GetMessages()
         {
             var ret = new Dictionary<string, MndpMessageEx>();
@@ -54,12 +61,16 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                MndpLog.Exception(nameof(MndpListener), nameof(Start), ex);
+                Log.Exception(nameof(MndpListener), nameof(Start), ex);
             }
 
             return ret;
         }
 
+        /// <summary>
+        /// Start listening process
+        /// </summary>
+        /// <returns>Is success?</returns>
         public bool Start()
         {
             if (this._udpClient == null)
@@ -81,7 +92,7 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    MndpLog.Exception(nameof(MndpListener), nameof(Start), ex);
+                    Log.Exception(nameof(MndpListener), nameof(Start), ex);
 
                     try
                     {
@@ -94,6 +105,10 @@ namespace MndpTray.Protocol
             return false;
         }
 
+        /// <summary>
+        /// Stop listening process
+        /// </summary>
+        /// <returns>Is sucess?</returns>
         public bool Stop()
         {
             try
@@ -110,7 +125,7 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                MndpLog.Exception(nameof(MndpListener), nameof(Stop), ex);
+                Log.Exception(nameof(MndpListener), nameof(Stop), ex);
             }
 
             return false;
@@ -145,7 +160,7 @@ namespace MndpTray.Protocol
 
                     var msg = new MndpMessageEx
                     {
-                        SenderAddress = ip.Address.ToString(),
+                        UnicastAddress = ip.Address.ToString(),
                         ReceiveDateTime = DateTime.Now
                     };
 
@@ -157,7 +172,7 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                MndpLog.Exception(nameof(MndpListener), nameof(this._receive), ex);
+                Log.Exception(nameof(MndpListener), nameof(this._receive), ex);
             }
 
             try
@@ -167,7 +182,7 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                MndpLog.Exception(nameof(MndpListener), nameof(this._receive), ex);
+                Log.Exception(nameof(MndpListener), nameof(this._receive), ex);
             }
         }
         #endregion Methods

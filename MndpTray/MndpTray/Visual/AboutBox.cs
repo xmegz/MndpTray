@@ -8,13 +8,13 @@ namespace MndpTray
     {
         public AboutBox()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.Text = String.Concat(this.Text, " Version: ", Assembly.GetEntryAssembly().GetName().Version.ToString());
-            this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
-            this.labelCopyright.Text = AssemblyCopyright;
-            this.labelCompanyName.Text = AssemblyCompany;
-            this.textBoxDescription.Text = AssemblyDescription;
+            this.labelProductName.Text = this.AssemblyProduct;
+            this.labelVersion.Text = String.Format("Version {0}", this.AssemblyVersion);
+            this.labelCopyright.Text = this.AssemblyCopyright;
+            this.labelCompanyName.Text = this.AssemblyCompany;
+            this.textBoxDescription.Text = this.AssemblyDescription;
             this.labelWeb.Text = "https://github.com/xmegz/MndpTray";
         }
 
@@ -99,7 +99,7 @@ namespace MndpTray
 
         #endregion Assembly Attribute Accessors
 
-        private void labelWeb_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LabelWeb_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             try
             {

@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ListForm));
             this.ReceiveTimer = new System.Windows.Forms.Timer(this.components);
             this.dgvGrid = new System.Windows.Forms.DataGridView();
@@ -79,6 +79,7 @@
             this.dgvGrid.ShowEditingIcon = false;
             this.dgvGrid.Size = new System.Drawing.Size(994, 478);
             this.dgvGrid.TabIndex = 0;
+            this.dgvGrid.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DgvGrid_MouseDown);
             // 
             // IpAddress
             // 
@@ -131,8 +132,8 @@
             // 
             // Age
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.Age.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.Age.DefaultCellStyle = dataGridViewCellStyle1;
             this.Age.FillWeight = 75F;
             this.Age.HeaderText = "Age (s)";
             this.Age.Name = "Age";
@@ -142,8 +143,8 @@
             // Uptime
             // 
             this.Uptime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.Uptime.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.Uptime.DefaultCellStyle = dataGridViewCellStyle2;
             this.Uptime.HeaderText = "Uptime";
             this.Uptime.Name = "Uptime";
             this.Uptime.ReadOnly = true;
