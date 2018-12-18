@@ -4,7 +4,7 @@
     <!--*-->
     <id>MndpTray.Protocol</id>
     <!--*-->
-    <version>1.4.1</version>
+    <version>1.4.4</version>
     <title>MndpTray.Protocol</title>
     <!--*-->
     <authors>Pádár Tamás</authors>
@@ -17,7 +17,7 @@
     <description>Mikrotik Neighbor Discovery Protocol</description>
     <!--*-->
     <repository type="git" url="https://github.com/xmegz/MndpTray" />
-    <releaseNotes>Add github reference</releaseNotes>
+    <releaseNotes>Add code documentation</releaseNotes>
     <copyright>Copyright ©  2018</copyright>
     <tags>Mikrotik Discovery Protocol</tags>
     <dependencies>
