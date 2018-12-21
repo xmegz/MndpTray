@@ -62,7 +62,7 @@ namespace MndpTray
                 String str = String.Format(format, args);
                 System.Diagnostics.Debug.WriteLine(str);
 
-                str = string.Concat("<", DateTime.Now.ToString(), "> ", str, "\r\n");
+                str = string.Concat("<", DateTime.Now.ToString(), "> ", str, Environment.NewLine);
 
                 if (LOG_FILE_IS_ENABLED)
                 {

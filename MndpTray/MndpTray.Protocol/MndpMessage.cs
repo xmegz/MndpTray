@@ -154,7 +154,7 @@ namespace MndpTray.Protocol
                     }
                 }
 
-                Log.Info("{0} Read,\r\n{1}\r\n", nameof(MndpMessage), this.ToString());
+                Log.Info("{0} Read,{2}{1}{2}",nameof(MndpMessage), this.ToString(), Environment.NewLine);
 
                 return true;
             }
@@ -174,18 +174,18 @@ namespace MndpTray.Protocol
         {
             var sb = new StringBuilder();
 
-            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.Type), this.Type);
-            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.Ttl), this.Ttl);
-            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.Sequence), this.Sequence);
-            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.MacAddress), this.MacAddress);
-            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.Identity), this.Identity);
-            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.Version), this.Version);
-            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.Platform), this.Platform);
-            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.Uptime), this.Uptime.ToString());
-            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.SoftwareId), this.SoftwareId);
-            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.BoardName), this.BoardName);
-            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.Unpack), this.Unpack);
-            sb.AppendFormat("\t{0}:{1},\r\n ", nameof(this.InterfaceName), this.InterfaceName);
+            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.Type), this.Type);
+            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.Ttl), this.Ttl);
+            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.Sequence), this.Sequence);
+            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.MacAddress), this.MacAddress);
+            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.Identity), this.Identity);
+            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.Version), this.Version);
+            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.Platform), this.Platform);
+            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.Uptime), this.Uptime.ToString());
+            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.SoftwareId), this.SoftwareId);
+            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.BoardName), this.BoardName);
+            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.Unpack), this.Unpack);
+            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.InterfaceName), this.InterfaceName);
 
             return sb.ToString();
         }
@@ -198,7 +198,7 @@ namespace MndpTray.Protocol
         {
             try
             {
-                Log.Info("{0} Write,\r\n{1}\r\n", nameof(MndpMessage), this.ToString());
+                Log.Info("{0} Write,{2}{1}{2}", nameof(MndpMessage), this.ToString(),Environment.NewLine);
 
                 var tlvMessage = new TlvMessage()
                 {
@@ -636,9 +636,9 @@ namespace MndpTray.Protocol
         {
             var sb = new StringBuilder();
 
-            sb.AppendFormat("\t{0}:{1},\r\n", nameof(this.ReceiveDateTime), this.ReceiveDateTime);
-            sb.AppendFormat("\t{0}:{1},\r\n", nameof(this.UnicastAddress), this.UnicastAddress);
-            sb.AppendFormat("\t{0}:{1},\r\n", nameof(this.BroadcastAddress), this.BroadcastAddress);
+            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.ReceiveDateTime), this.ReceiveDateTime);
+            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.UnicastAddress),  this.UnicastAddress);
+            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.BroadcastAddress),this.BroadcastAddress);
             sb.Append(base.ToString());
 
             return sb.ToString();

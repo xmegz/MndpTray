@@ -11,7 +11,7 @@
     <owners>Pádár Tamás</owners>
     <licenseUrl>https://github.com/xmegz/MndpTray/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/xmegz/MndpTray</projectUrl>
-    <iconUrl>https://github.com/xmegz/MndpTray/blob/master/MndpTray/MndpTray/Images/favicon.ico</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray/Images/favicon.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <!--*-->
     <description>Mikrotik Neighbor Discovery Protocol</description>

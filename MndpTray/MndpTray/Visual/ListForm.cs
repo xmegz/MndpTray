@@ -83,7 +83,7 @@ namespace MndpTray
             }
             catch (Exception ex)
             {
-                Program.Log("{0}, {1} Exception:\r\n{2}", nameof(ListForm), nameof(Receive_Timer), ex.ToString());             
+                Program.Log("{0}, {1} Exception:{2}{3}", nameof(ListForm), nameof(Receive_Timer),Environment.NewLine, ex.ToString());             
             }
         }
 
