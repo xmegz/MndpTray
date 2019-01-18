@@ -1,5 +1,8 @@
 ﻿using MndpTray.Protocol;
 using System;
+using System.IO;
+using System.Net;
+using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -7,49 +10,23 @@ namespace MndpTray
 {
     public class NotifyContext : ApplicationContext
     {
-        private readonly ListForm _listForm;
         private readonly AboutBox _aboutBox;
+        private readonly ListForm _listForm;
         private NotifyIcon _notifyIcon;
 
         public NotifyContext()
         {
-        
             this.InizializeComponets();
             this._listForm = new ListForm();
             this._aboutBox = new AboutBox();
+
             Log.SetInfoAction(Program.Log);
+
             MndpListener.Instance.Start();
             MndpSender.Instance.Start(MndpHostInfo.Instance);
         }
 
         #region Event Handlers
-
-        private void Exit_Click(object sender, EventArgs e)
-        {
-            MndpListener.Instance.Stop();
-            MndpSender.Instance.Stop();
-            this._notifyIcon.Dispose();
-            this._listForm.Close();
-
-            Thread.Sleep(100);
-            Application.Exit();
-        }
-
-        private void List_Click(object sender, EventArgs e)
-        {
-            if (!this._listForm.Visible)            
-                this._listForm.ShowDialog();            
-            else            
-                this._listForm.WindowState = FormWindowState.Normal;
-
-            this._listForm.BringToFront();
-            
-        }
-
-        private void Send_Click(object sender, System.EventArgs e)
-        {
-            MndpSender.Instance.SendHostInfoNow();
-        }
 
         private void About_Click(object sender, System.EventArgs e)
         {
@@ -59,6 +36,55 @@ namespace MndpTray
                 this._aboutBox.WindowState = FormWindowState.Normal;
 
             this._aboutBox.BringToFront();
+        }
+
+        private void Exit_Click(object sender, EventArgs e)
+        {
+            MndpListener.Instance.Stop();
+            MndpSender.Instance.Stop();
+
+            this._notifyIcon.Dispose();
+            this._listForm.Close();
+
+            Thread.Sleep(100);
+            Application.Exit();
+        }
+
+        private void List_Click(object sender, EventArgs e)
+        {
+            if (!this._listForm.Visible)
+                this._listForm.ShowDialog();
+            else
+                this._listForm.WindowState = FormWindowState.Normal;
+
+            this._listForm.BringToFront();
+        }
+
+        private void Send_Click(object sender, System.EventArgs e)
+        {
+            MndpSender.Instance.SendHostInfoNow();
+        }
+
+        private void Update_Click(object sender, System.EventArgs e)
+        {
+            string url = Update.Methods.GetNextVersionDownloadUrl("xmegz", Assembly.GetExecutingAssembly().GetName().Name, Assembly.GetExecutingAssembly().GetName().Version);
+
+            if (url != null)
+            {
+                var res = MessageBox.Show("New release found, would you like to update?", "Update", MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+
+                if (res == DialogResult.Yes)
+                {
+                    byte[] data = Update.Methods.DownloadBinary(url);
+                    Update.Methods.UpdateProgram(Path.GetFullPath(Assembly.GetExecutingAssembly().Location), data);
+
+                    MessageBox.Show("Update successful, please restart application!", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else
+            {
+                var res = MessageBox.Show("New release not found!", "Update", MessageBoxButtons.OK,MessageBoxIcon.Information);
+            }
         }
 
         #endregion Event Handlers
@@ -92,6 +118,13 @@ namespace MndpTray
             aboutMenuStrip.Text = "About";
             aboutMenuStrip.Click += this.About_Click;
             contextMenuStrip.Items.Add(aboutMenuStrip);
+
+            contextMenuStrip.Items.Add(new ToolStripSeparator());
+
+            var updateMenuStrip = new ToolStripMenuItem();
+            updateMenuStrip.Text = "Update";
+            updateMenuStrip.Click += this.Update_Click;
+            contextMenuStrip.Items.Add(updateMenuStrip);
 
             contextMenuStrip.Items.Add(new ToolStripSeparator());
 

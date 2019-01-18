@@ -21,7 +21,7 @@ namespace MndpTray.Protocol
         /// <summary>
         /// Host interface information
         /// </summary>
-        List<MndpHostInfo.MndpInterfaceInfo> InterfaceInfos { get; }
+        List<IMndpInterfaceInfo> InterfaceInfos { get; }
 
         /// <summary>
         /// Host platform

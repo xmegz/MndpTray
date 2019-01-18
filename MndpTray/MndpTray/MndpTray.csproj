@@ -64,6 +64,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -78,6 +79,9 @@
     <Compile Include="..\MndpTray.Protocol\IMndpHostInfo.cs">
       <Link>Protocol\IMndpHostInfo.cs</Link>
     </Compile>
+    <Compile Include="..\MndpTray.Protocol\IMndpInterfaceInfo.cs">
+      <Link>Protocol\IMndpInterfaceInfo.cs</Link>
+    </Compile>
     <Compile Include="..\MndpTray.Protocol\Internal\Extensions.cs">
       <Link>Protocol\Internal\Extensions.cs</Link>
     </Compile>
@@ -90,6 +94,9 @@
     <Compile Include="..\MndpTray.Protocol\MndpHostInfo.cs">
       <Link>Protocol\MndpHostInfo.cs</Link>
     </Compile>
+    <Compile Include="..\MndpTray.Protocol\MndpInterfaceInfo.cs">
+      <Link>Protocol\MndpInterfaceInfo.cs</Link>
+    </Compile>
     <Compile Include="..\MndpTray.Protocol\MndpListener.cs">
       <Link>Protocol\MndpListener.cs</Link>
     </Compile>
@@ -99,6 +106,8 @@
     <Compile Include="..\MndpTray.Protocol\MndpSender.cs">
       <Link>Protocol\MndpSender.cs</Link>
     </Compile>
+    <Compile Include="Update\Models.cs" />
+    <Compile Include="Update\Methods.cs" />
     <Compile Include="Visual\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>

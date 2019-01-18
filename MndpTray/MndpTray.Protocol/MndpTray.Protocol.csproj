@@ -23,7 +23,7 @@
     <DocumentationFile>bin\Debug\MndpTray.Protocol.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
+    <DebugType>embedded</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -52,8 +52,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IMndpHostInfo.cs" />
+    <Compile Include="IMndpInterfaceInfo.cs" />
     <Compile Include="Internal\Log.cs" />
     <Compile Include="Internal\Extensions.cs" />
+    <Compile Include="MndpInterfaceInfo.cs" />
     <Compile Include="MndpHostInfo.cs" />
     <Compile Include="MndpListener.cs" />
     <Compile Include="MndpMessage.cs" />
@@ -63,7 +65,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="key.snk" />
-    <None Include="package.nuspec" />
+    <None Include="package.nuspec">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

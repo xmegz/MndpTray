@@ -16,14 +16,61 @@ namespace MndpTray
             this.InitializeComponent();
             this.SetDoubleBuffering(this.dgvGrid);
 
-            this.Text = String.Concat(this.Text, " Version: ", Assembly.GetEntryAssembly().GetName().Version.ToString());            
+            this.Text = String.Concat(this.Text, " Version: ", Assembly.GetEntryAssembly().GetName().Version.ToString());
         }
 
-        private void Ping_Click(object sender, EventArgs e)
+        private void DgvGrid_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var contextMenuStrip = new ContextMenuStrip();
+
+                var pingMenuStrip = new ToolStripMenuItem();
+                pingMenuStrip.Text = "Ping";
+                pingMenuStrip.Click += this.Ping_Click;
+                contextMenuStrip.Items.Add(pingMenuStrip);
+
+                var httpMenuStrip = new ToolStripMenuItem();
+                httpMenuStrip.Text = "Http";
+                httpMenuStrip.Click += this.Http_Click;
+                contextMenuStrip.Items.Add(httpMenuStrip);
+
+                var sshMenuStrip = new ToolStripMenuItem();
+                sshMenuStrip.Text = "Ssh";
+                sshMenuStrip.Click += this.Ssh_Click;
+                contextMenuStrip.Items.Add(sshMenuStrip);
+
+                var rdpMenuStrip = new ToolStripMenuItem();
+                rdpMenuStrip.Text = "Rdp";
+                rdpMenuStrip.Click += this.Rdp_Click;
+                contextMenuStrip.Items.Add(rdpMenuStrip);
+
+                var vncMenuStrip = new ToolStripMenuItem();
+                vncMenuStrip.Text = "Vnc";
+                vncMenuStrip.Click += this.Vnc_Click;
+                contextMenuStrip.Items.Add(vncMenuStrip);
+
+                contextMenuStrip.Show(this, new Point(e.X, e.Y));
+            }
+        }
+
+        private string GetSelectedIpAddress()
+        {
+            if (this.dgvGrid.SelectedRows.Count > 0)
+            {
+                return this.dgvGrid.SelectedRows[0].Cells[0].Value as string;
+            }
+
+            return null;
+        }
+
+        private void Http_Click(object sender, EventArgs e)
         {
             try
             {
-                System.Diagnostics.Process.Start("ping","127.0.0.1");
+                string ip = this.GetSelectedIpAddress();
+                if (ip == null) return;
+                System.Diagnostics.Process.Start("http://" + ip);
             }
             catch (Exception ex)
             {
@@ -31,14 +78,61 @@ namespace MndpTray
             }
         }
 
-        private void SetDoubleBuffering(DataGridView dataGridView, bool value = true)
+        private void Ping_Click(object sender, EventArgs e)
         {
-            Type type = dataGridView.GetType();
-            PropertyInfo pi = type.GetProperty("DoubleBuffered",
-                    BindingFlags.Instance | BindingFlags.NonPublic);
-            pi.SetValue(dataGridView, value, null);
+            try
+            {
+                string ip = this.GetSelectedIpAddress();
+                if (ip == null) return;
+                System.Diagnostics.Process.Start("ping", ip);
+            }
+            catch (Exception ex)
+            {
+                Program.Log("Exception {0}", ex);
+            }
         }
 
+        private void Rdp_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string ip = this.GetSelectedIpAddress();
+                if (ip == null) return;
+                System.Diagnostics.Process.Start("mstsc", "/v:" + ip);
+            }
+            catch (Exception ex)
+            {
+                Program.Log("Exception {0}", ex);
+            }
+        }
+
+        private void Vnc_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string ip = this.GetSelectedIpAddress();
+                if (ip == null) return;
+                System.Diagnostics.Process.Start("tvnviewer", ip);
+            }
+            catch (Exception ex)
+            {
+                Program.Log("Exception {0}", ex);
+            }
+        }
+
+        private void Ssh_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string ip = this.GetSelectedIpAddress();
+                if (ip == null) return;
+                System.Diagnostics.Process.Start("putty", ip);
+            }
+            catch (Exception ex)
+            {
+                Program.Log("Exception {0}", ex);
+            }
+        }
 
         private void Receive_Timer(object sender, EventArgs e)
         {
@@ -83,26 +177,16 @@ namespace MndpTray
             }
             catch (Exception ex)
             {
-                Program.Log("{0}, {1} Exception:{2}{3}", nameof(ListForm), nameof(Receive_Timer),Environment.NewLine, ex.ToString());             
+                Program.Log("{0}, {1} Exception:{2}{3}", nameof(ListForm), nameof(Receive_Timer), Environment.NewLine, ex.ToString());
             }
         }
 
-        
-
-        private void DgvGrid_MouseDown(object sender, MouseEventArgs e)
+        private void SetDoubleBuffering(DataGridView dataGridView, bool value = true)
         {
-            if (e.Button == MouseButtons.Right)
-            {
-                var contextMenuStrip = new ContextMenuStrip();
-
-                var pingMenuStrip = new ToolStripMenuItem();
-                pingMenuStrip.Text = "Ping";
-                pingMenuStrip.Click += this.Ping_Click;
-                contextMenuStrip.Items.Add(pingMenuStrip);
-
-                contextMenuStrip.Show(this,new Point(e.X, e.Y));
-
-            }
+            Type type = dataGridView.GetType();
+            PropertyInfo pi = type.GetProperty("DoubleBuffered",
+                    BindingFlags.Instance | BindingFlags.NonPublic);
+            pi.SetValue(dataGridView, value, null);
         }
     }
 }
