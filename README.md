@@ -2,7 +2,6 @@
 MNDP Mikrotik Neighbor Discovery Protocol Tray Application
 
 ## Functions:
-
 * Periodic sends Windows host information over MNDP, Mikrotik routers see it.
 * Listens to MNDP messsages and put them to list
 * Blocking winbox discovery function when running
@@ -17,7 +16,7 @@ MNDP Mikrotik Neighbor Discovery Protocol Tray Application
 * Single and multiple NIC
 * .NET 4.5.2
 
-## Windows service
+## Windows service:
 * Periodic sends Windows host information over MNDP, Mikrotik routers see it.
 * Auto start after boot
 * Integrated with service installer
