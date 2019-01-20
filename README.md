@@ -6,6 +6,8 @@ MNDP Mikrotik Neighbor Discovery Protocol Tray Application
 * Periodic sends Windows host information over MNDP, Mikrotik routers see it.
 * Listens to MNDP messsages and put them to list
 * Blocking winbox discovery function when running
+* Tooltip list to open with SSH,VNC,RDP,HTTP,PING protocol
+* Self update from github
 
 ## Screenshot:
 ![alt text](https://github.com/xmegz/MndpTray/blob/master/MndpTray/MndpTray/Images/screenshot.png)
@@ -15,7 +17,18 @@ MNDP Mikrotik Neighbor Discovery Protocol Tray Application
 * Single and multiple NIC
 * .NET 4.5.2
 
-## Standalone Library:
+## Windows service
+* Periodic sends Windows host information over MNDP, Mikrotik routers see it.
+* Auto start after boot
+* Integrated with service installer
+```
+MndpService, Version=1.5.1.0, Culture=neutral, PublicKeyToken=null
+Usage:
+MndpService Install - Install Service
+MndpService Uninstall - Uninstall Service
+```
+
+## Standalone library:
 *Install via Nuget: [https://www.nuget.org/packages/MndpTray.Protocol/](https://www.nuget.org/packages/MndpTray.Protocol/)
 ### Usage:
 ```C#
