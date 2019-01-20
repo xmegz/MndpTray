@@ -93,43 +93,55 @@ namespace MndpTray
 
         private void InizializeComponets()
         {
-            var notifyIcon = new NotifyIcon();
-            notifyIcon.Icon = MndpTray.Properties.Resources.favicon_ico;
-            notifyIcon.Text = nameof(MndpTray);
-            notifyIcon.Visible = true;
+            var notifyIcon = new NotifyIcon
+            {
+                Icon = MndpTray.Properties.Resources.favicon_ico,
+                Text = nameof(MndpTray),
+                Visible = true
+            };
 
             var contextMenuStrip = new ContextMenuStrip();
 
-            var listMenuStrip = new ToolStripMenuItem();
-            listMenuStrip.Text = "List";
+            var listMenuStrip = new ToolStripMenuItem
+            {
+                Text = "List"
+            };
             listMenuStrip.Click += this.List_Click;
             contextMenuStrip.Items.Add(listMenuStrip);
 
             contextMenuStrip.Items.Add(new ToolStripSeparator());
 
-            var sendMenuStrip = new ToolStripMenuItem();
-            sendMenuStrip.Text = "Send";
+            var sendMenuStrip = new ToolStripMenuItem
+            {
+                Text = "Send"
+            };
             sendMenuStrip.Click += this.Send_Click;
             contextMenuStrip.Items.Add(sendMenuStrip);
 
             contextMenuStrip.Items.Add(new ToolStripSeparator());
 
-            var aboutMenuStrip = new ToolStripMenuItem();
-            aboutMenuStrip.Text = "About";
+            var aboutMenuStrip = new ToolStripMenuItem
+            {
+                Text = "About"
+            };
             aboutMenuStrip.Click += this.About_Click;
             contextMenuStrip.Items.Add(aboutMenuStrip);
 
             contextMenuStrip.Items.Add(new ToolStripSeparator());
 
-            var updateMenuStrip = new ToolStripMenuItem();
-            updateMenuStrip.Text = "Update";
+            var updateMenuStrip = new ToolStripMenuItem
+            {
+                Text = "Update"
+            };
             updateMenuStrip.Click += this.Update_Click;
             contextMenuStrip.Items.Add(updateMenuStrip);
 
             contextMenuStrip.Items.Add(new ToolStripSeparator());
 
-            var exitMenuStrip = new ToolStripMenuItem();
-            exitMenuStrip.Text = "Exit";
+            var exitMenuStrip = new ToolStripMenuItem
+            {
+                Text = "Exit"
+            };
             exitMenuStrip.Click += this.Exit_Click;
             contextMenuStrip.Items.Add(exitMenuStrip);
 

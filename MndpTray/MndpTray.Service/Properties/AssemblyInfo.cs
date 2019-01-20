@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MndpTray")]
-[assembly: AssemblyDescription("Mikrotik Neighbor Discovery Protocol Tray Application")]
+[assembly: AssemblyTitle("MndpTray.Service")]
+[assembly: AssemblyDescription("Mikrotik Neighbor Discovery Protocol Service")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Pádár Tamás")]
-[assembly: AssemblyProduct("MndpTray")]
+[assembly: AssemblyProduct("MndpTray.Service")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("Pádár Tamás")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("7a68e99f-ffd3-4784-bdad-673901009bab")]
+[assembly: Guid("c68af71d-2c00-483d-a5e5-4b2add183987")]
 
 // Version information for an assembly consists of the following four values:
 //

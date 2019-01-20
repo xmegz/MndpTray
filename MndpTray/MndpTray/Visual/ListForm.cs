@@ -25,28 +25,38 @@ namespace MndpTray
             {
                 var contextMenuStrip = new ContextMenuStrip();
 
-                var pingMenuStrip = new ToolStripMenuItem();
-                pingMenuStrip.Text = "Ping";
+                var pingMenuStrip = new ToolStripMenuItem
+                {
+                    Text = "Ping"
+                };
                 pingMenuStrip.Click += this.Ping_Click;
                 contextMenuStrip.Items.Add(pingMenuStrip);
 
-                var httpMenuStrip = new ToolStripMenuItem();
-                httpMenuStrip.Text = "Http";
+                var httpMenuStrip = new ToolStripMenuItem
+                {
+                    Text = "Http"
+                };
                 httpMenuStrip.Click += this.Http_Click;
                 contextMenuStrip.Items.Add(httpMenuStrip);
 
-                var sshMenuStrip = new ToolStripMenuItem();
-                sshMenuStrip.Text = "Ssh";
+                var sshMenuStrip = new ToolStripMenuItem
+                {
+                    Text = "Ssh"
+                };
                 sshMenuStrip.Click += this.Ssh_Click;
                 contextMenuStrip.Items.Add(sshMenuStrip);
 
-                var rdpMenuStrip = new ToolStripMenuItem();
-                rdpMenuStrip.Text = "Rdp";
+                var rdpMenuStrip = new ToolStripMenuItem
+                {
+                    Text = "Rdp"
+                };
                 rdpMenuStrip.Click += this.Rdp_Click;
                 contextMenuStrip.Items.Add(rdpMenuStrip);
 
-                var vncMenuStrip = new ToolStripMenuItem();
-                vncMenuStrip.Text = "Vnc";
+                var vncMenuStrip = new ToolStripMenuItem
+                {
+                    Text = "Vnc"
+                };
                 vncMenuStrip.Click += this.Vnc_Click;
                 contextMenuStrip.Items.Add(vncMenuStrip);
 

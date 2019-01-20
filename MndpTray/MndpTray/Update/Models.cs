@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace MndpTray.Update
@@ -7,6 +8,7 @@ namespace MndpTray.Update
     /// Github API release data
     /// </summary>
     [DataContract]
+    [SuppressMessage("Microsoft.Design", "IDE1006")]
     public class release
     {
         [DataMember]
@@ -44,6 +46,7 @@ namespace MndpTray.Update
     /// Github API release asset data
     /// </summary>
     [DataContract]
+    [SuppressMessage("Microsoft.Design", "IDE1006")]
     public class release_asset
     {
         [DataMember]
