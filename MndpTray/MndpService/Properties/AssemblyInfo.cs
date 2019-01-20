@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MndpTray.Service")]
+[assembly: AssemblyTitle("MndpService")]
 [assembly: AssemblyDescription("Mikrotik Neighbor Discovery Protocol Service")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Pádár Tamás")]
-[assembly: AssemblyProduct("MndpTray.Service")]
+[assembly: AssemblyProduct("MndpService")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("Pádár Tamás")]
 [assembly: AssemblyCulture("")]

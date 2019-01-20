@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MndpTray", "MndpTray\MndpTr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MndpTray.Protocol", "MndpTray.Protocol\MndpTray.Protocol.csproj", "{9008838B-88CD-40B0-BC80-FA37F5F9AAF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MndpTray.Service", "MndpTray.Service\MndpTray.Service.csproj", "{C68AF71D-2C00-483D-A5E5-4B2ADD183987}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MndpService", "MndpService\MndpService.csproj", "{C68AF71D-2C00-483D-A5E5-4B2ADD183987}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

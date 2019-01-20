@@ -1,4 +1,4 @@
-﻿namespace MndpTray.Service
+﻿namespace MndpService
 {
     partial class MndpService
     {

@@ -1,7 +1,7 @@
 ﻿using System.Configuration.Install;
 using System.ServiceProcess;
 
-namespace MndpTray.Service
+namespace MndpService
 {
     partial class ProjectInstaller
     {
@@ -43,7 +43,7 @@ namespace MndpTray.Service
             // serviceInstaller
             // 
             this.serviceInstaller.Description = "Mndp Service Application";
-            this.serviceInstaller.DisplayName = "MndpTray.Service";
+            this.serviceInstaller.DisplayName = "MndpService";
             this.serviceInstaller.ServiceName = "MndpService";
             this.serviceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 

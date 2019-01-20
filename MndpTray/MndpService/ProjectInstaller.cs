@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace MndpTray.Service
+namespace MndpService
 {
     [RunInstaller(true)]
     public partial class ProjectInstaller : System.Configuration.Install.Installer

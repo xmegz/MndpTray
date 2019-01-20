@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.ServiceProcess;
 
-namespace MndpTray.Service
+namespace MndpService
 {
     public partial class MndpService : ServiceBase
     {

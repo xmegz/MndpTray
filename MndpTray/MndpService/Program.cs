@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.ServiceProcess;
 
-namespace MndpTray.Service
+namespace MndpService
 {
     internal static class Program
     {
