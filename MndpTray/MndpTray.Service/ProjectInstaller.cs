@@ -7,7 +7,7 @@ namespace MndpTray.Service
     {
         public ProjectInstaller()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

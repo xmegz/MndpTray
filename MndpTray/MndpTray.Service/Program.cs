@@ -30,8 +30,10 @@ namespace MndpTray.Service
                     if (cmd == nameof(Install).ToUpper()) Install();
                     if (cmd == nameof(Uninstall).ToUpper()) Uninstall();
                 }
-
-                Usage();
+                else
+                {
+                    Usage();
+                }
             }
         }
 
@@ -117,8 +119,9 @@ namespace MndpTray.Service
         {
             Console.WriteLine(Assembly.GetEntryAssembly().FullName);
             Console.WriteLine("Usage:");
-            Console.WriteLine("Install - Install Service");
-            Console.WriteLine("Uninstall - Uninstall Service ");
+            Console.WriteLine(Assembly.GetEntryAssembly().GetName().Name + " Install - Install Service");
+            Console.WriteLine(Assembly.GetEntryAssembly().GetName().Name + " Uninstall - Uninstall Service ");
+            Console.ReadLine();
         }
         #endregion Methods
     }

@@ -13,7 +13,7 @@ namespace MndpTray.Service
 
         protected override void OnStart(string[] args)
         {
-            EventLog.WriteEntry("Start:" + Assembly.GetEntryAssembly().ToString());
+            this.EventLog.WriteEntry("Start:" + Assembly.GetEntryAssembly().ToString());
             Program.Log("------------------< START >------------------");
             MndpSender.Instance.Start(MndpHostInfo.Instance);
         }
@@ -21,7 +21,7 @@ namespace MndpTray.Service
         protected override void OnStop()
         {
             MndpSender.Instance.Stop();
-            EventLog.WriteEntry("Stop:" + Assembly.GetEntryAssembly().ToString());
+            this.EventLog.WriteEntry("Stop:" + Assembly.GetEntryAssembly().ToString());
             Program.Log("------------------< STOP >------------------");
         }
     }
