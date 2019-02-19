@@ -8,8 +8,9 @@ MNDP Mikrotik Neighbor Discovery Protocol Tray Application
 * Tooltip list to open with SSH,VNC,RDP,HTTP,PING protocol
 * Self update from github
 
-## Screenshot:
-![alt text](https://github.com/xmegz/MndpTray/blob/master/MndpTray/MndpTray/Images/screenshot.png)
+## Screenshots:
+![alt text](https://github.com/xmegz/MndpTray/blob/master/MndpTray/MndpTray/Images/screenshot3.png)
+![alt text](https://github.com/xmegz/MndpTray/blob/master/MndpTray/MndpTray/Images/screenshot2.png)
 
 ## Tested:
 * Windows 10, Windows 7
