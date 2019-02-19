@@ -58,6 +58,12 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
@@ -102,35 +108,18 @@
     <Compile Include="..\MndpTray.Protocol\MndpSender.cs">
       <Link>Protocol\MndpSender.cs</Link>
     </Compile>
-    <Compile Include="MndpService.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="MndpService.Designer.cs">
-      <DependentUpon>MndpService.cs</DependentUpon>
-    </Compile>
+    <Compile Include="MndpService.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ProjectInstaller.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ProjectInstaller.Designer.cs">
-      <DependentUpon>ProjectInstaller.cs</DependentUpon>
-    </Compile>
+    <Compile Include="ProjectInstaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="app.manifest" />
+    <None Include="key.snk" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Images\favicon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="MndpService.resx">
-      <DependentUpon>MndpService.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ProjectInstaller.resx">
-      <DependentUpon>ProjectInstaller.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

@@ -1,16 +1,28 @@
 ﻿using MndpTray.Protocol;
+using System.ComponentModel;
 using System.Reflection;
 using System.ServiceProcess;
 
 namespace MndpService
 {
-    public partial class MndpService : ServiceBase
+    /// <summary>
+    /// Mndp Service class
+    /// </summary>
+    [DesignerCategory("Code")]
+    public class MndpService : ServiceBase
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public MndpService()
         {
-            this.InitializeComponent();
+            this.ServiceName = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyTitleAttribute>().Title;
         }
 
+        /// <summary>
+        /// Start event
+        /// </summary>
+        /// <param name="args">Startup arguments</param>
         protected override void OnStart(string[] args)
         {
             this.EventLog.WriteEntry("Start:" + Assembly.GetEntryAssembly().ToString());
@@ -18,6 +30,9 @@ namespace MndpService
             MndpSender.Instance.Start(MndpHostInfo.Instance);
         }
 
+        /// <summary>
+        /// Stop event
+        /// </summary>
         protected override void OnStop()
         {
             MndpSender.Instance.Stop();
