@@ -44,6 +44,7 @@
             this.SoftwareId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Age = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Uptime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IPv6Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -69,7 +70,8 @@
             this.InterfaceName,
             this.SoftwareId,
             this.Age,
-            this.Uptime});
+            this.Uptime,
+            this.IPv6Address});
             this.dgvGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvGrid.Location = new System.Drawing.Point(0, 0);
             this.dgvGrid.Name = "dgvGrid";
@@ -142,12 +144,19 @@
             // 
             // Uptime
             // 
-            this.Uptime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             this.Uptime.DefaultCellStyle = dataGridViewCellStyle2;
             this.Uptime.HeaderText = "Uptime";
             this.Uptime.Name = "Uptime";
             this.Uptime.ReadOnly = true;
+            this.Uptime.Width = 5;
+            // 
+            // IPv6Address
+            // 
+            this.IPv6Address.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.IPv6Address.HeaderText = "IPv6";
+            this.IPv6Address.Name = "IPv6Address";
+            this.IPv6Address.ReadOnly = true;
             // 
             // ListForm
             // 
@@ -176,5 +185,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn SoftwareId;
         private System.Windows.Forms.DataGridViewTextBoxColumn Age;
         private System.Windows.Forms.DataGridViewTextBoxColumn Uptime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IPv6Address;
     }
 }

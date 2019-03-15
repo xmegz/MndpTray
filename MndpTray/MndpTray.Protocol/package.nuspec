@@ -14,12 +14,12 @@
     <iconUrl>https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray/Images/favicon.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <!--*-->
-    <description>Mikrotik Neighbor Discovery Protocol</description>
+    <description>Mikrotik Neighbor Discovery Protocol - Network Discovery</description>
     <!--*-->
     <repository type="git" url="https://github.com/xmegz/MndpTray" />
     <releaseNotes>IMndpHostInfo InterfaceInfo also interface</releaseNotes>
     <copyright>Copyright ©  2018</copyright>
-    <tags>Mikrotik Discovery Protocol</tags>
+    <tags>Mikrotik Discovery Protocol Network Udp Broadcast Windows Routeros Mndp</tags>
     <dependencies>
       <!--
       <dependency id="SampleDependency" version="1.0" />

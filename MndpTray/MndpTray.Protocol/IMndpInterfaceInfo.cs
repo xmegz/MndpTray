@@ -27,5 +27,11 @@
         /// </summary>
         /// <example>192.168.0.1</example>
         string UnicastAddress { get; }
+
+        /// <summary>
+        /// Interface Ipv6 unicast address
+        /// </summary>
+        /// <example>fe80::2d1f:d9f4:4c05:a200</example>
+        string UnicastIPv6Address { get; }
     }
 }

@@ -195,6 +195,7 @@ namespace MndpTray.Protocol
                             msg.InterfaceName = i.InterfaceName;
                             msg.MacAddress = i.MacAddress;
                             msg.UnicastAddress = i.UnicastAddress;
+                            msg.UnicastIPv6Address = i.UnicastIPv6Address;
 
                             this.Send((MndpMessageEx)msg.Clone());
                         }

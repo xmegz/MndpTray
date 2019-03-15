@@ -5,9 +5,9 @@ using System.ServiceProcess;
 
 namespace MndpService
 {
-    internal static class Program
+    public static class Program
     {
-        private static void Main(string[] args)
+        public static void Main(string[] args)
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
@@ -30,7 +30,7 @@ namespace MndpService
         
         private static readonly object LOG_FILE_LOCK = new object();
         private static readonly string LOG_FILE_NAME = GetLogFileName("log");
-        private static readonly bool LOG_FILE_IS_ENABLED = File.Exists(LOG_FILE_NAME);
+        private static readonly bool LOG_FILE_IS_ENABLED = File.Exists(GetLogFileName("log"));
 
         #endregion Fields
 

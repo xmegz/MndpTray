@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
 
@@ -16,6 +17,7 @@ namespace MndpTray.Protocol
         private const ushort TLV_TYPE_BOARD_NAME = 12;
         private const ushort TLV_TYPE_IDENTITY = 5;
         private const ushort TLV_TYPE_INTERFACE_NAME = 16;
+        private const ushort TLV_TYPE_IPV6 = 15;
         private const ushort TLV_TYPE_MAC_ADDRESS = 1;
         private const ushort TLV_TYPE_PLATFORM = 8;
         private const ushort TLV_TYPE_SOFTWAREID = 11;
@@ -26,6 +28,7 @@ namespace MndpTray.Protocol
         #endregion Consts
 
         #region Props
+
         /// <summary>
         /// Sender board name
         /// </summary>
@@ -40,6 +43,11 @@ namespace MndpTray.Protocol
         /// Sender interface name
         /// </summary>
         public string InterfaceName { get; set; }
+
+        /// <summary>
+        /// Sender unicast IPv6 address
+        /// </summary>
+        public string UnicastIPv6Address { get; set; }
 
         /// <summary>
         /// Sender mac address
@@ -82,7 +90,7 @@ namespace MndpTray.Protocol
         public TimeSpan Uptime { get; set; }
 
         /// <summary>
-        /// Sender software version 
+        /// Sender software version
         /// </summary>
         public string Version { get; set; }
 
@@ -150,11 +158,15 @@ namespace MndpTray.Protocol
                             this.InterfaceName = enc.GetString(i.Value);
                             break;
 
+                        case TLV_TYPE_IPV6:
+                            this.UnicastIPv6Address = new IPAddress(i.Value).ToString();
+                            break;
+
                         default: break;
                     }
                 }
 
-                Log.Info("{0} Read,{2}{1}{2}",nameof(MndpMessage), this.ToString(), Environment.NewLine);
+                Log.Info("{0} Read,{2}{1}{2}", nameof(MndpMessage), this.ToString(), Environment.NewLine);
 
                 return true;
             }
@@ -186,6 +198,7 @@ namespace MndpTray.Protocol
             sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.BoardName), this.BoardName);
             sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.Unpack), this.Unpack);
             sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.InterfaceName), this.InterfaceName);
+            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.UnicastIPv6Address), this.UnicastIPv6Address);
 
             return sb.ToString();
         }
@@ -198,7 +211,7 @@ namespace MndpTray.Protocol
         {
             try
             {
-                Log.Info("{0} Write,{2}{1}{2}", nameof(MndpMessage), this.ToString(),Environment.NewLine);
+                Log.Info("{0} Write,{2}{1}{2}", nameof(MndpMessage), this.ToString(), Environment.NewLine);
 
                 var tlvMessage = new TlvMessage()
                 {
@@ -249,6 +262,11 @@ namespace MndpTray.Protocol
                             tlvMessage.Items.Add(new Tlv(i, this.InterfaceName, enc));
                             break;
 
+                        case TLV_TYPE_IPV6:
+                            if (this.UnicastIPv6Address != null)
+                                tlvMessage.Items.Add(new Tlv(i, IPAddress.Parse(this.UnicastIPv6Address).GetAddressBytes()));
+                            break;
+
                         default: break;
                     }
                 }
@@ -285,7 +303,7 @@ namespace MndpTray.Protocol
             /// Record length
             /// </summary>
             public ushort Length { get; set; }
-        
+
             /// <summary>
             /// Record vlue
             /// </summary>
@@ -589,7 +607,7 @@ namespace MndpTray.Protocol
         public DateTime ReceiveDateTime { get; set; }
 
         /// <summary>
-        /// Sender unicast IPv4 address 
+        /// Sender unicast IPv4 address
         /// </summary>
         public string UnicastAddress { get; set; }
 
@@ -599,13 +617,14 @@ namespace MndpTray.Protocol
         /// <example>
         /// AA:BB:CC:DD:EE:FF
         /// </example>
-        public string MacAddressDelimited {
+        public string MacAddressDelimited
+        {
             get
             {
                 if (this.MacAddress == null) return null;
                 StringBuilder sb = new StringBuilder();
-                                
-                for(int i=0;i<this.MacAddress.Length;i++)
+
+                for (int i = 0; i < this.MacAddress.Length; i++)
                 {
                     sb.Append(this.MacAddress[i]);
                     if (i % 2 == 1) sb.Append(':');
@@ -613,8 +632,9 @@ namespace MndpTray.Protocol
 
                 if (sb.Length > 0) sb.Remove(sb.Length - 1, 1);
                 return sb.ToString();
+            }
+        }
 
-            } }
         #endregion Props
 
         #region Methods
@@ -637,8 +657,8 @@ namespace MndpTray.Protocol
             var sb = new StringBuilder();
 
             sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.ReceiveDateTime), this.ReceiveDateTime);
-            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.UnicastAddress),  this.UnicastAddress);
-            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.BroadcastAddress),this.BroadcastAddress);
+            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.UnicastAddress), this.UnicastAddress);
+            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.BroadcastAddress), this.BroadcastAddress);
             sb.Append(base.ToString());
 
             return sb.ToString();

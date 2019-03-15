@@ -9,8 +9,8 @@ MNDP Mikrotik Neighbor Discovery Protocol Tray Application
 * Self update from github
 
 ## Screenshots:
-![alt text](https://github.com/xmegz/MndpTray/blob/master/MndpTray/MndpTray/Images/screenshot3.png)
-![alt text](https://github.com/xmegz/MndpTray/blob/master/MndpTray/MndpTray/Images/screenshot2.png)
+![alt text](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray/Images/screenshot3.png)
+![alt text](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray/Images/screenshot2.png)
 
 ## Tested:
 * Windows 10, Windows 7
@@ -32,35 +32,34 @@ MndpService Uninstall - Uninstall Service
 *Install via Nuget: [https://www.nuget.org/packages/MndpTray.Protocol/](https://www.nuget.org/packages/MndpTray.Protocol/)
 ### Usage:
 ```C#
-using MndpTray.Protocol;
 using System;
 using System.Threading;
 
-namespace ConsoleApp2
+namespace MndpTray.Protocol.Test
 {
-    internal class Program
+    public class Program
     {
         private static readonly Timer Timer = new Timer(Timer_Callback, null, Timeout.Infinite, Timeout.Infinite);
 
-        private static void Timer_Callback(object state)
+        public static void Main(string[] args)
         {
-            foreach (var i in MndpListener.Instance.GetMessages()) Console.WriteLine(i.Value.ToString());
-            Console.WriteLine("--- Message List End ---");
-        }
-
-        private static void Main(string[] args)
-        {            
             MndpListener.Instance.Start();
             MndpSender.Instance.Start(MndpHostInfo.Instance);
             Timer.Change(0, 5000);
 
             Console.WriteLine("--- Start ---");
-            while (!Console.KeyAvailable) { Thread.Sleep(100); }           
+            while (!Console.KeyAvailable) { Thread.Sleep(100); }
             Console.WriteLine("--- Stop ---");
 
             Timer.Change(Timeout.Infinite, Timeout.Infinite);
             MndpListener.Instance.Stop();
             MndpSender.Instance.Stop();
+        }
+
+        private static void Timer_Callback(object state)
+        {
+            foreach (var i in MndpListener.Instance.GetMessages()) Console.WriteLine(i.Value.ToString());
+            Console.WriteLine("--- Message List End ---");
         }
     }
 }

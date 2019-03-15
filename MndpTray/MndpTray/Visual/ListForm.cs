@@ -19,6 +19,8 @@ namespace MndpTray
             this.Text = String.Concat(this.Text, " Version: ", Assembly.GetEntryAssembly().GetName().Version.ToString());
         }
 
+        #region Event Handlers
+
         private void DgvGrid_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -60,18 +62,15 @@ namespace MndpTray
                 vncMenuStrip.Click += this.Vnc_Click;
                 contextMenuStrip.Items.Add(vncMenuStrip);
 
+                var winboxMenuStrip = new ToolStripMenuItem
+                {
+                    Text = "Winbox"
+                };
+                winboxMenuStrip.Click += this.Winbox_Click;
+                contextMenuStrip.Items.Add(winboxMenuStrip);
+
                 contextMenuStrip.Show(this, new Point(e.X, e.Y));
             }
-        }
-
-        private string GetSelectedIpAddress()
-        {
-            if (this.dgvGrid.SelectedRows.Count > 0)
-            {
-                return this.dgvGrid.SelectedRows[0].Cells[0].Value as string;
-            }
-
-            return null;
         }
 
         private void Http_Click(object sender, EventArgs e)
@@ -90,16 +89,7 @@ namespace MndpTray
 
         private void Ping_Click(object sender, EventArgs e)
         {
-            try
-            {
-                string ip = this.GetSelectedIpAddress();
-                if (ip == null) return;
-                System.Diagnostics.Process.Start("ping", ip);
-            }
-            catch (Exception ex)
-            {
-                Program.Log("Exception {0}", ex);
-            }
+            this.StartProcessWithIpArgument("ping");
         }
 
         private void Rdp_Click(object sender, EventArgs e)
@@ -109,34 +99,6 @@ namespace MndpTray
                 string ip = this.GetSelectedIpAddress();
                 if (ip == null) return;
                 System.Diagnostics.Process.Start("mstsc", "/v:" + ip);
-            }
-            catch (Exception ex)
-            {
-                Program.Log("Exception {0}", ex);
-            }
-        }
-
-        private void Vnc_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string ip = this.GetSelectedIpAddress();
-                if (ip == null) return;
-                System.Diagnostics.Process.Start("tvnviewer", ip);
-            }
-            catch (Exception ex)
-            {
-                Program.Log("Exception {0}", ex);
-            }
-        }
-
-        private void Ssh_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string ip = this.GetSelectedIpAddress();
-                if (ip == null) return;
-                System.Diagnostics.Process.Start("putty", ip);
             }
             catch (Exception ex)
             {
@@ -165,14 +127,14 @@ namespace MndpTray
                     if (dictRow.ContainsKey(i.MacAddress))
                     {
                         var row = dictRow[i.MacAddress];
-                        row.SetValues(i.UnicastAddress, i.MacAddressDelimited, i.Identity, i.Platform, i.Version, i.BoardName, i.InterfaceName, i.SoftwareId, i.Age.ToString("F0"), i.Uptime);
+                        row.SetValues(i.UnicastAddress, i.MacAddressDelimited, i.Identity, i.Platform, i.Version, i.BoardName, i.InterfaceName, i.SoftwareId, i.Age.ToString("F0"), i.Uptime, i.UnicastIPv6Address);
                         dictRow.Remove(i.MacAddress);
                     }
                     else
                     {
                         var row = new DataGridViewRow();
 
-                        row.CreateCells(this.dgvGrid, i.UnicastAddress, i.MacAddressDelimited, i.Identity, i.Platform, i.Version, i.BoardName, i.InterfaceName, i.SoftwareId, i.Age.ToString("F0"), i.Uptime);
+                        row.CreateCells(this.dgvGrid, i.UnicastAddress, i.MacAddressDelimited, i.Identity, i.Platform, i.Version, i.BoardName, i.InterfaceName, i.SoftwareId, i.Age.ToString("F0"), i.Uptime, i.UnicastIPv6Address);
                         row.Tag = i.MacAddress;
                         this.dgvGrid.Rows.Add(row);
                     }
@@ -191,6 +153,34 @@ namespace MndpTray
             }
         }
 
+        private void Ssh_Click(object sender, EventArgs e)
+        {
+            this.StartProcessWithIpArgument("putty");
+        }
+
+        private void Vnc_Click(object sender, EventArgs e)
+        {
+            this.StartProcessWithIpArgument("tvnviewer");
+        }
+
+        private void Winbox_Click(object sender, EventArgs e)
+        {
+            this.StartProcessWithIpArgument("winbox");
+        }
+
+        #endregion Event Handlers
+
+        #region Methods
+
+        private string GetSelectedIpAddress()
+        {
+            if (this.dgvGrid.SelectedRows.Count > 0)
+            {
+                return this.dgvGrid.SelectedRows[0].Cells[0].Value as string;
+            }
+            return null;
+        }
+
         private void SetDoubleBuffering(DataGridView dataGridView, bool value = true)
         {
             Type type = dataGridView.GetType();
@@ -198,5 +188,29 @@ namespace MndpTray
                     BindingFlags.Instance | BindingFlags.NonPublic);
             pi.SetValue(dataGridView, value, null);
         }
+
+        private void StartProcessWithIpArgument(string name)
+        {
+            try
+            {
+                string ip = this.GetSelectedIpAddress();
+                if (ip == null) return;
+
+                try
+                {
+                    System.Diagnostics.Process.Start(name, ip);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + ":" + name);
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.Log("Exception {0}", ex);
+            }
+        }
+
+        #endregion Methods
     }
 }
