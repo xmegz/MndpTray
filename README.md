@@ -31,7 +31,7 @@ MndpService Uninstall - Uninstall Service
 
 ## Standalone library:
 *Install via Nuget: [https://www.nuget.org/packages/MndpTray.Protocol/](https://www.nuget.org/packages/MndpTray.Protocol/)
-### Usage:
+### Usage: https://dotnetfiddle.net/vMF42n
 ```C#
 using System;
 using System.Threading;
