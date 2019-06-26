@@ -1,4 +1,4 @@
-# MndpTray
+# MndpTray [![Build status](https://ci.appveyor.com/api/projects/status/decjg2rq0hwn77rq?svg=true)](https://ci.appveyor.com/project/xmegz/mndptray)
 MNDP Mikrotik Neighbor Discovery Protocol Tray Application
 
 ## Functions:
@@ -6,6 +6,7 @@ MNDP Mikrotik Neighbor Discovery Protocol Tray Application
 * Listens to MNDP messsages and put them to list
 * Blocking winbox discovery function when running
 * Tooltip list to open with SSH,VNC,RDP,HTTP,PING protocol
+* IPv4 & IPv6 support
 * Self update from github
 
 ## Screenshots:
@@ -30,7 +31,8 @@ MndpService Uninstall - Uninstall Service
 
 ## Standalone library:
 *Install via Nuget: [https://www.nuget.org/packages/MndpTray.Protocol/](https://www.nuget.org/packages/MndpTray.Protocol/)
-### Usage:
+### Usage: 
+*Try it on .Net Fiddle: [https://dotnetfiddle.net/vMF42n/](https://dotnetfiddle.net/vMF42n/)
 ```C#
 using System;
 using System.Threading;
