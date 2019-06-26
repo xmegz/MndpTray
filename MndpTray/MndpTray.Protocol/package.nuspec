@@ -4,7 +4,7 @@
     <!--*-->
     <id>MndpTray.Protocol</id>
     <!--*-->
-    <version>1.5.0</version>
+    <version>1.6.0</version>
     <title>MndpTray.Protocol</title>
     <!--*-->
     <authors>Pádár Tamás</authors>
@@ -17,7 +17,7 @@
     <description>Mikrotik Neighbor Discovery Protocol - Network Discovery</description>
     <!--*-->
     <repository type="git" url="https://github.com/xmegz/MndpTray" />
-    <releaseNotes>IMndpHostInfo InterfaceInfo also interface</releaseNotes>
+    <releaseNotes>IPv6 support</releaseNotes>
     <copyright>Copyright ©  2018</copyright>
     <tags>Mikrotik Discovery Protocol Network Udp Broadcast Windows Routeros Mndp</tags>
     <dependencies>

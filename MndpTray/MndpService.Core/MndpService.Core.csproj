@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+    <AssemblyVersion>1.7.0.0</AssemblyVersion>
+    <FileVersion>1.7.0.0</FileVersion>
+    <Version>1.7.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\MndpTray.Protocol\IMndpHostInfo.cs" Link="Protocol\IMndpHostInfo.cs" />
+    <Compile Include="..\MndpTray.Protocol\IMndpInterfaceInfo.cs" Link="Protocol\IMndpInterfaceInfo.cs" />
+    <Compile Include="..\MndpTray.Protocol\Internal\Extensions.cs" Link="Protocol\Internal\Extensions.cs" />
+    <Compile Include="..\MndpTray.Protocol\Internal\Log.cs" Link="Protocol\Internal\Log.cs" />
+    <Compile Include="..\MndpTray.Protocol\MndpHostInfo.cs" Link="Protocol\MndpHostInfo.cs" />
+    <Compile Include="..\MndpTray.Protocol\MndpInterfaceInfo.cs" Link="Protocol\MndpInterfaceInfo.cs" />
+    <Compile Include="..\MndpTray.Protocol\MndpListener.cs" Link="Protocol\MndpListener.cs" />
+    <Compile Include="..\MndpTray.Protocol\MndpMessage.cs" Link="Protocol\MndpMessage.cs" />
+    <Compile Include="..\MndpTray.Protocol\MndpSender.cs" Link="Protocol\MndpSender.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Protocol\Internal\" />
+  </ItemGroup>
+
+</Project>

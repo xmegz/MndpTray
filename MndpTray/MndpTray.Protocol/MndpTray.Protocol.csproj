@@ -60,7 +60,6 @@
     <Compile Include="MndpListener.cs" />
     <Compile Include="MndpMessage.cs" />
     <Compile Include="MndpSender.cs" />
-    <Compile Include="Internal\NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -112,7 +112,7 @@ namespace MndpTray.Protocol
 
                 if (!ok) return false;
 
-                var enc = Encoding.GetEncoding(1250);
+                var enc = Encoding.GetEncoding(28591);
 
                 this.Type = tlvMessage.Type;
                 this.Ttl = tlvMessage.Ttl;
@@ -220,7 +220,7 @@ namespace MndpTray.Protocol
                     Sequence = this.Sequence
                 };
 
-                var enc = Encoding.GetEncoding(1250);
+                var enc = Encoding.GetEncoding(28591);
 
                 for (ushort i = 0; i <= 16; i++)
                 {
@@ -399,7 +399,7 @@ namespace MndpTray.Protocol
                 if (this.Value != null)
                 {
                     valueHex = BitConverter.ToString(this.Value).Replace("-", ",");
-                    valueStr = Encoding.GetEncoding(1250).GetString(this.Value);
+                    valueStr = Encoding.GetEncoding(28591).GetString(this.Value);
                 }
 
                 return String.Format("T:{0}, L:{1}, V:{2}, VS:{3}", this.Type, this.Length, valueHex, valueStr);

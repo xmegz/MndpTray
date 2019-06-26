@@ -26,7 +26,7 @@ namespace MndpTray.Protocol
 
         #region Const
 
-        private const int HOST_INFO_SEND_INTERVAL = 60;
+        private const int HOST_INFO_SEND_INTERVAL = 30;
         private const int UDP_PORT = 5678;
         private static readonly IPAddress IP_ADDRESS = IPAddress.Broadcast;
 

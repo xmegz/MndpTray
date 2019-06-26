@@ -88,9 +88,6 @@
     <Compile Include="..\MndpTray.Protocol\Internal\Log.cs">
       <Link>Protocol\Internal\Log.cs</Link>
     </Compile>
-    <Compile Include="..\MndpTray.Protocol\Internal\NativeMethods.cs">
-      <Link>Protocol\Internal\NativeMethods.cs</Link>
-    </Compile>
     <Compile Include="..\MndpTray.Protocol\MndpHostInfo.cs">
       <Link>Protocol\MndpHostInfo.cs</Link>
     </Compile>
