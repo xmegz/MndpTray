@@ -77,6 +77,8 @@ namespace MndpService
             sb.AppendLine("Usage:");
             sb.AppendLine(Assembly.GetEntryAssembly().GetName().Name + " Install - Install Service");
             sb.AppendLine(Assembly.GetEntryAssembly().GetName().Name + " Uninstall - Uninstall Service ");
+            sb.AppendLine(Assembly.GetEntryAssembly().GetName().Name + " Start - Start Service");
+            sb.AppendLine(Assembly.GetEntryAssembly().GetName().Name + " Stop - Stop Service");
 
             return sb.ToString();
         }
@@ -98,6 +100,10 @@ namespace MndpService
                     GoInstall();
                 else if (cmd == "Uninstall".ToUpper())
                     GoUninstall();
+                else if (cmd == "Start".ToUpper())
+                    GoStart();
+                else if (cmd == "Stop".ToUpper())
+                    GoStop();
                 else
                     Console.WriteLine(GetUsage());
 
@@ -121,6 +127,37 @@ namespace MndpService
         {
             ManagedInstallerClass.InstallHelper(new string[] { "/u", Assembly.GetEntryAssembly().Location });
         }
+
+        /// <summary>
+        /// Start Service
+        /// </summary>
+        public static void GoStart()
+        {
+            string ServiceName = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyTitleAttribute>().Title;
+
+            using (ServiceController sc = new ServiceController(ServiceName))
+            {
+                sc.Start();
+            }
+
+            Console.WriteLine("Start Ok!");
+        }
+
+        /// <summary>
+        /// Stop Service
+        /// </summary>
+        public static void GoStop()
+        {
+            string ServiceName = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyTitleAttribute>().Title;
+
+            using (ServiceController sc = new ServiceController(ServiceName))
+            {
+                sc.Stop();
+            }
+
+            Console.WriteLine("Stop Ok!");
+        }
+
         #endregion Static
 
         #region Event handlers
