@@ -22,17 +22,21 @@ MNDP Mikrotik Neighbor Discovery Protocol Tray Application
 * Periodic sends Windows host information over MNDP, Mikrotik routers see it.
 * Auto start after boot
 * Integrated with service installer
+* .Net Core Support (Alpha State Testing in Ubuntu 18.04)
 ```
-MndpService, Version=1.5.1.0, Culture=neutral, PublicKeyToken=null
+MndpService, Version=1.7.0.0, Culture=neutral, PublicKeyToken=d876b79f32e69502
 Usage:
 MndpService Install - Install Service
 MndpService Uninstall - Uninstall Service
+MndpService Start - Start Service
+MndpService Stop - Stop Service
 ```
 
 ## Standalone library:
-*Install via Nuget: [https://www.nuget.org/packages/MndpTray.Protocol/](https://www.nuget.org/packages/MndpTray.Protocol/)
-### Usage: 
-*Try it on .Net Fiddle: [https://dotnetfiddle.net/vMF42n/](https://dotnetfiddle.net/vMF42n/)
+* Install via Nuget: [https://www.nuget.org/packages/MndpTray.Protocol/](https://www.nuget.org/packages/MndpTray.Protocol/)
+
+## Usage: 
+* Try it on .Net Fiddle: [https://dotnetfiddle.net/vMF42n/](https://dotnetfiddle.net/vMF42n/)
 ```C#
 using System;
 using System.Threading;
