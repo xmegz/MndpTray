@@ -4,7 +4,7 @@
     <!--*-->
     <id>MndpTray.Protocol</id>
     <!--*-->
-    <version>1.6.0</version>
+    <version>1.7.0</version>
     <title>MndpTray.Protocol</title>
     <!--*-->
     <authors>Pádár Tamás</authors>
@@ -17,9 +17,13 @@
     <description>Mikrotik Neighbor Discovery Protocol - Network Discovery</description>
     <!--*-->
     <repository type="git" url="https://github.com/xmegz/MndpTray" />
-    <releaseNotes>IPv6 support</releaseNotes>
-    <copyright>Copyright ©  2018</copyright>
-    <tags>Mikrotik Discovery Protocol Network Udp Broadcast Windows Routeros Mndp</tags>
+    <releaseNotes>Increased Mndp send time to 30s,
+Changed Msg encoding to better .Net core support,
+Changed Host BoardName detection,
+Changed Host SoftwareId to return logged in user name,
+Changed Host UpTime calculation</releaseNotes>
+    <copyright>Copyright ©  2018-2019</copyright>
+    <tags>Mikrotik Discovery Protocol Network Udp Broadcast Windows Routeros Mndp Network Beacon</tags>
     <dependencies>
       <!--
       <dependency id="SampleDependency" version="1.0" />
