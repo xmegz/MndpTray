@@ -10,8 +10,8 @@ MNDP Mikrotik Neighbor Discovery Protocol Tray Application
 * Self update from github
 
 ## Screenshots:
-![alt text](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray/Images/screenshot3.png)
-![alt text](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray/Images/screenshot2.png)
+![alt text](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray/Images/screenshot5.png)
+![alt text](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray/Images/screenshot6.png)
 
 ## Tested:
 * Windows 10, Windows 7
