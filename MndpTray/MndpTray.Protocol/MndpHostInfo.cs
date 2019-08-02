@@ -164,13 +164,25 @@ namespace MndpTray.Protocol
                #else
                 {
                     try
-                    {
-                        ManagementScope ms = new ManagementScope("\\\\.\\root\\cimv2");
-                        ObjectQuery query = new ObjectQuery("SELECT * FROM Win32_ComputerSystem");
-                        ManagementObjectSearcher searcher = new ManagementObjectSearcher(ms, query);
-                        foreach (ManagementObject mo in searcher.Get())
+                    {                      
                         {
-                            return mo["UserName"].ToString();
+                            SelectQuery query = new SelectQuery(@"Select * from Win32_Process");
+                            using (ManagementObjectSearcher searcher = new ManagementObjectSearcher(query))
+                            {
+                                foreach (ManagementObject obj in searcher.Get())
+                                {
+                                    string path = obj["ExecutablePath"] as String;
+
+                                    if (path == null) continue;
+                                    if (!path.EndsWith("explorer.exe",StringComparison.InvariantCultureIgnoreCase)) continue;
+                                    
+                                    string[] ownerInfo = new string[2];
+                                    obj.InvokeMethod("GetOwner", (object[])ownerInfo);
+
+                                    return ownerInfo[0];                                    
+                                }
+                            }
+                            return "";
                         }
                     }
 

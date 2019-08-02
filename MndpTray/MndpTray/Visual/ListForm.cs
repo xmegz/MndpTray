@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -69,7 +70,39 @@ namespace MndpTray
                 winboxMenuStrip.Click += this.Winbox_Click;
                 contextMenuStrip.Items.Add(winboxMenuStrip);
 
+                var messageMenuStrip = new ToolStripMenuItem
+                {
+                    Text = "Message"
+                };
+                messageMenuStrip.Click += this.messageMenuStrip_Click;
+                contextMenuStrip.Items.Add(messageMenuStrip);
+
                 contextMenuStrip.Show(this, new Point(e.X, e.Y));
+            }
+        }
+
+       
+
+        private void messageMenuStrip_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string ip = this.GetSelectedIpAddress();              
+                if (ip == null) return;
+
+                string path = this.GetMsgExePath();
+                if (path == null) return;
+
+                MsgBoxForm form = new MsgBoxForm();
+                if (form.ShowDialog() != DialogResult.OK) return;
+                string message = form.MsgText;     
+                
+                System.Diagnostics.Process.Start(path,String.Format("/SERVER:{0} console \"{1}\"",ip, message));
+                
+            }
+            catch (Exception ex)
+            {
+                Program.Log("Exception {0}", ex);
             }
         }
 
@@ -105,6 +138,8 @@ namespace MndpTray
                 Program.Log("Exception {0}", ex);
             }
         }
+
+        
 
         private void Receive_Timer(object sender, EventArgs e)
         {
@@ -171,6 +206,19 @@ namespace MndpTray
         #endregion Event Handlers
 
         #region Methods
+
+        private string GetMsgExePath()
+        {            
+            string[] paths = new string[] { Environment.ExpandEnvironmentVariables(@"%windir%\system32\msg.exe"),
+                                     Environment.ExpandEnvironmentVariables(@"%windir%\sysnative\msg.exe") };
+
+            foreach (string i in paths)
+            {
+                if (File.Exists(i)) return i;                
+            }
+
+            return null;
+        }
 
         private string GetSelectedIpAddress()
         {
