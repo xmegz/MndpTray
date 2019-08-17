@@ -67,7 +67,11 @@ namespace MndpTray
 
         private void Update_Click(object sender, System.EventArgs e)
         {
-            string url = Update.Methods.GetNextVersionDownloadUrl("xmegz", Assembly.GetExecutingAssembly().GetName().Name, Assembly.GetExecutingAssembly().GetName().Version);
+            string repositoryName = "MndpTray";
+            string assetName = Assembly.GetExecutingAssembly().GetName().Name;
+            Version version = Assembly.GetExecutingAssembly().GetName().Version;
+
+            string url = MndpTray.Update.Methods.GetNextVersionDownloadUrl("xmegz", repositoryName, assetName, version);
 
             if (url != null)
             {
@@ -75,8 +79,8 @@ namespace MndpTray
 
                 if (res == DialogResult.Yes)
                 {
-                    byte[] data = Update.Methods.DownloadBinary(url);
-                    Update.Methods.UpdateProgram(Path.GetFullPath(Assembly.GetExecutingAssembly().Location), data);
+                    byte[] data = MndpTray.Update.Methods.DownloadBinary(url);
+                    MndpTray.Update.Methods.UpdateProgram(Path.GetFullPath(Assembly.GetExecutingAssembly().Location), data);
 
                     MessageBox.Show("Update successful, please restart application!", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>0895405e-f8a3-44a1-9188-46edd13080d9</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>MndpTray.Protocol.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)IMndpHostInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IMndpInterfaceInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\Extensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\Log.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MndpHostInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MndpInterfaceInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MndpListener.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MndpMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MndpSender.cs" />
+  </ItemGroup>
+</Project>

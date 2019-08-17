@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Configuration.Install;
+using System.IO;
 using System.Reflection;
 using System.ServiceProcess;
 using System.Text;
@@ -75,10 +76,12 @@ namespace MndpService
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(Assembly.GetEntryAssembly().FullName);
             sb.AppendLine("Usage:");
-            sb.AppendLine(Assembly.GetEntryAssembly().GetName().Name + " Install - Install Service");
-            sb.AppendLine(Assembly.GetEntryAssembly().GetName().Name + " Uninstall - Uninstall Service ");
-            sb.AppendLine(Assembly.GetEntryAssembly().GetName().Name + " Start - Start Service");
-            sb.AppendLine(Assembly.GetEntryAssembly().GetName().Name + " Stop - Stop Service");
+            sb.AppendLine(Assembly.GetEntryAssembly().GetName().Name + " install - Install Service");
+            sb.AppendLine(Assembly.GetEntryAssembly().GetName().Name + " uninstall - Uninstall Service ");
+            sb.AppendLine(Assembly.GetEntryAssembly().GetName().Name + " start - Start Service");            
+            sb.AppendLine(Assembly.GetEntryAssembly().GetName().Name + " stop - Stop Service");
+            sb.AppendLine(Assembly.GetEntryAssembly().GetName().Name + " update - Update Service");
+            sb.AppendLine(Assembly.GetEntryAssembly().GetName().Name + " restart - Restart Service");
 
             return sb.ToString();
         }
@@ -104,6 +107,13 @@ namespace MndpService
                     GoStart();
                 else if (cmd == "Stop".ToUpper())
                     GoStop();
+                else if (cmd == "Update".ToUpper())
+                    GoUpdate();
+                else if (cmd == "Restart".ToUpper())
+                {
+                    GoStop();                    
+                    GoStart();
+                }
                 else
                     Console.WriteLine(GetUsage());
 
@@ -135,9 +145,12 @@ namespace MndpService
         {
             string ServiceName = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyTitleAttribute>().Title;
 
+            Console.WriteLine("Starting...");
+
             using (ServiceController sc = new ServiceController(ServiceName))
             {
                 sc.Start();
+                sc.WaitForStatus(ServiceControllerStatus.Running, new TimeSpan(0, 0, 10));
             }
 
             Console.WriteLine("Start Ok!");
@@ -150,12 +163,40 @@ namespace MndpService
         {
             string ServiceName = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyTitleAttribute>().Title;
 
+            Console.WriteLine("Stopping...");
+
             using (ServiceController sc = new ServiceController(ServiceName))
             {
                 sc.Stop();
+                sc.WaitForStatus(ServiceControllerStatus.Stopped, new TimeSpan(0, 0, 10));
             }
 
             Console.WriteLine("Stop Ok!");
+        }
+
+        public static void GoUpdate()
+        {
+            string repositoryName = "MndpTray";
+            string assetName = Assembly.GetExecutingAssembly().GetName().Name;
+            Version version = Assembly.GetExecutingAssembly().GetName().Version;
+
+            string url = MndpTray.Update.Methods.GetNextVersionDownloadUrl("xmegz", repositoryName, assetName, version);
+
+            if (url != null)
+            {
+                Console.WriteLine("New release found");
+                
+                byte[] data = MndpTray.Update.Methods.DownloadBinary(url);
+                MndpTray.Update.Methods.UpdateProgram(Path.GetFullPath(Assembly.GetExecutingAssembly().Location), data);
+
+                Console.WriteLine("Update successful, please restart application!");                
+            }
+            else
+            {
+                Console.WriteLine("New release not found!");
+            }
+
+            Console.WriteLine("Update Ok!");
         }
 
         #endregion Static

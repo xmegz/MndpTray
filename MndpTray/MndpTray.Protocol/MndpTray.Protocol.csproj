@@ -37,7 +37,8 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -51,23 +52,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IMndpHostInfo.cs" />
-    <Compile Include="IMndpInterfaceInfo.cs" />
-    <Compile Include="Internal\Log.cs" />
-    <Compile Include="Internal\Extensions.cs" />
-    <Compile Include="MndpInterfaceInfo.cs" />
-    <Compile Include="MndpHostInfo.cs" />
-    <Compile Include="MndpListener.cs" />
-    <Compile Include="MndpMessage.cs" />
-    <Compile Include="MndpSender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="key.snk" />
     <None Include="package.nuspec">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup />
+  <Import Project="..\MndpTray.Protocol.Shared\MndpTray.Protocol.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

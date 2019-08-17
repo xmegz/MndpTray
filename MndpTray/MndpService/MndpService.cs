@@ -26,7 +26,8 @@ namespace MndpService
         protected override void OnStart(string[] args)
         {
             this.EventLog.WriteEntry("Start:" + Assembly.GetEntryAssembly().ToString());
-            Program.Log("------------------< START >------------------");
+            Log.SetInfoAction(Program.Log);
+            Program.Log("------------------< START >------------------");            
             MndpSender.Instance.Start(MndpHostInfo.Instance);
         }
 

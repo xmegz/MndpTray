@@ -31,7 +31,7 @@ namespace MndpTray.Protocol
         #endregion Static
 
         #region Props
-    
+
         /// <summary>
         /// Host board name (x86)
         /// </summary>
@@ -40,7 +40,7 @@ namespace MndpTray.Protocol
             get
             {
                 try
-                {                    
+                {
                     return (System.Environment.Is64BitOperatingSystem) ? "x64" : "x86";
                 }
                 catch (Exception ex)
@@ -72,7 +72,6 @@ namespace MndpTray.Protocol
             }
         }
 
-
         /// <summary>
         /// Host interface info
         /// </summary>
@@ -101,7 +100,6 @@ namespace MndpTray.Protocol
                                     var broadcastInt = addressInt | ~maskInt;
                                     var broadcast = new IPAddress(BitConverter.GetBytes(broadcastInt));
                                     var ipv6Address = addresses.Where(a => a.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6).FirstOrDefault()?.Address;
-
 
                                     ret.Add(new MndpInterfaceInfo(broadcast.ToString(), @interface.Name, @interface.GetPhysicalAddress().ToString(), unicastAddress.Address.ToString(), ipv6Address?.ToString()));
                                 }
@@ -157,35 +155,59 @@ namespace MndpTray.Protocol
         {
             get
             {
-               #if (NETCOREAPP2_1)
-               {
+#if (NETCOREAPP2_1)
+                {
                     return String.Empty;
-               }
-               #else
+                }
+#else
                 {
                     try
-                    {                      
+                    {
+                        using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT UserName FROM Win32_ComputerSystem"))
                         {
-                            SelectQuery query = new SelectQuery(@"Select * from Win32_Process");
-                            using (ManagementObjectSearcher searcher = new ManagementObjectSearcher(query))
+                            foreach (ManagementObject queryObj in searcher.Get())
                             {
-                                foreach (ManagementObject obj in searcher.Get())
-                                {
-                                    string path = obj["ExecutablePath"] as String;
+                                string userName = null;
 
-                                    if (path == null) continue;
-                                    if (!path.EndsWith("explorer.exe",StringComparison.InvariantCultureIgnoreCase)) continue;
-                                    
-                                    string[] ownerInfo = new string[2];
-                                    obj.InvokeMethod("GetOwner", (object[])ownerInfo);
+                                var obj = queryObj["UserName"];
 
-                                    return ownerInfo[0];                                    
-                                }
+                                if (obj == null) continue;
+
+                                userName = obj.ToString();
+
+                                if (String.IsNullOrEmpty(userName)) continue;
+
+                                userName = userName.Substring(userName.LastIndexOf('\\') + 1);
+
+                                if (String.IsNullOrEmpty(userName)) continue;
+
+                                return userName;
                             }
-                            return "";
                         }
-                    }
 
+                        using (ManagementObjectSearcher searcher = new ManagementObjectSearcher(new SelectQuery(@"Select * from Win32_Process")))
+                        {
+                            foreach (ManagementObject obj in searcher.Get())
+                            {
+                                string path = obj["ExecutablePath"] as String;
+
+                                if (String.IsNullOrEmpty(path)) continue;
+
+                                if (!path.EndsWith("explorer.exe", StringComparison.InvariantCultureIgnoreCase)) continue;
+
+                                string[] ownerInfo = new string[2];
+                                obj.InvokeMethod("GetOwner", (object[])ownerInfo);
+
+                                if (ownerInfo == null) continue;
+
+                                if (String.IsNullOrEmpty(ownerInfo[0])) continue;
+
+                                return ownerInfo[0];
+                            }
+                        }
+
+                        return "";
+                    }
                     catch (Exception ex)
                     {
                         Log.Exception(nameof(MndpHostInfo), nameof(this.SoftwareId), ex);
@@ -193,7 +215,7 @@ namespace MndpTray.Protocol
 
                     return String.Empty;
                 }
-               #endif
+#endif
             }
         }
 
@@ -210,7 +232,6 @@ namespace MndpTray.Protocol
             }
         }
 
-
         /// <summary>
         /// Host software version (From Registry ProductName)
         /// </summary>
@@ -223,9 +244,8 @@ namespace MndpTray.Protocol
 #if (NETCOREAPP2_1)
                     return MndpService.Core.PlatformSpec.GetOsVersion();
 #else
-                    return Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName", "").ToString();                    
+                    return Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName", "").ToString();
 #endif
-
                 }
                 catch (Exception ex)
                 {
@@ -236,6 +256,7 @@ namespace MndpTray.Protocol
             }
         }
 
-#endregion Props      
+        #endregion Props
+
     }
 }

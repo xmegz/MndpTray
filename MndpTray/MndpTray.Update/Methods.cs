@@ -41,8 +41,9 @@ namespace MndpTray.Update
         /// <param name="repositoryName">Github repository name</param>
         /// <param name="curVersion">Current assembly version</param>
         /// <returns>Next release download url is available, else null</returns>
-        public static string GetNextVersionDownloadUrl(string author, string repositoryName, Version curVersion)
+        public static string GetNextVersionDownloadUrl(string author, string repositoryName, string assetName, Version curVersion)
         {
+            if (assetName == null) assetName = repositoryName;
             string releaseStr = GetReleasesFromApi(author, repositoryName);
 
             List<release> list = DeserializeResponse<List<release>>(releaseStr);
@@ -51,7 +52,7 @@ namespace MndpTray.Update
 
             if (ReleaseIsNewer(max, curVersion))
             {
-                return GetReleaseDownloadUrl(max, repositoryName);
+                return GetReleaseDownloadUrl(max, assetName);
             }
 
             return null;
@@ -160,8 +161,7 @@ namespace MndpTray.Update
                 data = responseReader.ReadToEnd();
             }
 
-            Program.Log("{0}", data);
-
+           
             return data;
         }
 
