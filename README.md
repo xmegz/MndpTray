@@ -8,7 +8,7 @@ This protocol similar to CDP and LLDP, but Mikrotik specific
 * Listens to MNDP messsages and put them to list
 * Blocking winbox discovery function when running
 * Tooltip list to open with SSH,VNC,RDP,HTTP,PING protocol
-* Send message over windows message service
+* Send message over windows message service (Remote RPC)
 * IPv4 & IPv6 support
 * Self update from github
 
