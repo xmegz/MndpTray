@@ -6,6 +6,7 @@ MNDP Mikrotik Neighbor Discovery Protocol Tray Application
 * Listens to MNDP messsages and put them to list
 * Blocking winbox discovery function when running
 * Tooltip list to open with SSH,VNC,RDP,HTTP,PING protocol
+* Send message over windows message service
 * IPv4 & IPv6 support
 * Self update from github
 
