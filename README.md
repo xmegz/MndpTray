@@ -1,5 +1,7 @@
 # MndpTray [![Build status](https://ci.appveyor.com/api/projects/status/decjg2rq0hwn77rq?svg=true)](https://ci.appveyor.com/project/xmegz/mndptray)
-MNDP Mikrotik Neighbor Discovery Protocol Tray Application
+MNDP - Mikrotik Neighbor Discovery Protocol - Tray Application
+
+This protocol similar to CDP and LLDP, but Mikrotik specific
 
 ## Functions:
 * Periodic sends Windows host information over MNDP, Mikrotik routers see it.
@@ -11,7 +13,7 @@ MNDP Mikrotik Neighbor Discovery Protocol Tray Application
 * Self update from github
 
 ## Screenshots:
-![alt text](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray/Images/screenshot4.png)
+![alt text](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray/Images/screenshot6.png)
 ![alt text](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray/Images/screenshot5.png)
 
 ## Tested:
@@ -23,6 +25,7 @@ MNDP Mikrotik Neighbor Discovery Protocol Tray Application
 * Periodic sends Windows host information over MNDP, Mikrotik routers see it.
 * Auto start after boot
 * Integrated with service installer
+* Self update from github
 * .Net Core Support (Alpha State Testing in Ubuntu 18.04)
 ```
 MndpService, Version=1.8.0.0, Culture=neutral, PublicKeyToken=d876b79f32e69502
