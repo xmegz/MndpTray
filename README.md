@@ -25,12 +25,14 @@ MNDP Mikrotik Neighbor Discovery Protocol Tray Application
 * Integrated with service installer
 * .Net Core Support (Alpha State Testing in Ubuntu 18.04)
 ```
-MndpService, Version=1.7.0.0, Culture=neutral, PublicKeyToken=d876b79f32e69502
+MndpService, Version=1.8.0.0, Culture=neutral, PublicKeyToken=d876b79f32e69502
 Usage:
-MndpService Install - Install Service
-MndpService Uninstall - Uninstall Service
-MndpService Start - Start Service
-MndpService Stop - Stop Service
+MndpService install - Install Service
+MndpService uninstall - Uninstall Service
+MndpService start - Start Service
+MndpService stop - Stop Service
+MndpService update - Update Service
+MndpService restart - Restart Service
 ```
 
 ## Standalone library:
