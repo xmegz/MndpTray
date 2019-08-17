@@ -4,7 +4,7 @@
     <!--*-->
     <id>MndpTray.Protocol</id>
     <!--*-->
-    <version>1.7.0</version>
+    <version>1.8.0</version>
     <title>MndpTray.Protocol</title>
     <!--*-->
     <authors>Pádár Tamás</authors>
@@ -17,13 +17,14 @@
     <description>Mikrotik Neighbor Discovery Protocol - Network Discovery</description>
     <!--*-->
     <repository type="git" url="https://github.com/xmegz/MndpTray" />
-    <releaseNotes>Increased Mndp send time to 30s,
-Changed Msg encoding to better .Net core support,
-Changed Host BoardName detection,
-Changed Host SoftwareId to return logged in user name,
-Changed Host UpTime calculation</releaseNotes>
+    <releaseNotes>New: message sending over Windows msg.exe
+New: shared lib for protocol
+New: shared lib for update
+Improved: current console session user name query
+Improved: service update
+Improved: service restart</releaseNotes>
     <copyright>Copyright ©  2018-2019</copyright>
-    <tags>Mikrotik Discovery Protocol Network Udp Broadcast Windows Routeros Mndp Network Beacon</tags>
+    <tags>Mikrotik Discovery Protocol Network Udp Broadcast Windows Routeros Mndp Network Beacon Cdp Lldp</tags>
     <dependencies>
       <!--
       <dependency id="SampleDependency" version="1.0" />
