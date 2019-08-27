@@ -18,7 +18,7 @@ This protocol similar to CDP and LLDP, but Mikrotik specific
 ![alt text](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray/Images/screenshot5.png)
 
 ## Tested:
-* Windows 10, Windows 7
+* Windows 10, Windows 7, Windows Server 2012 R2, Windows Server 2016
 * Single and multiple NIC
 * .NET 4.5.2
 
