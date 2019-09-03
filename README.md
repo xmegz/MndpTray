@@ -13,6 +13,8 @@ This protocol similar to CDP and LLDP, but Mikrotik specific
 * IPv4 & IPv6 support
 * Self update from github
 
+## Download: [Latest](https://github.com/xmegz/MndpTray/releases/download/v1.8.0/MndpTray.exe)
+
 ## Screenshots:
 ![alt text](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray/Images/screenshot6.png)
 ![alt text](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray/Images/screenshot5.png)
