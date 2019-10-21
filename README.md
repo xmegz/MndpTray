@@ -29,7 +29,7 @@ This protocol similar to CDP and LLDP, but Mikrotik specific
 * Auto start after boot
 * Integrated with service installer
 * Self update from github
-* .Net Core Support (Alpha State Testing in Ubuntu 18.04)
+* .Net Core Support (Alpha State Testing at Ubuntu 18.04)
 ```
 MndpService, Version=1.8.0.0, Culture=neutral, PublicKeyToken=d876b79f32e69502
 Usage:
