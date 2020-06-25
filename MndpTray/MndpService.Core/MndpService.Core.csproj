@@ -10,7 +10,15 @@
     <Version>1.8.0</Version>
     <PackageLicenseUrl />
     <RepositoryUrl>https://github.com/xmegz/MndpTray</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
 
   <Import Project="..\MndpTray.Protocol.Shared\MndpTray.Protocol.Shared.projitems" Label="Shared" />
 
