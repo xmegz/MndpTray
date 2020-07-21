@@ -33,8 +33,6 @@
 
         #endregion Static
 
-        
-
         #region Fields
 
         private readonly ConcurrentDictionary<string, MndpMessageEx> _dictMessages = new ConcurrentDictionary<string, MndpMessageEx>();

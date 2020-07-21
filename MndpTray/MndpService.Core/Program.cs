@@ -17,8 +17,6 @@ namespace MndpService.Core
             Console.CancelKeyPress += Console_CancelKeyPress;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-            
-
             Start();
 
             while (true)

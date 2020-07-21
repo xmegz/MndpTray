@@ -56,8 +56,6 @@
             }
         }
 
-     
-
         #region Event Handlers
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
