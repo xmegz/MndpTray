@@ -1,10 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
-using System.Windows.Forms;
-
-namespace MndpTray
+﻿namespace MndpTray
 {
+    using System;
+    using System.IO;
+    using System.Reflection;
+    using System.Windows.Forms;
+
     public static class Program
     {
         [STAThread]
@@ -12,7 +12,9 @@ namespace MndpTray
         {
             string processName = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
             if (System.Diagnostics.Process.GetProcessesByName(processName).Length > 1)
+            {
                 return;
+            }
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
@@ -32,36 +34,11 @@ namespace MndpTray
 
         #endregion Fields
 
-        #region Event Handlers
-
-        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            try
-            {
-                Log("CurrentDomain_UnhandledException {0}", e.ExceptionObject.ToString());
-            }
-            catch { }
-        }
-
-        #endregion Event Handlers
-
-        #region Methods
-
-        public static string GetLogFileName(string extension)
-        {
-            Assembly assembly = Assembly.GetEntryAssembly();
-            string dir = Path.GetDirectoryName(assembly.Location);
-            string file = Path.GetFileNameWithoutExtension(assembly.Location);
-
-            file = Path.Combine(dir, file);
-            return file + "." + extension;
-        }
-
         public static void Log(string format, params object[] args)
         {
             try
             {
-                String str = String.Format(format, args);
+                string str = string.Format(format, args);
                 System.Diagnostics.Debug.WriteLine(str);
 
                 str = string.Concat("<", DateTime.Now.ToString(), "> ", str, Environment.NewLine);
@@ -74,9 +51,36 @@ namespace MndpTray
                     }
                 }
             }
-            catch { }
+            catch
+            {
+            }
         }
 
-        #endregion Methods
+     
+
+        #region Event Handlers
+
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            try
+            {
+                Log("CurrentDomain_UnhandledException {0}", e.ExceptionObject.ToString());
+            }
+            catch
+            {
+            }
+        }
+
+        #endregion Event Handlers
+
+        private static string GetLogFileName(string extension)
+        {
+            Assembly assembly = Assembly.GetEntryAssembly();
+            string dir = Path.GetDirectoryName(assembly.Location);
+            string file = Path.GetFileNameWithoutExtension(assembly.Location);
+
+            file = Path.Combine(dir, file);
+            return file + "." + extension;
+        }
     }
 }

@@ -1,28 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Runtime.Serialization.Json;
-using System.Text;
-
-namespace MndpTray.Update
+﻿namespace MndpTray.Update
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Net;
+    using System.Runtime.Serialization.Json;
+    using System.Text;
+
+    /// <summary>
+    /// Update methods.
+    /// </summary>
     public static class Methods
     {
-        #region Public 
+        #region Public
 
         /// <summary>
-        /// Download binary content from web
+        /// Download binary content from web.
         /// </summary>
-        /// <param name="url">target url</param>
-        /// <returns>target content</returns>
+        /// <param name="url">target url.</param>
+        /// <returns>target content.</returns>
         public static byte[] DownloadBinary(string url)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             HttpWebRequest webRequest = System.Net.WebRequest.Create(url) as HttpWebRequest;
             webRequest.Method = "GET";
             webRequest.UserAgent = "download";
-        
+
             MemoryStream ms = new MemoryStream();
             WebResponse response = webRequest.GetResponse();
 
@@ -35,15 +38,20 @@ namespace MndpTray.Update
         }
 
         /// <summary>
-        /// Get next version download url if available
+        /// Get next version download url if available.
         /// </summary>
-        /// <param name="author">Github author</param>
-        /// <param name="repositoryName">Github repository name</param>
-        /// <param name="curVersion">Current assembly version</param>
-        /// <returns>Next release download url is available, else null</returns>
+        /// <param name="author">Github author.</param>
+        /// <param name="repositoryName">Github repository name.</param>
+        /// <param name="assetName">Github asset name.</param>
+        /// <param name="curVersion">Current assembly version.</param>
+        /// <returns>Next release download url is available, else null.</returns>
         public static string GetNextVersionDownloadUrl(string author, string repositoryName, string assetName, Version curVersion)
         {
-            if (assetName == null) assetName = repositoryName;
+            if (assetName == null)
+            {
+                assetName = repositoryName;
+            }
+
             string releaseStr = GetReleasesFromApi(author, repositoryName);
 
             List<release> list = DeserializeResponse<List<release>>(releaseStr);
@@ -59,18 +67,25 @@ namespace MndpTray.Update
         }
 
         /// <summary>
-        /// Update method to running programs
+        /// Update method to running programs.
         /// </summary>
-        /// <param name="fileName">Program file name</param>
-        /// <param name="data">New program file content</param>
+        /// <param name="fileName">Program file name.</param>
+        /// <param name="data">New program file content.</param>
         public static void UpdateProgram(string fileName, byte[] data)
         {
             string curName = fileName;
             string oldName = fileName + ".old";
             string newName = fileName + ".new";
 
-            if (File.Exists(newName)) File.Delete(newName);
-            if (File.Exists(oldName)) File.Delete(oldName);
+            if (File.Exists(newName))
+            {
+                File.Delete(newName);
+            }
+
+            if (File.Exists(oldName))
+            {
+                File.Delete(oldName);
+            }
 
             File.WriteAllBytes(newName, data);
             File.Move(curName, oldName);
@@ -79,7 +94,7 @@ namespace MndpTray.Update
 
         #endregion
 
-        #region Private 
+        #region Private
 
         private static T DeserializeResponse<T>(string data)
         {
@@ -93,7 +108,10 @@ namespace MndpTray.Update
 
         private static release GetMaxRelease(List<release> list)
         {
-            if (list == null) return null;
+            if (list == null)
+            {
+                return null;
+            }
 
             release ret = null;
 
@@ -129,8 +147,15 @@ namespace MndpTray.Update
 
         private static string GetReleaseDownloadUrl(release data, string assetName)
         {
-            if (data == null) return null;
-            if (data.assets == null) return null;
+            if (data == null)
+            {
+                return null;
+            }
+
+            if (data.assets == null)
+            {
+                return null;
+            }
 
             foreach (var i in data.assets)
             {
@@ -142,6 +167,7 @@ namespace MndpTray.Update
                     }
                 }
             }
+
             return null;
         }
 
@@ -161,7 +187,6 @@ namespace MndpTray.Update
                 data = responseReader.ReadToEnd();
             }
 
-           
             return data;
         }
 
@@ -169,14 +194,25 @@ namespace MndpTray.Update
         {
             List<int> ret = new List<int>();
 
-            if (data == null) return ret;
-            if (data.tag_name == null) return ret;
+            if (data == null)
+            {
+                return ret;
+            }
 
-            String[] parts = data.tag_name.ToLower().TrimStart('v').Split('.');
+            if (data.tag_name == null)
+            {
+                return ret;
+            }
+
+            string[] parts = data.tag_name.ToLower().TrimStart('v').Split('.');
 
             foreach (var i in parts)
             {
-                if (!int.TryParse(i, out int j)) break;
+                if (!int.TryParse(i, out int j))
+                {
+                    break;
+                }
+
                 ret.Add(j);
             }
 
@@ -185,19 +221,36 @@ namespace MndpTray.Update
 
         private static bool ReleaseIsNewer(release data, Version curVersion)
         {
-            if (data == null) return false;
+            if (data == null)
+            {
+                return false;
+            }
 
             var nextVersion = GetReleaseVersion(data);
 
-            if (nextVersion.Count < 3) return false;
+            if (nextVersion.Count < 3)
+            {
+                return false;
+            }
 
-            if (nextVersion[0] > curVersion.Major) return true;
+            if (nextVersion[0] > curVersion.Major)
+            {
+                return true;
+            }
+
             if (nextVersion[0] == curVersion.Major)
             {
-                if (nextVersion[1] > curVersion.Minor) return true;
+                if (nextVersion[1] > curVersion.Minor)
+                {
+                    return true;
+                }
+
                 if (nextVersion[1] == curVersion.Minor)
                 {
-                    if (nextVersion[2] > curVersion.Build) return true;
+                    if (nextVersion[2] > curVersion.Build)
+                    {
+                        return true;
+                    }
                 }
             }
 

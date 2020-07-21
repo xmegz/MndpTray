@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Net.NetworkInformation;
-using System.Text;
-
-namespace MndpTray.Protocol
+﻿namespace MndpTray.Protocol
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Net;
+    using System.Net.NetworkInformation;
+    using System.Text;
+
     /// <summary>
-    /// Mikrotik discovery message
+    /// Mikrotik discovery message .
     /// </summary>
     public class MndpMessage
     {
@@ -30,67 +30,67 @@ namespace MndpTray.Protocol
         #region Props
 
         /// <summary>
-        /// Sender board name
+        /// Gets or sets sender board name.
         /// </summary>
         public string BoardName { get; set; }
 
         /// <summary>
-        /// Sender device name
+        /// Gets or sets sender device name.
         /// </summary>
         public string Identity { get; set; }
 
         /// <summary>
-        /// Sender interface name
+        /// Gets or sets sender interface name.
         /// </summary>
         public string InterfaceName { get; set; }
 
         /// <summary>
-        /// Sender unicast IPv6 address
+        /// Gets or sets sender unicast IPv6 address.
         /// </summary>
         public string UnicastIPv6Address { get; set; }
 
         /// <summary>
-        /// Sender mac address
+        /// Gets or sets sender mac address.
         /// </summary>
         public string MacAddress { get; set; }
 
         /// <summary>
-        /// Sender platform
+        /// Gets or sets sender platform.
         /// </summary>
         public string Platform { get; set; }
 
         /// <summary>
-        /// Send sequence number
+        /// Gets or sets send sequence number.
         /// </summary>
         public ushort Sequence { get; set; }
 
         /// <summary>
-        /// Sender software id
+        /// Gets or sets sender software id.
         /// </summary>
         public string SoftwareId { get; set; }
 
         /// <summary>
-        /// ???
+        /// Gets or sets ???.
         /// </summary>
         public byte Ttl { get; set; }
 
         /// <summary>
-        /// ???
+        /// Gets or sets ???.
         /// </summary>
         public byte Type { get; set; }
 
         /// <summary>
-        /// ???
+        /// Gets or sets ???.
         /// </summary>
         public byte Unpack { get; set; }
 
         /// <summary>
-        /// Time elapsed since sender boot
+        /// Gets or sets time elapsed since sender boot.
         /// </summary>
         public TimeSpan Uptime { get; set; }
 
         /// <summary>
-        /// Sender software version
+        /// Gets or sets sender software version.
         /// </summary>
         public string Version { get; set; }
 
@@ -99,10 +99,10 @@ namespace MndpTray.Protocol
         #region Methods
 
         /// <summary>
-        /// Parse from raw udp data bytes
+        /// Parse from raw udp data bytes.
         /// </summary>
-        /// <param name="data">raw udp data</param>
-        /// <returns>Parse is sucess?</returns>
+        /// <param name="data">raw udp data.</param>
+        /// <returns>Parse is sucess? .</returns>
         public bool Read(byte[] data)
         {
             try
@@ -110,7 +110,10 @@ namespace MndpTray.Protocol
                 var tlvMessage = new TlvMessage();
                 bool ok = tlvMessage.Read(data);
 
-                if (!ok) return false;
+                if (!ok)
+                {
+                    return false;
+                }
 
                 var enc = Encoding.GetEncoding(28591);
 
@@ -172,16 +175,16 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Log.Exception(nameof(MndpMessage), nameof(Read), ex);
+                Log.Exception(nameof(MndpMessage), nameof(this.Read), ex);
             }
 
             return false;
         }
 
         /// <summary>
-        /// Debug message
+        /// Debug message.
         /// </summary>
-        /// <returns>Debug string</returns>
+        /// <returns>Debug string.</returns>
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -204,9 +207,9 @@ namespace MndpTray.Protocol
         }
 
         /// <summary>
-        /// Convert message to raw udp data
+        /// Convert message to raw udp data.
         /// </summary>
-        /// <returns>Raw udp data</returns>
+        /// <returns>Raw udp data.</returns>
         public byte[] Write()
         {
             try
@@ -217,7 +220,7 @@ namespace MndpTray.Protocol
                 {
                     Type = this.Type,
                     Ttl = this.Ttl,
-                    Sequence = this.Sequence
+                    Sequence = this.Sequence,
                 };
 
                 var enc = Encoding.GetEncoding(28591);
@@ -264,7 +267,10 @@ namespace MndpTray.Protocol
 
                         case TLV_TYPE_IPV6:
                             if (this.UnicastIPv6Address != null)
+                            {
                                 tlvMessage.Items.Add(new Tlv(i, IPAddress.Parse(this.UnicastIPv6Address).GetAddressBytes()));
+                            }
+
                             break;
 
                         default: break;
@@ -273,13 +279,16 @@ namespace MndpTray.Protocol
 
                 bool ok = tlvMessage.Write(out byte[] data);
 
-                if (!ok) return null;
+                if (!ok)
+                {
+                    return null;
+                }
 
                 return data;
             }
             catch (Exception ex)
             {
-                Log.Exception(nameof(MndpMessage), nameof(Write), ex);
+                Log.Exception(nameof(MndpMessage), nameof(this.Write), ex);
             }
 
             return null;
@@ -288,44 +297,23 @@ namespace MndpTray.Protocol
         #endregion Methods
 
         /// <summary>
-        /// T=Type , L=Length , V=Value
+        /// T=Type , L=Length , V=Value .
         /// </summary>
         protected class Tlv
         {
-            #region Props
-
             /// <summary>
-            /// Record type
-            /// </summary>
-            public ushort Type { get; set; }
-
-            /// <summary>
-            /// Record length
-            /// </summary>
-            public ushort Length { get; set; }
-
-            /// <summary>
-            /// Record vlue
-            /// </summary>
-            public byte[] Value { get; set; }
-
-            #endregion Props
-
-            #region Methods
-
-            /// <summary>
-            /// Constructor
+            /// Initializes a new instance of the <see cref="Tlv"/> class.
             /// </summary>
             public Tlv()
             {
             }
 
             /// <summary>
-            /// Constructor
+            /// Initializes a new instance of the <see cref="Tlv"/> class.
             /// </summary>
-            /// <param name="type">Record type</param>
-            /// <param name="length">Record length</param>
-            /// <param name="value">Record value</param>
+            /// <param name="type">Record type.</param>
+            /// <param name="length">Record length.</param>
+            /// <param name="value">Record value.</param>
             public Tlv(ushort type, ushort length, byte[] value)
             {
                 this.Type = type;
@@ -334,38 +322,62 @@ namespace MndpTray.Protocol
             }
 
             /// <summary>
-            /// Constructor
+            /// Initializes a new instance of the <see cref="Tlv"/> class.
             /// </summary>
-            /// <param name="type">Record type</param>
-            /// <param name="data">Record value</param>
-            public Tlv(ushort type, byte[] data) : this(type, (ushort)(data?.Length ?? 0), data)
+            /// <param name="type">Record type.</param>
+            /// <param name="data">Record value.</param>
+            public Tlv(ushort type, byte[] data)
+                : this(type, (ushort)(data?.Length ?? 0), data)
             {
             }
 
             /// <summary>
-            /// Constructor
+            /// Initializes a new instance of the <see cref="Tlv"/> class.
             /// </summary>
-            /// <param name="type">Record type</param>
-            /// <param name="data">Record value</param>
-            public Tlv(ushort type, uint data) : this(type, BitConverter.GetBytes(data))
+            /// <param name="type">Record type.</param>
+            /// <param name="data">Record value.</param>
+            public Tlv(ushort type, uint data)
+                : this(type, BitConverter.GetBytes(data))
             {
             }
 
             /// <summary>
-            /// Constructor
+            /// Initializes a new instance of the <see cref="Tlv"/> class.
             /// </summary>
-            /// <param name="type">Record type</param>
-            /// <param name="data">Record value</param>
-            /// <param name="encoding">Record value encoding</param>
-            public Tlv(ushort type, string data, Encoding encoding) : this(type, data != null ? encoding?.GetBytes(data) : new byte[0])
+            /// <param name="type">Record type.</param>
+            /// <param name="data">Record value.</param>
+            /// <param name="encoding">Record value encoding.</param>
+            public Tlv(ushort type, string data, Encoding encoding)
+                : this(type, data != null ? encoding?.GetBytes(data) : new byte[0])
             {
             }
 
+            #region Props
+
             /// <summary>
-            /// Read record from BinaryReader
+            /// Gets or sets record type.
             /// </summary>
-            /// <param name="br">BinaryReader object</param>
-            /// <returns>Is sucess?</returns>
+            public ushort Type { get; set; }
+
+            /// <summary>
+            /// Gets or sets Record length.
+            /// </summary>
+            public ushort Length { get; set; }
+
+            /// <summary>
+            /// Gets or sets record value.
+            /// </summary>
+            public byte[] Value { get; set; }
+
+            #endregion Props
+
+            #region Methods
+
+            /// <summary>
+            /// Read record from BinaryReader.
+            /// </summary>
+            /// <param name="br">BinaryReader object.</param>
+            /// <returns>Is sucess?.</returns>
             public virtual bool Read(BinaryReader br)
             {
                 try
@@ -375,26 +387,28 @@ namespace MndpTray.Protocol
                     this.Value = br.ReadBytes(this.Length);
 
                     if (this.Length > 1400)
+                    {
                         throw new Exception("Tlv too long!");
+                    }
 
                     return true;
                 }
                 catch (Exception ex)
                 {
-                    Log.Exception(nameof(Tlv), nameof(Read), ex);
+                    Log.Exception(nameof(Tlv), nameof(this.Read), ex);
                 }
 
                 return false;
             }
 
             /// <summary>
-            /// Debug TLV
+            /// Debug TLV.
             /// </summary>
-            /// <returns>Debug string</returns>
+            /// <returns>Debug string.</returns>
             public override string ToString()
             {
-                var valueHex = "";
-                var valueStr = "";
+                var valueHex = string.Empty;
+                var valueStr = string.Empty;
 
                 if (this.Value != null)
                 {
@@ -402,14 +416,14 @@ namespace MndpTray.Protocol
                     valueStr = Encoding.GetEncoding(28591).GetString(this.Value);
                 }
 
-                return String.Format("T:{0}, L:{1}, V:{2}, VS:{3}", this.Type, this.Length, valueHex, valueStr);
+                return string.Format("T:{0}, L:{1}, V:{2}, VS:{3}", this.Type, this.Length, valueHex, valueStr);
             }
 
             /// <summary>
-            /// Write TLV to BinaryWriter
+            /// Write TLV to BinaryWriter.
             /// </summary>
-            /// <param name="bw">BinaryWriter object</param>
-            /// <returns>Is success?</returns>
+            /// <param name="bw">BinaryWriter object.</param>
+            /// <returns>Is success?.</returns>
             public virtual bool Write(BinaryWriter bw)
             {
                 try
@@ -422,7 +436,7 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    Log.Exception(nameof(Tlv), nameof(Write), ex);
+                    Log.Exception(nameof(Tlv), nameof(this.Write), ex);
                 }
 
                 return false;
@@ -432,29 +446,29 @@ namespace MndpTray.Protocol
         }
 
         /// <summary>
-        /// Message in TLV collection format
+        /// Message in TLV collection format.
         /// </summary>
         protected class TlvMessage
         {
             #region Props
 
             /// <summary>
-            /// TLV record list
+            /// Gets or sets TLV record list.
             /// </summary>
             public List<Tlv> Items { get; set; } = new List<Tlv>();
 
             /// <summary>
-            /// Sequence number
+            /// Gets or sets sequence number.
             /// </summary>
             public ushort Sequence { get; set; }
 
             /// <summary>
-            /// ???
+            /// Gets or sets ???.
             /// </summary>
             public byte Ttl { get; set; }
 
             /// <summary>
-            /// ???
+            /// Gets or sets ???.
             /// </summary>
             public byte Type { get; set; }
 
@@ -463,10 +477,10 @@ namespace MndpTray.Protocol
             #region Methods
 
             /// <summary>
-            /// Read all records from BinaryReader
+            /// Read all records from BinaryReader.
             /// </summary>
-            /// <param name="br">BinaryReader object</param>
-            /// <returns>Is sucess?</returns>
+            /// <param name="br">BinaryReader object.</param>
+            /// <returns>Is sucess? .</returns>
             public bool Read(BinaryReader br)
             {
                 this.Type = br.ReadByte();
@@ -477,7 +491,11 @@ namespace MndpTray.Protocol
                 {
                     var item = new Tlv();
                     bool ok = item.Read(br);
-                    if (!ok) return false;
+                    if (!ok)
+                    {
+                        return false;
+                    }
+
                     this.Items.Add(item);
                 }
 
@@ -485,10 +503,10 @@ namespace MndpTray.Protocol
             }
 
             /// <summary>
-            /// Parse TLV records from raw udp data
+            /// Parse TLV records from raw udp data.
             /// </summary>
-            /// <param name="data">raw udp data</param>
-            /// <returns>Is success?</returns>
+            /// <param name="data">raw udp data.</param>
+            /// <returns>Is success?.</returns>
             public bool Read(byte[] data)
             {
                 try
@@ -511,26 +529,26 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    Log.Exception(nameof(TlvMessage), nameof(Read), ex);
+                    Log.Exception(nameof(TlvMessage), nameof(this.Read), ex);
                 }
 
                 return false;
             }
 
             /// <summary>
-            /// Debug TLV message
+            /// Debug TLV message.
             /// </summary>
-            /// <returns>Debug string</returns>
+            /// <returns>Debug string.</returns>
             public override string ToString()
             {
-                return String.Format("Ver:{0}, Ttl:{1}, Seq:{2}", this.Type, this.Ttl, this.Sequence);
+                return string.Format("Ver:{0}, Ttl:{1}, Seq:{2}", this.Type, this.Ttl, this.Sequence);
             }
 
             /// <summary>
-            /// Conver all TLV record to raw udp data
+            /// Conver all TLV record to raw udp data.
             /// </summary>
-            /// <param name="data">raw udp data</param>
-            /// <returns>Is success?</returns>
+            /// <param name="data">raw udp data.</param>
+            /// <returns>Is success?.</returns>
             public bool Write(out byte[] data)
             {
                 data = null;
@@ -542,7 +560,11 @@ namespace MndpTray.Protocol
                         using (BinaryWriter bw = new BinaryWriter(ms))
                         {
                             bool ok = this.Write(bw);
-                            if (!ok) return false;
+                            if (!ok)
+                            {
+                                return false;
+                            }
+
                             data = ms.ToArray();
                         }
                     }
@@ -551,17 +573,17 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    Log.Exception(nameof(TlvMessage), nameof(Write), ex);
+                    Log.Exception(nameof(TlvMessage), nameof(this.Write), ex);
                 }
 
                 return false;
             }
 
             /// <summary>
-            /// Write all record to BinaryWriter
+            /// Write all record to BinaryWriter.
             /// </summary>
-            /// <param name="bw">BinaryWriter object</param>
-            /// <returns>Is success?</returns>
+            /// <param name="bw">BinaryWriter object.</param>
+            /// <returns>Is success?.</returns>
             public bool Write(BinaryWriter bw)
             {
                 bw.Write(this.Type);
@@ -573,7 +595,9 @@ namespace MndpTray.Protocol
                     foreach (var i in this.Items)
                     {
                         if (!i.Write(bw))
+                        {
                             return false;
+                        }
                     }
                 }
 
@@ -585,52 +609,66 @@ namespace MndpTray.Protocol
     }
 
     /// <summary>
-    /// Mikrotik discovery message with extensions
+    /// Mikrotik discovery message with extensions.
     /// </summary>
     public class MndpMessageEx : MndpMessage, ICloneable
     {
         #region Props
 
         /// <summary>
-        /// Time elapsed since message received
+        /// Gets time elapsed since message received.
         /// </summary>
-        public double Age { get { return (DateTime.Now - this.ReceiveDateTime).TotalSeconds; } }
+        public double Age
+        {
+            get { return (DateTime.Now - this.ReceiveDateTime).TotalSeconds; }
+        }
 
         /// <summary>
-        /// Sender broadcast address
+        /// Gets or Sets sender broadcast address.
         /// </summary>
         public string BroadcastAddress { get; set; }
 
         /// <summary>
-        /// Message receive DT
+        /// Gets or sets message receive DateTime.
         /// </summary>
         public DateTime ReceiveDateTime { get; set; }
 
         /// <summary>
-        /// Sender unicast IPv4 address
+        /// Gets or sets sender unicast IPv4 address.
         /// </summary>
         public string UnicastAddress { get; set; }
 
         /// <summary>
-        /// Sender mac address formatted ( ':' delimited )
+        /// Gets sender mac address formatted ( ':' delimited ).
         /// </summary>
         /// <example>
-        /// AA:BB:CC:DD:EE:FF
+        /// AA:BB:CC:DD:EE:FF .
         /// </example>
         public string MacAddressDelimited
         {
             get
             {
-                if (this.MacAddress == null) return null;
+                if (this.MacAddress == null)
+                {
+                    return null;
+                }
+
                 StringBuilder sb = new StringBuilder();
 
                 for (int i = 0; i < this.MacAddress.Length; i++)
                 {
                     sb.Append(this.MacAddress[i]);
-                    if (i % 2 == 1) sb.Append(':');
+                    if (i % 2 == 1)
+                    {
+                        sb.Append(':');
+                    }
                 }
 
-                if (sb.Length > 0) sb.Remove(sb.Length - 1, 1);
+                if (sb.Length > 0)
+                {
+                    sb.Remove(sb.Length - 1, 1);
+                }
+
                 return sb.ToString();
             }
         }
@@ -640,18 +678,18 @@ namespace MndpTray.Protocol
         #region Methods
 
         /// <summary>
-        /// Clone object
+        /// Clone object.
         /// </summary>
-        /// <returns>Message object</returns>
+        /// <returns>Message object.</returns>
         public object Clone()
         {
             return this.MemberwiseClone();
         }
 
         /// <summary>
-        /// Debug message
+        /// Debug message.
         /// </summary>
-        /// <returns>Debug string</returns>
+        /// <returns>Debug string.</returns>
         public override string ToString()
         {
             var sb = new StringBuilder();

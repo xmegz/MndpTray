@@ -1,12 +1,12 @@
-﻿using System;
-using System.Net;
-using System.Net.Sockets;
-using System.Threading;
-
-namespace MndpTray.Protocol
+﻿namespace MndpTray.Protocol
 {
+    using System;
+    using System.Net;
+    using System.Net.Sockets;
+    using System.Threading;
+
     /// <summary>
-    /// Mikrotik discovery message sender
+    /// Mikrotik discovery message sender.
     /// </summary>
     public class MndpSender
     {
@@ -18,7 +18,7 @@ namespace MndpTray.Protocol
         }
 
         /// <summary>
-        /// Sigleton instance
+        /// Gets sigleton instance.
         /// </summary>
         public static MndpSender Instance { get; }
 
@@ -44,10 +44,10 @@ namespace MndpTray.Protocol
         #region Methods
 
         /// <summary>
-        /// Send message
+        /// Send message.
         /// </summary>
-        /// <param name="msg">Mndp message</param>
-        /// <returns>Is success?</returns>
+        /// <param name="msg">Mndp message.</param>
+        /// <returns>Is success?.</returns>
         public bool Send(MndpMessageEx msg)
         {
             try
@@ -58,7 +58,9 @@ namespace MndpTray.Protocol
                 var broadcastAddress = IP_ADDRESS;
 
                 if (msg.BroadcastAddress != null)
+                {
                     broadcastAddress = IPAddress.Parse(msg.BroadcastAddress);
+                }
 
                 using (s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp))
                 {
@@ -78,14 +80,14 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Log.Exception(nameof(MndpSender), nameof(Send), ex);
+                Log.Exception(nameof(MndpSender), nameof(this.Send), ex);
             }
 
             return false;
         }
 
         /// <summary>
-        /// Sender thread notification to send immediately
+        /// Sender thread notification to send immediately.
         /// </summary>
         public void SendHostInfoNow()
         {
@@ -93,15 +95,15 @@ namespace MndpTray.Protocol
         }
 
         /// <summary>
-        /// Start sending process
+        /// Start sending process.
         /// </summary>
-        /// <param name="hostInfo">Current host information</param>
-        /// <returns>Is success?</returns>
+        /// <param name="hostInfo">Current host information.</param>
+        /// <returns>Is success?.</returns>
         public bool Start(IMndpHostInfo hostInfo)
         {
             try
             {
-                var t = new Thread(this._sendHostInfoWork);
+                var t = new Thread(this.SendHostInfoWork);
                 this._sendHostInfoIsRunning = true;
                 t.Start();
                 this._sendHostInfoThread = t;
@@ -109,16 +111,16 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Log.Exception(nameof(MndpSender), nameof(Start), ex);
+                Log.Exception(nameof(MndpSender), nameof(this.Start), ex);
             }
 
             return false;
         }
 
         /// <summary>
-        /// Stop sending process
+        /// Stop sending process.
         /// </summary>
-        /// <returns>Is success?</returns>
+        /// <returns>Is success?.</returns>
         public bool Stop()
         {
             try
@@ -150,18 +152,18 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Log.Exception(nameof(MndpSender), nameof(Stop), ex);
+                Log.Exception(nameof(MndpSender), nameof(this.Stop), ex);
             }
 
             return false;
         }
 
-        private void _sendHostInfoWork()
+        private void SendHostInfoWork()
         {
             try
             {
                 ulong sequence = 0;
-                DateTime nextSend = DateTime.Now;
+                DateTime nextSendDateTime = DateTime.Now;
 
                 MndpMessageEx msg = new MndpMessageEx
                 {
@@ -172,16 +174,16 @@ namespace MndpTray.Protocol
                     Version = this._hostInfo.Version,
                     Ttl = 0,
                     Type = 0,
-                    Unpack = 0
+                    Unpack = 0,
                 };
 
                 while (this._sendHostInfoIsRunning)
                 {
                     Thread.Sleep(100);
 
-                    if ((nextSend < DateTime.Now) || (this._sendHostInfoNow))
+                    if ((nextSendDateTime < DateTime.Now) || this._sendHostInfoNow)
                     {
-                        nextSend = DateTime.Now.AddSeconds(HOST_INFO_SEND_INTERVAL);
+                        nextSendDateTime = DateTime.Now.AddSeconds(HOST_INFO_SEND_INTERVAL);
                         this._sendHostInfoNow = false;
 
                         var interfaces = this._hostInfo.InterfaceInfos;
@@ -204,7 +206,7 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Log.Exception(nameof(MndpSender), nameof(_sendHostInfoWork), ex);
+                Log.Exception(nameof(MndpSender), nameof(this.SendHostInfoWork), ex);
             }
         }
 

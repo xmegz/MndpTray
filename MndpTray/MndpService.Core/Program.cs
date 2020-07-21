@@ -11,7 +11,7 @@ namespace MndpService.Core
     class Program
     {
 
-        static void Main(string[] args)
+        static void Main()
         {
             AssemblyLoadContext.Default.Unloading += Default_Unloading;
             Console.CancelKeyPress += Console_CancelKeyPress;

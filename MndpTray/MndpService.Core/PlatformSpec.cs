@@ -11,7 +11,7 @@ namespace MndpService.Core
         private static string GetDataFromOsRelease(string key)
         {
             key = key.ToUpper();
-            key = key + "=";
+            key += "=";
 
             if (File.Exists("/etc/os-release"))
             {

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MndpTray", "MndpTray\MndpTray.csproj", "{7A68E99F-FFD3-4784-BDAD-673901009BAB}"
 EndProject
@@ -26,6 +26,7 @@ Global
 		MndpTray.Update\MndpTray.Update.projitems*{b4e4bb8c-1d27-4bc9-9cad-bcf6806edf5c}*SharedItemsImports = 13
 		MndpTray.Protocol.Shared\MndpTray.Protocol.Shared.projitems*{c68af71d-2c00-483d-a5e5-4b2add183987}*SharedItemsImports = 4
 		MndpTray.Update\MndpTray.Update.projitems*{c68af71d-2c00-483d-a5e5-4b2add183987}*SharedItemsImports = 4
+		MndpTray.Protocol.Shared\MndpTray.Protocol.Shared.projitems*{f8a7247d-4729-44ae-8295-6c2408075c46}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

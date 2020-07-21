@@ -1,11 +1,11 @@
-﻿using System;
-using System.IO;
-
-namespace MndpTray.Protocol
+﻿namespace MndpTray.Protocol
 {
+    using System;
+    using System.IO;
+
     internal static class BinaryReaderExtensions
     {
-        internal static UInt16 ReadUInt16Reverse(this BinaryReader self)
+        internal static ushort ReadUInt16Reverse(this BinaryReader self)
         {
             byte[] b = self.ReadBytes(2);
             Array.Reverse(b);
@@ -13,7 +13,7 @@ namespace MndpTray.Protocol
             return BitConverter.ToUInt16(b, 0);
         }
 
-        internal static UInt32 ReadUInt32Reverse(this BinaryReader self)
+        internal static uint ReadUInt32Reverse(this BinaryReader self)
         {
             byte[] b = self.ReadBytes(4);
             Array.Reverse(b);
@@ -24,7 +24,7 @@ namespace MndpTray.Protocol
 
     internal static class BinaryWriterExtensions
     {
-        internal static void WriteUInt16Reverse(this BinaryWriter self, UInt16 data)
+        internal static void WriteUInt16Reverse(this BinaryWriter self, ushort data)
         {
             byte[] b = BitConverter.GetBytes(data);
             Array.Reverse(b);
@@ -32,7 +32,7 @@ namespace MndpTray.Protocol
             self.Write(b);
         }
 
-        internal static void WriteUInt32Reverse(this BinaryWriter self, UInt32 data)
+        internal static void WriteUInt32Reverse(this BinaryWriter self, uint data)
         {
             byte[] b = BitConverter.GetBytes(data);
             Array.Reverse(b);

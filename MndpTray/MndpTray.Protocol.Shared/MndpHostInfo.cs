@@ -1,18 +1,18 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-#if (!NETCOREAPP2_1)
-using System.Management;
-#endif
-using System.Net;
-using System.Net.NetworkInformation;
-
-namespace MndpTray.Protocol
+﻿namespace MndpTray.Protocol
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    #if !NETCOREAPP2_1
+    using System.Management;
+    #endif
+    using System.Net;
+    using System.Net.NetworkInformation;
+    using Microsoft.Win32;
+
     /// <summary>
-    /// Mikrotik discovery message host information provider
+    /// Mikrotik discovery message host information provider.
     /// </summary>
     public class MndpHostInfo : IMndpHostInfo
     {
@@ -24,7 +24,7 @@ namespace MndpTray.Protocol
         }
 
         /// <summary>
-        /// Singleton instance
+        /// Gets singleton instance.
         /// </summary>
         public static MndpHostInfo Instance { get; }
 
@@ -33,7 +33,7 @@ namespace MndpTray.Protocol
         #region Props
 
         /// <summary>
-        /// Host board name (x86)
+        /// Gets host board name (x86).
         /// </summary>
         public string BoardName
         {
@@ -41,19 +41,19 @@ namespace MndpTray.Protocol
             {
                 try
                 {
-                    return (System.Environment.Is64BitOperatingSystem) ? "x64" : "x86";
+                    return System.Environment.Is64BitOperatingSystem ? "x64" : "x86";
                 }
                 catch (Exception ex)
                 {
                     Log.Exception(nameof(MndpHostInfo), nameof(this.BoardName), ex);
                 }
 
-                return String.Empty;
+                return string.Empty;
             }
         }
 
         /// <summary>
-        /// Host indentity (Host dns name)
+        /// Gets host indentity (Host dns name).
         /// </summary>
         public string Identity
         {
@@ -61,7 +61,7 @@ namespace MndpTray.Protocol
             {
                 try
                 {
-                    return Dns.GetHostEntry("").HostName;
+                    return Dns.GetHostEntry(string.Empty).HostName;
                 }
                 catch (Exception ex)
                 {
@@ -73,7 +73,7 @@ namespace MndpTray.Protocol
         }
 
         /// <summary>
-        /// Host interface info
+        /// Gets host interface info.
         /// </summary>
         public List<IMndpInterfaceInfo> InterfaceInfos
         {
@@ -117,7 +117,7 @@ namespace MndpTray.Protocol
         }
 
         /// <summary>
-        /// Host platform (From management object ComputerSystem.Manufacturer)
+        /// Gets host platform (From management object ComputerSystem.Manufacturer).
         /// </summary>
         public string Platform
         {
@@ -125,7 +125,7 @@ namespace MndpTray.Protocol
             {
                 try
                 {
-#if (NETCOREAPP2_1)
+#if NETCOREAPP2_1
                     return MndpService.Core.PlatformSpec.GetManufacturer();
 #else
                     ManagementClass mc = new ManagementClass("Win32_ComputerSystem");
@@ -144,18 +144,18 @@ namespace MndpTray.Protocol
                     Log.Exception(nameof(MndpHostInfo), nameof(this.Platform), ex);
                 }
 
-                return String.Empty;
+                return string.Empty;
             }
         }
 
         /// <summary>
-        /// Logged In user name
+        /// Gets logged In user name.
         /// </summary>
         public string SoftwareId
         {
             get
             {
-#if (NETCOREAPP2_1)
+#if NETCOREAPP2_1
                 {
                     return String.Empty;
                 }
@@ -171,15 +171,24 @@ namespace MndpTray.Protocol
 
                                 var obj = queryObj["UserName"];
 
-                                if (obj == null) continue;
+                                if (obj == null)
+                                {
+                                    continue;
+                                }
 
                                 userName = obj.ToString();
 
-                                if (String.IsNullOrEmpty(userName)) continue;
+                                if (string.IsNullOrEmpty(userName))
+                                {
+                                    continue;
+                                }
 
                                 userName = userName.Substring(userName.LastIndexOf('\\') + 1);
 
-                                if (String.IsNullOrEmpty(userName)) continue;
+                                if (string.IsNullOrEmpty(userName))
+                                {
+                                    continue;
+                                }
 
                                 return userName;
                             }
@@ -189,38 +198,50 @@ namespace MndpTray.Protocol
                         {
                             foreach (ManagementObject obj in searcher.Get())
                             {
-                                string path = obj["ExecutablePath"] as String;
+                                string path = obj["ExecutablePath"] as string;
 
-                                if (String.IsNullOrEmpty(path)) continue;
+                                if (string.IsNullOrEmpty(path))
+                                {
+                                    continue;
+                                }
 
-                                if (!path.EndsWith("explorer.exe", StringComparison.InvariantCultureIgnoreCase)) continue;
+                                if (!path.EndsWith("explorer.exe", StringComparison.InvariantCultureIgnoreCase))
+                                {
+                                    continue;
+                                }
 
                                 string[] ownerInfo = new string[2];
                                 obj.InvokeMethod("GetOwner", (object[])ownerInfo);
 
-                                if (ownerInfo == null) continue;
+                                if (ownerInfo == null)
+                                {
+                                    continue;
+                                }
 
-                                if (String.IsNullOrEmpty(ownerInfo[0])) continue;
+                                if (string.IsNullOrEmpty(ownerInfo[0]))
+                                {
+                                    continue;
+                                }
 
                                 return ownerInfo[0];
                             }
                         }
 
-                        return "";
+                        return string.Empty;
                     }
                     catch (Exception ex)
                     {
                         Log.Exception(nameof(MndpHostInfo), nameof(this.SoftwareId), ex);
                     }
 
-                    return String.Empty;
+                    return string.Empty;
                 }
 #endif
             }
         }
 
         /// <summary>
-        /// Host uptime (From 64-bit TickCount)
+        /// Gets host uptime (From 64-bit TickCount).
         /// </summary>
         public TimeSpan UpTime
         {
@@ -233,7 +254,7 @@ namespace MndpTray.Protocol
         }
 
         /// <summary>
-        /// Host software version (From Registry ProductName)
+        /// Gets host software version (From Registry ProductName).
         /// </summary>
         public string Version
         {
@@ -241,10 +262,10 @@ namespace MndpTray.Protocol
             {
                 try
                 {
-#if (NETCOREAPP2_1)
+#if NETCOREAPP2_1
                     return MndpService.Core.PlatformSpec.GetOsVersion();
 #else
-                    return Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName", "").ToString();
+                    return Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName", string.Empty).ToString();
 #endif
                 }
                 catch (Exception ex)
@@ -252,7 +273,7 @@ namespace MndpTray.Protocol
                     Log.Exception(nameof(MndpHostInfo), nameof(this.Version), ex);
                 }
 
-                return String.Empty;
+                return string.Empty;
             }
         }
 

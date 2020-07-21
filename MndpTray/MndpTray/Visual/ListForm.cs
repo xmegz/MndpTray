@@ -1,23 +1,29 @@
-﻿using MndpTray.Protocol;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Windows.Forms;
-
-namespace MndpTray
+﻿namespace MndpTray
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Windows.Forms;
+    using MndpTray.Protocol;
+
+    /// <summary>
+    /// List Form.
+    /// </summary>
     public partial class ListForm : Form
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ListForm"/> class.
+        /// </summary>
         public ListForm()
         {
             this.InitializeComponent();
             this.SetDoubleBuffering(this.dgvGrid);
 
-            this.Text = String.Concat(this.Text, " Version: ", Assembly.GetEntryAssembly().GetName().Version.ToString());
+            this.Text = string.Concat(this.Text, " Version: ", Assembly.GetEntryAssembly().GetName().Version.ToString());
         }
 
         #region Event Handlers
@@ -30,75 +36,82 @@ namespace MndpTray
 
                 var pingMenuStrip = new ToolStripMenuItem
                 {
-                    Text = "Ping"
+                    Text = "Ping",
                 };
                 pingMenuStrip.Click += this.Ping_Click;
                 contextMenuStrip.Items.Add(pingMenuStrip);
 
                 var httpMenuStrip = new ToolStripMenuItem
                 {
-                    Text = "Http"
+                    Text = "Http",
                 };
                 httpMenuStrip.Click += this.Http_Click;
                 contextMenuStrip.Items.Add(httpMenuStrip);
 
                 var sshMenuStrip = new ToolStripMenuItem
                 {
-                    Text = "Ssh"
+                    Text = "Ssh",
                 };
                 sshMenuStrip.Click += this.Ssh_Click;
                 contextMenuStrip.Items.Add(sshMenuStrip);
 
                 var rdpMenuStrip = new ToolStripMenuItem
                 {
-                    Text = "Rdp"
+                    Text = "Rdp",
                 };
                 rdpMenuStrip.Click += this.Rdp_Click;
                 contextMenuStrip.Items.Add(rdpMenuStrip);
 
                 var vncMenuStrip = new ToolStripMenuItem
                 {
-                    Text = "Vnc"
+                    Text = "Vnc",
                 };
                 vncMenuStrip.Click += this.Vnc_Click;
                 contextMenuStrip.Items.Add(vncMenuStrip);
 
                 var winboxMenuStrip = new ToolStripMenuItem
                 {
-                    Text = "Winbox"
+                    Text = "Winbox",
                 };
                 winboxMenuStrip.Click += this.Winbox_Click;
                 contextMenuStrip.Items.Add(winboxMenuStrip);
 
                 var messageMenuStrip = new ToolStripMenuItem
                 {
-                    Text = "Message"
+                    Text = "Message",
                 };
-                messageMenuStrip.Click += this.messageMenuStrip_Click;
+                messageMenuStrip.Click += this.MessageMenuStrip_Click;
                 contextMenuStrip.Items.Add(messageMenuStrip);
 
                 contextMenuStrip.Show(this, new Point(e.X, e.Y));
             }
         }
 
-       
-
-        private void messageMenuStrip_Click(object sender, EventArgs e)
+        private void MessageMenuStrip_Click(object sender, EventArgs e)
         {
             try
             {
-                string ip = this.GetSelectedIpAddress();              
-                if (ip == null) return;
+                string ip = this.GetSelectedIpAddress();
+                if (ip == null)
+                {
+                    return;
+                }
 
                 string path = this.GetMsgExePath();
-                if (path == null) return;
+                if (path == null)
+                {
+                    return;
+                }
 
                 MsgBoxForm form = new MsgBoxForm();
-                if (form.ShowDialog() != DialogResult.OK) return;
-                string message = form.MsgText;     
-                
-                System.Diagnostics.Process.Start(path,String.Format("/SERVER:{0} console \"{1}\"",ip, message));
-                
+                if (form.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+
+                string message = form.MsgText;
+
+                System.Diagnostics.Process.Start(path, string.Format("/SERVER:{0} console \"{1}\"", ip, message));
             }
             catch (Exception ex)
             {
@@ -111,7 +124,11 @@ namespace MndpTray
             try
             {
                 string ip = this.GetSelectedIpAddress();
-                if (ip == null) return;
+                if (ip == null)
+                {
+                    return;
+                }
+
                 System.Diagnostics.Process.Start("http://" + ip);
             }
             catch (Exception ex)
@@ -130,7 +147,11 @@ namespace MndpTray
             try
             {
                 string ip = this.GetSelectedIpAddress();
-                if (ip == null) return;
+                if (ip == null)
+                {
+                    return;
+                }
+
                 System.Diagnostics.Process.Start("mstsc", "/v:" + ip);
             }
             catch (Exception ex)
@@ -138,8 +159,6 @@ namespace MndpTray
                 Program.Log("Exception {0}", ex);
             }
         }
-
-        
 
         private void Receive_Timer(object sender, EventArgs e)
         {
@@ -152,7 +171,9 @@ namespace MndpTray
                 foreach (DataGridViewRow i in this.dgvGrid.Rows)
                 {
                     if (i.Tag != null)
+                    {
                         dictRow[(string)i.Tag] = i;
+                    }
                 }
 
                 this.dgvGrid.SuspendLayout();
@@ -184,7 +205,7 @@ namespace MndpTray
             }
             catch (Exception ex)
             {
-                Program.Log("{0}, {1} Exception:{2}{3}", nameof(ListForm), nameof(Receive_Timer), Environment.NewLine, ex.ToString());
+                Program.Log("{0}, {1} Exception:{2}{3}", nameof(ListForm), nameof(this.Receive_Timer), Environment.NewLine, ex.ToString());
             }
         }
 
@@ -208,13 +229,19 @@ namespace MndpTray
         #region Methods
 
         private string GetMsgExePath()
-        {            
-            string[] paths = new string[] { Environment.ExpandEnvironmentVariables(@"%windir%\system32\msg.exe"),
-                                     Environment.ExpandEnvironmentVariables(@"%windir%\sysnative\msg.exe") };
+        {
+            string[] paths = new string[]
+            {
+                Environment.ExpandEnvironmentVariables(@"%windir%\system32\msg.exe"),
+                Environment.ExpandEnvironmentVariables(@"%windir%\sysnative\msg.exe"),
+            };
 
             foreach (string i in paths)
             {
-                if (File.Exists(i)) return i;                
+                if (File.Exists(i))
+                {
+                    return i;
+                }
             }
 
             return null;
@@ -226,14 +253,16 @@ namespace MndpTray
             {
                 return this.dgvGrid.SelectedRows[0].Cells[0].Value as string;
             }
+
             return null;
         }
 
         private void SetDoubleBuffering(DataGridView dataGridView, bool value = true)
         {
             Type type = dataGridView.GetType();
-            PropertyInfo pi = type.GetProperty("DoubleBuffered",
-                    BindingFlags.Instance | BindingFlags.NonPublic);
+            PropertyInfo pi = type.GetProperty(
+                "DoubleBuffered",
+                BindingFlags.Instance | BindingFlags.NonPublic);
             pi.SetValue(dataGridView, value, null);
         }
 
@@ -242,7 +271,10 @@ namespace MndpTray
             try
             {
                 string ip = this.GetSelectedIpAddress();
-                if (ip == null) return;
+                if (ip == null)
+                {
+                    return;
+                }
 
                 try
                 {

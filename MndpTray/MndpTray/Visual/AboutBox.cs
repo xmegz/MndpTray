@@ -1,17 +1,23 @@
-﻿using System;
-using System.Reflection;
-using System.Windows.Forms;
-
-namespace MndpTray
+﻿namespace MndpTray
 {
-    partial class AboutBox : Form
+    using System;
+    using System.Reflection;
+    using System.Windows.Forms;
+
+    /// <summary>
+    /// About Box.
+    /// </summary>
+    internal partial class AboutBox : Form
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AboutBox"/> class.
+        /// </summary>
         public AboutBox()
         {
             this.InitializeComponent();
-            this.Text = String.Concat(this.Text, " Version: ", Assembly.GetEntryAssembly().GetName().Version.ToString());
+            this.Text = string.Concat(this.Text, " Version: ", Assembly.GetEntryAssembly().GetName().Version.ToString());
             this.labelProductName.Text = this.AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0}", this.AssemblyVersion);
+            this.labelVersion.Text = string.Format("Version {0}", this.AssemblyVersion);
             this.labelCopyright.Text = this.AssemblyCopyright;
             this.labelCompanyName.Text = this.AssemblyCompany;
             this.textBoxDescription.Text = this.AssemblyDescription;
@@ -28,11 +34,12 @@ namespace MndpTray
                 if (attributes.Length > 0)
                 {
                     AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                    if (titleAttribute.Title != "")
+                    if (titleAttribute.Title != string.Empty)
                     {
                         return titleAttribute.Title;
                     }
                 }
+
                 return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
             }
         }
@@ -52,8 +59,9 @@ namespace MndpTray
                 object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
                 if (attributes.Length == 0)
                 {
-                    return "";
+                    return string.Empty;
                 }
+
                 return ((AssemblyDescriptionAttribute)attributes[0]).Description;
             }
         }
@@ -65,8 +73,9 @@ namespace MndpTray
                 object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
                 if (attributes.Length == 0)
                 {
-                    return "";
+                    return string.Empty;
                 }
+
                 return ((AssemblyProductAttribute)attributes[0]).Product;
             }
         }
@@ -78,8 +87,9 @@ namespace MndpTray
                 object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
                 if (attributes.Length == 0)
                 {
-                    return "";
+                    return string.Empty;
                 }
+
                 return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
             }
         }
@@ -91,8 +101,9 @@ namespace MndpTray
                 object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
                 if (attributes.Length == 0)
                 {
-                    return "";
+                    return string.Empty;
                 }
+
                 return ((AssemblyCompanyAttribute)attributes[0]).Company;
             }
         }
@@ -105,7 +116,9 @@ namespace MndpTray
             {
                 System.Diagnostics.Process.Start(this.labelWeb.Text);
             }
-            catch{ }            
+            catch
+            {
+            }
         }
     }
 }

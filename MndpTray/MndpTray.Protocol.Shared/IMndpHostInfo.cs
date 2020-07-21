@@ -1,45 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MndpTray.Protocol
+﻿namespace MndpTray.Protocol
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
-    /// Mndp Host information
+    /// Mndp Host information.
     /// </summary>
     public interface IMndpHostInfo
     {
         /// <summary>
-        /// Host board name
+        /// Gets host board name.
         /// </summary>
         string BoardName { get; }
 
         /// <summary>
-        /// Host identity
+        /// Gets host identity.
         /// </summary>
         string Identity { get; }
 
         /// <summary>
-        /// Host interface information
+        /// Gets host interface information.
         /// </summary>
         List<IMndpInterfaceInfo> InterfaceInfos { get; }
 
         /// <summary>
-        /// Host platform
+        /// Gets host platform.
         /// </summary>
         string Platform { get; }
 
         /// <summary>
-        /// Host sotware id
+        /// Gets host sotware id.
         /// </summary>
         string SoftwareId { get; }
 
         /// <summary>
-        /// Host Uptime
+        /// Gets host uptime.
         /// </summary>
         TimeSpan UpTime { get; }
 
         /// <summary>
-        /// Host software version
+        /// Gets host software version.
         /// </summary>
         string Version { get; }
     }

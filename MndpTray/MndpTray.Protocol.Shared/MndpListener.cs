@@ -1,16 +1,24 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
-
-namespace MndpTray.Protocol
+﻿namespace MndpTray.Protocol
 {
+    using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Sockets;
+
     /// <summary>
-    /// Mikrotik discovery message listener
+    /// Mikrotik discovery message listener.
     /// </summary>
     public class MndpListener
     {
+        #region Consts
+
+        private const int MESSAGE_KEEP_TIME = 240;
+        private const int UDP_PORT = 5678;
+        private static readonly IPAddress IP_ADDRESS = IPAddress.Any;
+
+        #endregion Consts
+
         #region Static
 
         static MndpListener()
@@ -19,19 +27,13 @@ namespace MndpTray.Protocol
         }
 
         /// <summary>
-        /// Singleton Instance
+        /// Gets singleton instance.
         /// </summary>
         public static MndpListener Instance { get; }
 
         #endregion Static
 
-        #region Consts
-
-        private const int MESSAGE_KEEP_TIME = 240;
-        private const int UDP_PORT = 5678;
-        private static readonly IPAddress IP_ADDRESS = IPAddress.Any;
-
-        #endregion Consts
+        
 
         #region Fields
 
@@ -43,16 +45,16 @@ namespace MndpTray.Protocol
         #region Methods
 
         /// <summary>
-        /// Get received message dictionary (Key = Sender mac address)
+        /// Get received message dictionary (Key = Sender mac address).
         /// </summary>
-        /// <returns>Is Sucess?</returns>
+        /// <returns>Is Sucess? .</returns>
         public Dictionary<string, MndpMessageEx> GetMessages()
         {
             var ret = new Dictionary<string, MndpMessageEx>();
 
             try
             {
-                this._clearOldMessages();
+                this.ClearOldMessages();
 
                 foreach (var i in this._dictMessages)
                 {
@@ -61,16 +63,16 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Log.Exception(nameof(MndpListener), nameof(Start), ex);
+                Log.Exception(nameof(MndpListener), nameof(this.Start), ex);
             }
 
             return ret;
         }
 
         /// <summary>
-        /// Start listening process
+        /// Start listening process.
         /// </summary>
-        /// <returns>Is success?</returns>
+        /// <returns>Is success? .</returns>
         public bool Start()
         {
             if (this._udpClient == null)
@@ -84,7 +86,7 @@ namespace MndpTray.Protocol
                     client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
                     client.ExclusiveAddressUse = false;
                     client.Client.Bind(new IPEndPoint(IP_ADDRESS, UDP_PORT));
-                    client.BeginReceive(new AsyncCallback(this._receive), null);
+                    client.BeginReceive(new AsyncCallback(this.Receive), null);
 
                     this._udpClient = client;
 
@@ -92,13 +94,15 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    Log.Exception(nameof(MndpListener), nameof(Start), ex);
+                    Log.Exception(nameof(MndpListener), nameof(this.Start), ex);
 
                     try
                     {
                         client.Close();
                     }
-                    catch { }
+                    catch
+                    {
+                    }
                 }
             }
 
@@ -106,9 +110,9 @@ namespace MndpTray.Protocol
         }
 
         /// <summary>
-        /// Stop listening process
+        /// Stop listening process.
         /// </summary>
-        /// <returns>Is sucess?</returns>
+        /// <returns>Is sucess? .</returns>
         public bool Stop()
         {
             try
@@ -125,13 +129,13 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Log.Exception(nameof(MndpListener), nameof(Stop), ex);
+                Log.Exception(nameof(MndpListener), nameof(this.Stop), ex);
             }
 
             return false;
         }
 
-        private void _clearOldMessages()
+        private void ClearOldMessages()
         {
             DateTime limit = DateTime.Now.AddSeconds(-MESSAGE_KEEP_TIME);
 
@@ -140,16 +144,18 @@ namespace MndpTray.Protocol
             foreach (var i in this._dictMessages)
             {
                 if (i.Value.ReceiveDateTime < limit)
+                {
                     listRemove.Add(i.Key);
+                }
             }
 
             foreach (var i in listRemove)
             {
-                this._dictMessages.TryRemove(i, out MndpMessageEx val);
+                this._dictMessages.TryRemove(i, out _);
             }
         }
 
-        private void _receive(IAsyncResult ar)
+        private void Receive(IAsyncResult ar)
         {
             try
             {
@@ -161,7 +167,7 @@ namespace MndpTray.Protocol
                     var msg = new MndpMessageEx
                     {
                         UnicastAddress = ip.Address.ToString(),
-                        ReceiveDateTime = DateTime.Now
+                        ReceiveDateTime = DateTime.Now,
                     };
 
                     if (msg.Read(bytes))
@@ -172,17 +178,19 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Log.Exception(nameof(MndpListener), nameof(this._receive), ex);
+                Log.Exception(nameof(MndpListener), nameof(this.Receive), ex);
             }
 
             try
             {
                 if (this._udpClient != null)
-                    this._udpClient.BeginReceive(this._receive, new object());
+                {
+                    this._udpClient.BeginReceive(this.Receive, new object());
+                }
             }
             catch (Exception ex)
             {
-                Log.Exception(nameof(MndpListener), nameof(this._receive), ex);
+                Log.Exception(nameof(MndpListener), nameof(this.Receive), ex);
             }
         }
         #endregion Methods

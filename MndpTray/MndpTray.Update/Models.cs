@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.Serialization;
-
-namespace MndpTray.Update
+﻿namespace MndpTray.Update
 {
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Runtime.Serialization;
+
     /// <summary>
-    /// Github API release data
+    /// Github API release data.
     /// </summary>
     [DataContract]
-    [SuppressMessage("Microsoft.Design", "IDE1006")]
+    [SuppressMessage("Microsoft.Design", "IDE1006", Justification = "<Pending>")]
     public class release
     {
         [DataMember]
@@ -43,10 +43,10 @@ namespace MndpTray.Update
     }
 
     /// <summary>
-    /// Github API release asset data
+    /// Github API release asset data.
     /// </summary>
     [DataContract]
-    [SuppressMessage("Microsoft.Design", "IDE1006")]
+    [SuppressMessage("Microsoft.Design", "IDE1006", Justification = "<Pending>")]
     public class release_asset
     {
         [DataMember]

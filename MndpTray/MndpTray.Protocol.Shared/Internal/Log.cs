@@ -1,9 +1,9 @@
-﻿using System;
-
-namespace MndpTray.Protocol
+﻿namespace MndpTray.Protocol
 {
+    using System;
+
     /// <summary>
-    /// Mikrotik discovery message lib log and debug provider
+    /// Mikrotik discovery message lib log and debug provider.
     /// </summary>
     internal static class Log
     {
@@ -16,7 +16,7 @@ namespace MndpTray.Protocol
         #region Methods
 
         /// <summary>
-        /// Set Debug Format string style delegate
+        /// Set Debug Format string style delegate.
         /// </summary>
         /// <param name="infoAction"></param>
         internal static void SetInfoAction(Action<string, object[]> infoAction)
@@ -30,7 +30,9 @@ namespace MndpTray.Protocol
             {
                 _infoAction?.Invoke("{0}, {1} Exception:\r\n{2}", new object[] { className, methodName, ex.ToString() });
             }
-            catch { }
+            catch
+            {
+            }
         }
 
         internal static void Info(string format, params object[] args)
@@ -39,7 +41,9 @@ namespace MndpTray.Protocol
             {
                 _infoAction?.Invoke(format, args);
             }
-            catch { }
+            catch
+            {
+            }
         }
 
         #endregion Methods

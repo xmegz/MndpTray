@@ -1,19 +1,22 @@
-﻿using MndpTray.Protocol;
-using System;
-using System.IO;
-using System.Net;
-using System.Reflection;
-using System.Threading;
-using System.Windows.Forms;
-
-namespace MndpTray
+﻿namespace MndpTray
 {
+    using System;
+    using System.IO;
+    using System.Net;
+    using System.Reflection;
+    using System.Threading;
+    using System.Windows.Forms;
+    using MndpTray.Protocol;
+
     public class NotifyContext : ApplicationContext
     {
         private readonly AboutBox _aboutBox;
         private readonly ListForm _listForm;
         private NotifyIcon _notifyIcon;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NotifyContext"/> class.
+        /// </summary>
         public NotifyContext()
         {
             this.InizializeComponets();
@@ -31,9 +34,13 @@ namespace MndpTray
         private void About_Click(object sender, System.EventArgs e)
         {
             if (!this._aboutBox.Visible)
+            {
                 this._aboutBox.ShowDialog();
+            }
             else
+            {
                 this._aboutBox.WindowState = FormWindowState.Normal;
+            }
 
             this._aboutBox.BringToFront();
         }
@@ -53,9 +60,13 @@ namespace MndpTray
         private void List_Click(object sender, EventArgs e)
         {
             if (!this._listForm.Visible)
+            {
                 this._listForm.ShowDialog();
+            }
             else
+            {
                 this._listForm.WindowState = FormWindowState.Normal;
+            }
 
             this._listForm.BringToFront();
         }
@@ -75,7 +86,7 @@ namespace MndpTray
 
             if (url != null)
             {
-                var res = MessageBox.Show("New release found, would you like to update?", "Update", MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+                var res = MessageBox.Show("New release found, would you like to update?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (res == DialogResult.Yes)
                 {
@@ -87,7 +98,7 @@ namespace MndpTray
             }
             else
             {
-                var res = MessageBox.Show("New release not found!", "Update", MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("New release not found!", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -101,14 +112,14 @@ namespace MndpTray
             {
                 Icon = MndpTray.Properties.Resources.favicon_ico,
                 Text = nameof(MndpTray),
-                Visible = true
+                Visible = true,
             };
 
             var contextMenuStrip = new ContextMenuStrip();
 
             var listMenuStrip = new ToolStripMenuItem
             {
-                Text = "List"
+                Text = "List",
             };
             listMenuStrip.Click += this.List_Click;
             contextMenuStrip.Items.Add(listMenuStrip);
@@ -117,7 +128,7 @@ namespace MndpTray
 
             var sendMenuStrip = new ToolStripMenuItem
             {
-                Text = "Send"
+                Text = "Send",
             };
             sendMenuStrip.Click += this.Send_Click;
             contextMenuStrip.Items.Add(sendMenuStrip);
@@ -126,7 +137,7 @@ namespace MndpTray
 
             var aboutMenuStrip = new ToolStripMenuItem
             {
-                Text = "About"
+                Text = "About",
             };
             aboutMenuStrip.Click += this.About_Click;
             contextMenuStrip.Items.Add(aboutMenuStrip);
@@ -135,7 +146,7 @@ namespace MndpTray
 
             var updateMenuStrip = new ToolStripMenuItem
             {
-                Text = "Update"
+                Text = "Update",
             };
             updateMenuStrip.Click += this.Update_Click;
             contextMenuStrip.Items.Add(updateMenuStrip);
@@ -144,7 +155,7 @@ namespace MndpTray
 
             var exitMenuStrip = new ToolStripMenuItem
             {
-                Text = "Exit"
+                Text = "Exit",
             };
             exitMenuStrip.Click += this.Exit_Click;
             contextMenuStrip.Items.Add(exitMenuStrip);
