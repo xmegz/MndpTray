@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
-    #if !NETCOREAPP2_1
+    #if !NETCOREAPP3_1
     using System.Management;
     #endif
     using System.Net;
@@ -125,7 +125,7 @@
             {
                 try
                 {
-#if NETCOREAPP2_1
+#if NETCOREAPP3_1
                     return MndpService.Core.PlatformSpec.GetManufacturer();
 #else
                     ManagementClass mc = new ManagementClass("Win32_ComputerSystem");
@@ -155,7 +155,7 @@
         {
             get
             {
-#if NETCOREAPP2_1
+#if NETCOREAPP3_1
                 {
                     return String.Empty;
                 }
@@ -262,7 +262,7 @@
             {
                 try
                 {
-#if NETCOREAPP2_1
+#if NETCOREAPP3_1
                     return MndpService.Core.PlatformSpec.GetOsVersion();
 #else
                     return Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName", string.Empty).ToString();
