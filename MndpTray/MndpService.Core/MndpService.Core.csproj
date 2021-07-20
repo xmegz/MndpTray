@@ -16,6 +16,7 @@
     <PackageIcon>favicon.jpg</PackageIcon>
     <PackageTags>mikrotik discovery protocol</PackageTags>
     <PackageProjectUrl>ttps://github.com/xmegz/MndpTray</PackageProjectUrl>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
 
   <ItemGroup>

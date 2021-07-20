@@ -78,7 +78,7 @@ namespace MndpService
             sb.AppendLine("Usage:");
             sb.AppendLine(Assembly.GetEntryAssembly().GetName().Name + " install - Install Service");
             sb.AppendLine(Assembly.GetEntryAssembly().GetName().Name + " uninstall - Uninstall Service ");
-            sb.AppendLine(Assembly.GetEntryAssembly().GetName().Name + " start - Start Service");            
+            sb.AppendLine(Assembly.GetEntryAssembly().GetName().Name + " start - Start Service");
             sb.AppendLine(Assembly.GetEntryAssembly().GetName().Name + " stop - Stop Service");
             sb.AppendLine(Assembly.GetEntryAssembly().GetName().Name + " update - Update Service");
             sb.AppendLine(Assembly.GetEntryAssembly().GetName().Name + " restart - Restart Service");
@@ -111,12 +111,11 @@ namespace MndpService
                     GoUpdate();
                 else if (cmd == "Restart".ToUpper())
                 {
-                    GoStop();                    
+                    GoStop();
                     GoStart();
                 }
                 else
                     Console.WriteLine(GetUsage());
-
             }
             catch (Exception ex) { Console.WriteLine(ex); }
             Console.ReadLine();
@@ -185,11 +184,11 @@ namespace MndpService
             if (url != null)
             {
                 Console.WriteLine("New release found");
-                
+
                 byte[] data = MndpTray.Update.Methods.DownloadBinary(url);
                 MndpTray.Update.Methods.UpdateProgram(Path.GetFullPath(Assembly.GetExecutingAssembly().Location), data);
 
-                Console.WriteLine("Update successful, please restart application!");                
+                Console.WriteLine("Update successful, please restart application!");
             }
             else
             {

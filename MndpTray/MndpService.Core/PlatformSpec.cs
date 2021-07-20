@@ -18,13 +18,13 @@ namespace MndpService.Core
                 {
                     if (line.StartsWith(key, StringComparison.Ordinal))
                     {
-                        return line.Substring(key.Length).Trim('"', '\'');
+                        return line[key.Length..]
+                                   .Trim('"', '\'');
                     }
                 }
             }
 
             return String.Empty;
-
         }
 
         /// <summary>

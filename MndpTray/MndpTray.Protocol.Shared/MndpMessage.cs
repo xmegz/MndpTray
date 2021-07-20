@@ -557,7 +557,7 @@
                 {
                     MemoryStream ms = new MemoryStream();
                     {
-                        using (BinaryWriter bw = new BinaryWriter(ms))
+                        using (var bw = new BinaryWriter(ms))
                         {
                             bool ok = this.Write(bw);
                             if (!ok)
