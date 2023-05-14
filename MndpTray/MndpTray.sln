@@ -1,50 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30104.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MndpTray", "MndpTray\MndpTray.csproj", "{7A68E99F-FFD3-4784-BDAD-673901009BAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MndpTray.Protocol", "MndpTray.Protocol\MndpTray.Protocol.csproj", "{9008838B-88CD-40B0-BC80-FA37F5F9AAF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MndpTray.Protocol", "MndpTray.Protocol\MndpTray.Protocol.csproj", "{9008838B-88CD-40B0-BC80-FA37F5F9AAF8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MndpService", "MndpService\MndpService.csproj", "{C68AF71D-2C00-483D-A5E5-4B2ADD183987}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MndpTray.Protocol.Test", "MndpTray.Protocol.Test\MndpTray.Protocol.Test.csproj", "{35AFB577-7545-4B0B-B5A4-161D9846D7DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MndpTray.Protocol.Test", "MndpTray.Protocol.Test\MndpTray.Protocol.Test.csproj", "{35AFB577-7545-4B0B-B5A4-161D9846D7DD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MndpService.Core", "MndpService.Core\MndpService.Core.csproj", "{F8A7247D-4729-44AE-8295-6C2408075C46}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MndpTray.Update", "MndpTray.Update\MndpTray.Update.shproj", "{B4E4BB8C-1D27-4BC9-9CAD-BCF6806EDF5C}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MndpTray.Protocol.Shared", "MndpTray.Protocol.Shared\MndpTray.Protocol.Shared.shproj", "{0895405E-F8A3-44A1-9188-46EDD13080D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MndpTray.Core", "MndpTray.Core\MndpTray.Core.csproj", "{09DB8A0F-7679-4625-BC58-9E83E8D5DD10}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		MndpTray.Protocol.Shared\MndpTray.Protocol.Shared.projitems*{0895405e-f8a3-44a1-9188-46edd13080d9}*SharedItemsImports = 13
-		MndpTray.Protocol.Shared\MndpTray.Protocol.Shared.projitems*{7a68e99f-ffd3-4784-bdad-673901009bab}*SharedItemsImports = 4
-		MndpTray.Update\MndpTray.Update.projitems*{7a68e99f-ffd3-4784-bdad-673901009bab}*SharedItemsImports = 4
-		MndpTray.Protocol.Shared\MndpTray.Protocol.Shared.projitems*{9008838b-88cd-40b0-bc80-fa37f5f9aaf8}*SharedItemsImports = 4
-		MndpTray.Update\MndpTray.Update.projitems*{b4e4bb8c-1d27-4bc9-9cad-bcf6806edf5c}*SharedItemsImports = 13
-		MndpTray.Protocol.Shared\MndpTray.Protocol.Shared.projitems*{c68af71d-2c00-483d-a5e5-4b2add183987}*SharedItemsImports = 4
-		MndpTray.Update\MndpTray.Update.projitems*{c68af71d-2c00-483d-a5e5-4b2add183987}*SharedItemsImports = 4
-		MndpTray.Protocol.Shared\MndpTray.Protocol.Shared.projitems*{f8a7247d-4729-44ae-8295-6c2408075c46}*SharedItemsImports = 5
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7A68E99F-FFD3-4784-BDAD-673901009BAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7A68E99F-FFD3-4784-BDAD-673901009BAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7A68E99F-FFD3-4784-BDAD-673901009BAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7A68E99F-FFD3-4784-BDAD-673901009BAB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9008838B-88CD-40B0-BC80-FA37F5F9AAF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9008838B-88CD-40B0-BC80-FA37F5F9AAF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9008838B-88CD-40B0-BC80-FA37F5F9AAF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9008838B-88CD-40B0-BC80-FA37F5F9AAF8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C68AF71D-2C00-483D-A5E5-4B2ADD183987}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C68AF71D-2C00-483D-A5E5-4B2ADD183987}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C68AF71D-2C00-483D-A5E5-4B2ADD183987}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C68AF71D-2C00-483D-A5E5-4B2ADD183987}.Release|Any CPU.Build.0 = Release|Any CPU
 		{35AFB577-7545-4B0B-B5A4-161D9846D7DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{35AFB577-7545-4B0B-B5A4-161D9846D7DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35AFB577-7545-4B0B-B5A4-161D9846D7DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -53,6 +29,10 @@ Global
 		{F8A7247D-4729-44AE-8295-6C2408075C46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8A7247D-4729-44AE-8295-6C2408075C46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8A7247D-4729-44AE-8295-6C2408075C46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09DB8A0F-7679-4625-BC58-9E83E8D5DD10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09DB8A0F-7679-4625-BC58-9E83E8D5DD10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09DB8A0F-7679-4625-BC58-9E83E8D5DD10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09DB8A0F-7679-4625-BC58-9E83E8D5DD10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

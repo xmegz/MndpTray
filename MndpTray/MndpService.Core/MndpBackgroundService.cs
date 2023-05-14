@@ -6,7 +6,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MndpService.Core
+namespace MndpService
 {
     public class MndpBackgroundService : BackgroundService
     {
@@ -29,6 +29,7 @@ namespace MndpService.Core
             }
 
             MndpSender.Instance.Start(MndpHostInfo.Instance);
+            MndpListener.Instance.Start();
 
             return Task.CompletedTask;
         }
@@ -38,7 +39,8 @@ namespace MndpService.Core
             this._logger?.LogInformation("Stopping...");
 
             MndpSender.Instance.Stop();
-            
+            MndpListener.Instance.Stop();
+
             return Task.CompletedTask;
         }
 
@@ -49,8 +51,8 @@ namespace MndpService.Core
 
         protected void InfoAction(string format, params object[] args)
         {
-            string str = string.Format(format, args);
-            this._logger?.LogInformation(str);
+            string message = string.Format(format, args);
+            this._logger?.LogInformation(message);
         }
     }
 }

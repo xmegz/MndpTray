@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using System;
 
-namespace MndpService.Core
+namespace MndpService
 {
     public class Program
     {
@@ -10,7 +10,7 @@ namespace MndpService.Core
         {
             var hostBuilder = Host.CreateDefaultBuilder(args)
             .UseWindowsService()
-            .UseSystemd()            
+            .UseSystemd()
             .ConfigureServices(services =>
             {
                 services.AddLogging();

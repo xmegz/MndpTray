@@ -1,7 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>Data\key.snk</AssemblyOriginatorKeyFile>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
@@ -12,19 +15,19 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>    
     <PackageIcon>favicon.jpg</PackageIcon>
-    <PackageTags>mikrotik discovery protocol</PackageTags>
+    <PackageTags>mikrotik discovery protocol tray application</PackageTags>
     <PackageProjectUrl>https://github.com/xmegz/MndpTray</PackageProjectUrl>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <AnalysisLevel>6.0-minimum</AnalysisLevel>
-    <Title>MndpService.Core</Title>
+    <Title>MndpTray.Core</Title>
 	<DebugType>embedded</DebugType>
+	<ApplicationIcon>Images\favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="6.0.0" />
+    <Content Include="Images\favicon.ico" />
+  </ItemGroup>
+  <ItemGroup>    
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     <ProjectReference Include="..\MndpTray.Protocol\MndpTray.Protocol.csproj" />
   </ItemGroup>
@@ -38,6 +41,21 @@
 
   <ItemGroup>
     <Folder Include="Install\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

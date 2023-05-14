@@ -1,0 +1,17 @@
+[Unit]
+Description=mndpservice core
+
+[Service]
+WorkingDirectory=/root
+ExecStart=/root/MndpService.Core
+Restart=always
+RestartSec=15
+KillSignal=SIGINT
+SyslogIdentifier=mndpservice
+User=root
+Group=root
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target
