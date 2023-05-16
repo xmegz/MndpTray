@@ -15,6 +15,9 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
     <PackageIcon>favicon.jpg</PackageIcon>
+    <Authors>Pádár Tamás</Authors>
+    <Company>Pádár Tamás</Company>
+    <Copyright>2018-2023</Copyright>
     <PackageTags>MNDP - Mikrotik Neighbor Discovery Protocol - Tray Application Tool</PackageTags>
     <Description>MNDP - Mikrotik Neighbor Discovery Protocol - Tray Application Tool</Description>
     <PackageProjectUrl>https://github.com/xmegz/MndpTray</PackageProjectUrl>

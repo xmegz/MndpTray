@@ -19,7 +19,7 @@ MNDP similar to CDP and LLDP, but Mikrotik specific, typically includes the foll
 * Includes integration with external tools like WINBOX, SSH, VNC, RDP, HTTP, PING
 * Send message over windows message service (Remote RPC)
 * IPv4 & IPv6 support
-* Self update from github
+* Self update from GitHub
 * Blocking winbox discovery function when running
 
 ### Download [Latest](https://github.com/xmegz/MndpTray/releases/download/v1.8.0/MndpTray.exe)
@@ -29,13 +29,17 @@ MNDP similar to CDP and LLDP, but Mikrotik specific, typically includes the foll
 ![alt text](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray/Images/screenshot5.png)
 
 ### Tested
-* Windows 11, Windows 10
+* Windows 11, Windows 10 Os
 * Single and multiple NIC
-* .NET 6.0
+* .NET 6.0 runtime
 
 # MndpService
-* Systemd or Windows service
-* .NET 6.0 and Linux support
+
+MndpService is a background service, which is send information about running host
+
+* Systemd or Windows service support
+* .NET 6.0 and Ubuntu Linux support
+* **Developement in progress**
 
 # MndpProtocol
 * .NET 4.6.2, .NET 6.0 support

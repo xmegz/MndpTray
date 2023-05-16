@@ -37,7 +37,7 @@
             this.textBoxDescription = new System.Windows.Forms.TextBox();
             this.okButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)this.logoPictureBox).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel
@@ -80,12 +80,12 @@
             this.labelWeb.TabStop = true;
             this.labelWeb.Text = "Web";
             this.labelWeb.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.labelWeb.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LabelWeb_LinkClicked);
+            this.labelWeb.LinkClicked += this.LabelWeb_LinkClicked;
             // 
             // logoPictureBox
             // 
             this.logoPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.logoPictureBox.Image = global::MndpTray.Core.Properties.Resources.favicon;
+            this.logoPictureBox.Image = Properties.Resources.favicon;
             this.logoPictureBox.Location = new System.Drawing.Point(6, 6);
             this.logoPictureBox.Margin = new System.Windows.Forms.Padding(6);
             this.logoPictureBox.Name = "logoPictureBox";
@@ -159,7 +159,7 @@
             // 
             // okButton
             // 
-            this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.okButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.okButton.Location = new System.Drawing.Point(754, 362);
             this.okButton.Margin = new System.Windows.Forms.Padding(6);
@@ -186,9 +186,8 @@
             this.Text = "MndpTray - About";
             this.tableLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)this.logoPictureBox).EndInit();
             this.ResumeLayout(false);
-
         }
 
         #endregion

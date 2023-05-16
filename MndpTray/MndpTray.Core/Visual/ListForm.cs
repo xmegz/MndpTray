@@ -9,6 +9,7 @@ namespace MndpTray.Core
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using System.Diagnostics;
     using System.Drawing;
     using System.IO;
     using System.Linq;
@@ -134,7 +135,12 @@ namespace MndpTray.Core
                     return;
                 }
 
-                System.Diagnostics.Process.Start("http://" + ip);
+                System.Diagnostics.Process.Start(new ProcessStartInfo
+                {
+                    FileName = "http://" + ip,
+                    UseShellExecute = true
+                });
+               
             }
             catch (Exception ex)
             {

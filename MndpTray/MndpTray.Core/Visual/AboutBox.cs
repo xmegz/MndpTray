@@ -5,6 +5,7 @@
  -----------------------------------------------------------------------------*/
 namespace MndpTray.Core
 {
+    using System.Diagnostics;
     using System.Reflection;
     using System.Windows.Forms;
 
@@ -118,7 +119,12 @@ namespace MndpTray.Core
         {
             try
             {
-                System.Diagnostics.Process.Start(this.labelWeb.Text);
+
+                System.Diagnostics.Process.Start(new ProcessStartInfo
+                {
+                    FileName = this.labelWeb.Text,
+                    UseShellExecute = true
+                });
             }
             catch
             {

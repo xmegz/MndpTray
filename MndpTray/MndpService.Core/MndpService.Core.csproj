@@ -11,15 +11,18 @@
     <PackageLicenseUrl />
     <RepositoryUrl>https://github.com/xmegz/MndpTray</RepositoryUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <IncludeSymbols>true</IncludeSymbols>    
+    <IncludeSymbols>true</IncludeSymbols>
     <PackageIcon>favicon.jpg</PackageIcon>
+    <Authors>Pádár Tamás</Authors>
+    <Company>Pádár Tamás</Company>
+    <Copyright>2018-2023</Copyright>
     <PackageTags>MNDP - Mikrotik Neighbor Discovery Protocol - Service Tool</PackageTags>
     <PackageProjectUrl>https://github.com/xmegz/MndpTray</PackageProjectUrl>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <AnalysisLevel>6.0-minimum</AnalysisLevel>
     <Title>MndpService.Core</Title>
-	<DebugType>embedded</DebugType>
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;IDE0063</NoWarn>
