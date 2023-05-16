@@ -25,8 +25,8 @@ MNDP similar to CDP and LLDP, but Mikrotik specific, typically includes the foll
 ### Download [Latest](https://github.com/xmegz/MndpTray/releases/download/v1.8.0/MndpTray.exe)
 
 ### Screenshots
-![alt text](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray/Images/screenshot6.png)
-![alt text](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray/Images/screenshot5.png)
+![alt text](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray.Core/Images/screenshot6.png)
+![alt text](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray.Core/Images/screenshot5.png)
 
 ### Tested
 * Windows 11, Windows 10 Os
