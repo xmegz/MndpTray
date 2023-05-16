@@ -81,7 +81,7 @@
             this.dgvGrid.RowHeadersWidth = 82;
             this.dgvGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvGrid.ShowEditingIcon = false;
-            this.dgvGrid.Size = new System.Drawing.Size(998, 697);
+            this.dgvGrid.Size = new System.Drawing.Size(1850, 697);
             this.dgvGrid.TabIndex = 0;
             this.dgvGrid.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DgvGrid_MouseDown);
             // 
@@ -181,8 +181,9 @@
             // ListForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(998, 697);
+            this.ClientSize = new System.Drawing.Size(1850, 697);
             this.Controls.Add(this.dgvGrid);
+            this.Font = new System.Drawing.Font("Segoe UI", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "ListForm";

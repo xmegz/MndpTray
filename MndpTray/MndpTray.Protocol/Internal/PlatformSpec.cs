@@ -1,4 +1,9 @@
-﻿#if NETSTANDARD2_0_OR_GREATER
+﻿/*-----------------------------------------------------------------------------
+ * Project:    MndpTray
+ * Repository: https://github.com/xmegz/MndpTray
+ * Author:     Pádár Tamás
+ -----------------------------------------------------------------------------*/
+#if NETSTANDARD2_0_OR_GREATER
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -8,7 +13,7 @@ namespace MndpTray.Protocol
     /// <summary>
     /// Platform specific utilities
     /// </summary>
-    public static class PlatformSpec
+    internal static class PlatformSpec
     {
         private static string GetDataFromOsRelease(string key)
         {

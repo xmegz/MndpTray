@@ -1,4 +1,9 @@
-﻿namespace MndpTray.Protocol
+﻿/*-----------------------------------------------------------------------------
+ * Project:    MndpTray
+ * Repository: https://github.com/xmegz/MndpTray
+ * Author:     Pádár Tamás
+ -----------------------------------------------------------------------------*/
+namespace MndpTray.Protocol
 {
     using System;
     using System.IO;
@@ -6,14 +11,15 @@
     /// <summary>
     /// Binary Reader Extensions
     /// </summary>
-    public static class BinaryReaderExtensions
+    internal static class BinaryReaderExtensions
     {
+        #region Methods
         /// <summary>
         /// Read UIn16 value reversed byte order
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
-        public static ushort ReadUInt16Reverse(this BinaryReader self)
+        internal static ushort ReadUInt16Reverse(this BinaryReader self)
         {
             byte[] b = self.ReadBytes(2);
             Array.Reverse(b);
@@ -26,12 +32,13 @@
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
-        public static uint ReadUInt32Reverse(this BinaryReader self)
+        internal static uint ReadUInt32Reverse(this BinaryReader self)
         {
             byte[] b = self.ReadBytes(4);
             Array.Reverse(b);
 
             return BitConverter.ToUInt32(b, 0);
         }
+        #endregion
     }
 }

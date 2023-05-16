@@ -1,4 +1,9 @@
-﻿namespace MndpTray.Protocol
+﻿/*-----------------------------------------------------------------------------
+ * Project:    MndpTray
+ * Repository: https://github.com/xmegz/MndpTray
+ * Author:     Pádár Tamás
+ -----------------------------------------------------------------------------*/
+namespace MndpTray.Protocol
 {
     using System;
     using System.IO;
@@ -6,14 +11,15 @@
     /// <summary>
     /// BinaryWriter extension
     /// </summary>
-    public static class BinaryWriterExtensions
+    internal static class BinaryWriterExtensions
     {
+        #region Methods
         /// <summary>
         /// Write UInt16 value reversed byte order
         /// </summary>
         /// <param name="self"></param>
         /// <param name="data"></param>
-        public static void WriteUInt16Reverse(this BinaryWriter self, ushort data)
+        internal static void WriteUInt16Reverse(this BinaryWriter self, ushort data)
         {
             byte[] b = BitConverter.GetBytes(data);
             Array.Reverse(b);
@@ -24,12 +30,13 @@
         /// <summary>
         /// Write UInt32 value reversed byte order
         /// </summary>
-        public static void WriteUInt32Reverse(this BinaryWriter self, uint data)
+        internal static void WriteUInt32Reverse(this BinaryWriter self, uint data)
         {
             byte[] b = BitConverter.GetBytes(data);
             Array.Reverse(b);
 
             self.Write(b);
         }
+        #endregion
     }
 }

@@ -1,4 +1,9 @@
-﻿namespace MndpTray.Protocol
+﻿/*-----------------------------------------------------------------------------
+ * Project:    MndpTray
+ * Repository: https://github.com/xmegz/MndpTray
+ * Author:     Pádár Tamás
+ -----------------------------------------------------------------------------*/
+namespace MndpTray.Protocol
 {
     using System;
 
@@ -30,7 +35,7 @@
         /// <param name="className"></param>
         /// <param name="methodName"></param>
         /// <param name="ex"></param>
-        public static void Exception(string className, string methodName, Exception ex)
+        internal static void Exception(string className, string methodName, Exception ex)
         {
             try
             {
@@ -46,7 +51,7 @@
         /// </summary>
         /// <param name="format"></param>
         /// <param name="args"></param>
-        public static void Info(string format, params object[] args)
+        internal static void Info(string format, params object[] args)
         {
             try
             {

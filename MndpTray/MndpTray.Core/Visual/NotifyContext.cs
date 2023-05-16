@@ -1,8 +1,12 @@
-﻿namespace MndpTray.Core
+﻿/*-----------------------------------------------------------------------------
+ * Project:    MndpTray
+ * Repository: https://github.com/xmegz/MndpTray
+ * Author:     Pádár Tamás
+ -----------------------------------------------------------------------------*/
+namespace MndpTray.Core
 {
     using System;
     using System.IO;
-    using System.Net;
     using System.Reflection;
     using System.Threading;
     using System.Windows.Forms;

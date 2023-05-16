@@ -1,51 +1,47 @@
 # MndpTray [![Build status](https://ci.appveyor.com/api/projects/status/decjg2rq0hwn77rq?svg=true)](https://ci.appveyor.com/project/xmegz/mndptray) [![CodeFactor](https://www.codefactor.io/repository/github/xmegz/mndptray/badge)](https://www.codefactor.io/repository/github/xmegz/mndptray) ![GitHub All Releases](https://img.shields.io/github/downloads/xmegz/MndpTray/total) ![Nuget](https://img.shields.io/nuget/v/MndpTray.Protocol)
 
-MNDP - Mikrotik Neighbor Discovery Protocol - Tray Application Tool
+MndpTray is a Windows utility that allows you to monitor and manage MikroTik devices on your network from the system tray.
 
-This protocol similar to CDP and LLDP, but Mikrotik specific
+The information is broadcast using the MikroTik Discovery Protocol (MNDP), which allows MikroTik RouterOS devices to discover other MikroTik RouterOS devices on the same network segment. This makes it possible for Mndptray to provide information about the host to other MikroTik RouterOS devices and for other MikroTik RouterOS devices to retrieve this information and display it in their own management interfaces.
 
-## Functions:
-* Periodic sends Windows host information over MNDP, Mikrotik routers see it.
-* Listens to MNDP messsages and put them to list
-* Blocking winbox discovery function when running
-* Tooltip list to open with SSH,VNC,RDP,HTTP,PING protocol
+By providing this information, Mndptray makes it easier for network administrators to monitor and manage their MikroTik RouterOS devices, as they can quickly see the status of all the devices on their network without having to log in to each device individually.
+
+MNDP similar to CDP and LLDP, but Mikrotik specific, typically includes the following information:
+
+* MikroTik RouterOS Version: The version of MikroTik RouterOS running on the device.
+* IP Address: The IP address of the device's network interface.
+* Board Name: The name of the device's board.
+* Software ID: A unique identifier for the device's software.
+* MAC Address: The MAC address of the device's network interface.
+* Uptime: The amount of time the device has been running.
+
+### Functions
+* Includes integration with external tools like WINBOX, SSH, VNC, RDP, HTTP, PING
 * Send message over windows message service (Remote RPC)
 * IPv4 & IPv6 support
 * Self update from github
+* Blocking winbox discovery function when running
 
-## Download: [Latest](https://github.com/xmegz/MndpTray/releases/download/v1.8.0/MndpTray.exe)
+### Download [Latest](https://github.com/xmegz/MndpTray/releases/download/v1.8.0/MndpTray.exe)
 
-## Screenshots:
+### Screenshots
 ![alt text](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray/Images/screenshot6.png)
 ![alt text](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray/Images/screenshot5.png)
 
-## Tested:
-* Windows 10, Windows 7, Windows Server 2012 R2, Windows Server 2016
+### Tested
+* Windows 11, Windows 10
 * Single and multiple NIC
-* .NET 4.5.2
+* .NET 6.0
 
-## Windows service:
-* Periodic sends Windows host information over MNDP, Mikrotik routers see it.
-* Auto start after boot
-* Integrated with service installer
-* Self update from github
-## Linux service:
-* .Net Core Support (3.1)
-```
-MndpService, Version=1.8.0.0, Culture=neutral, PublicKeyToken=d876b79f32e69502
-Usage:
-MndpService install - Install Service
-MndpService uninstall - Uninstall Service
-MndpService start - Start Service
-MndpService stop - Stop Service
-MndpService update - Update Service
-MndpService restart - Restart Service
-```
+# MndpService
+* Systemd or Windows service
+* .NET 6.0 and Linux support
 
-## Standalone library:
+# MndpProtocol
+* .NET 4.6.2, .NET 6.0 support
 * Install via Nuget: [https://www.nuget.org/packages/MndpTray.Protocol/](https://www.nuget.org/packages/MndpTray.Protocol/)
 
-## Usage: 
+### Usage
 * Try it on .Net Fiddle: [https://dotnetfiddle.net/vMF42n/](https://dotnetfiddle.net/vMF42n/)
 ```C#
 using System;

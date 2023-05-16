@@ -1,6 +1,10 @@
-﻿namespace MndpTray.Core
+﻿/*-----------------------------------------------------------------------------
+ * Project:    MndpTray
+ * Repository: https://github.com/xmegz/MndpTray
+ * Author:     Pádár Tamás
+ -----------------------------------------------------------------------------*/
+namespace MndpTray.Core
 {
-    using System;
     using System.Reflection;
     using System.Windows.Forms;
 
@@ -16,17 +20,17 @@
         {
             this.InitializeComponent();
             this.Text = string.Concat(this.Text, " Version: ", Assembly.GetEntryAssembly().GetName().Version.ToString());
-            this.labelProductName.Text = this.AssemblyProduct;
-            this.labelVersion.Text = string.Format("Version {0}", this.AssemblyVersion);
-            this.labelCopyright.Text = this.AssemblyCopyright;
-            this.labelCompanyName.Text = this.AssemblyCompany;
-            this.textBoxDescription.Text = this.AssemblyDescription;
+            this.labelProductName.Text = AssemblyProduct;
+            this.labelVersion.Text = string.Format("Version {0}", AssemblyVersion);
+            this.labelCopyright.Text = AssemblyCopyright;
+            this.labelCompanyName.Text = AssemblyCompany;
+            this.textBoxDescription.Text = AssemblyDescription;
             this.labelWeb.Text = "https://github.com/xmegz/MndpTray";
         }
 
         #region Assembly Attribute Accessors
 
-        public string AssemblyTitle
+        public static string AssemblyTitle
         {
             get
             {
@@ -40,11 +44,11 @@
                     }
                 }
 
-                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location);
             }
         }
 
-        public string AssemblyVersion
+        public static string AssemblyVersion
         {
             get
             {
@@ -52,7 +56,7 @@
             }
         }
 
-        public string AssemblyDescription
+        public static string AssemblyDescription
         {
             get
             {
@@ -66,7 +70,7 @@
             }
         }
 
-        public string AssemblyProduct
+        public static string AssemblyProduct
         {
             get
             {
@@ -80,7 +84,7 @@
             }
         }
 
-        public string AssemblyCopyright
+        public static string AssemblyCopyright
         {
             get
             {
@@ -94,7 +98,7 @@
             }
         }
 
-        public string AssemblyCompany
+        public static string AssemblyCompany
         {
             get
             {

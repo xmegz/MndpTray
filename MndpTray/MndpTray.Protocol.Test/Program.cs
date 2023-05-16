@@ -1,3 +1,8 @@
+/*-----------------------------------------------------------------------------
+ * Project:    MndpTray
+ * Repository: https://github.com/xmegz/MndpTray
+ * Author:     Pádár Tamás
+ -----------------------------------------------------------------------------*/
 namespace MndpTray.Protocol.Test
 {
     using System;

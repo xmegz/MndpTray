@@ -1,13 +1,17 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using MndpTray.Protocol;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-
+﻿/*-----------------------------------------------------------------------------
+ * Project:    MndpTray
+ * Repository: https://github.com/xmegz/MndpTray
+ * Author:     Pádár Tamás
+ -----------------------------------------------------------------------------*/
 namespace MndpService
 {
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
+    using MndpTray.Protocol;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
     public class MndpBackgroundService : BackgroundService
     {
         private readonly ILogger<MndpBackgroundService> _logger;
@@ -25,7 +29,10 @@ namespace MndpService
 
             if (this._configuration.GetValue<bool>("isLogging", false))
             {
-                Log.SetInfoAction(this.InfoAction);
+                Log.SetInfoAction((format, param) =>
+                    {
+                        this._logger?.LogInformation(format, param);
+                    });
             }
 
             MndpSender.Instance.Start(MndpHostInfo.Instance);
@@ -47,12 +54,6 @@ namespace MndpService
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             throw new NotImplementedException();
-        }
-
-        protected void InfoAction(string format, params object[] args)
-        {
-            string message = string.Format(format, args);
-            this._logger?.LogInformation(message);
         }
     }
 }

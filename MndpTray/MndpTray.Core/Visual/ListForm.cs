@@ -1,5 +1,11 @@
-﻿namespace MndpTray.Core
+﻿/*-----------------------------------------------------------------------------
+ * Project:    MndpTray
+ * Repository: https://github.com/xmegz/MndpTray
+ * Author:     Pádár Tamás
+ -----------------------------------------------------------------------------*/
+namespace MndpTray.Core
 {
+    using MndpTray.Protocol;
     using System;
     using System.Collections.Generic;
     using System.Data;
@@ -8,7 +14,6 @@
     using System.Linq;
     using System.Reflection;
     using System.Windows.Forms;
-    using MndpTray.Protocol;
 
     /// <summary>
     /// List Form.
@@ -21,7 +26,7 @@
         public ListForm()
         {
             this.InitializeComponent();
-            this.SetDoubleBuffering(this.dgvGrid);
+            SetDoubleBuffering(this.dgvGrid);
 
             this.Text = string.Concat(this.Text, " Version: ", Assembly.GetEntryAssembly().GetName().Version.ToString());
         }
@@ -97,7 +102,7 @@
                     return;
                 }
 
-                string path = this.GetMsgExePath();
+                string path = GetMsgExePath();
                 if (path == null)
                 {
                     return;
@@ -230,7 +235,7 @@
 
         #region Methods
 
-        private string GetMsgExePath()
+        private static string GetMsgExePath()
         {
             string[] paths = new string[]
             {
@@ -259,7 +264,7 @@
             return null;
         }
 
-        private void SetDoubleBuffering(DataGridView dataGridView, bool value = true)
+        private static void SetDoubleBuffering(DataGridView dataGridView, bool value = true)
         {
             Type type = dataGridView.GetType();
             PropertyInfo pi = type.GetProperty(

@@ -1,4 +1,9 @@
-﻿namespace MndpTray.Core.Update
+﻿/*-----------------------------------------------------------------------------
+ * Project:    MndpTray
+ * Repository: https://github.com/xmegz/MndpTray
+ * Author:     Pádár Tamás
+ -----------------------------------------------------------------------------*/
+namespace MndpTray.Core.Update
 {
     using System;
     using System.Collections.Generic;
@@ -23,6 +28,7 @@
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             HttpWebRequest webRequest = System.Net.WebRequest.Create(url) as HttpWebRequest;
+
             webRequest.Method = "GET";
             webRequest.UserAgent = "download";
 
@@ -47,10 +53,7 @@
         /// <returns>Next release download url is available, else null.</returns>
         public static string GetNextVersionDownloadUrl(string author, string repositoryName, string assetName, Version curVersion)
         {
-            if (assetName == null)
-            {
-                assetName = repositoryName;
-            }
+            assetName ??= repositoryName;
 
             string releaseStr = GetReleasesFromApi(author, repositoryName);
 
@@ -177,6 +180,7 @@
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             HttpWebRequest webRequest = System.Net.WebRequest.Create(url) as HttpWebRequest;
+
             webRequest.Method = "GET";
             webRequest.UserAgent = repositoryName;
             webRequest.ServicePoint.Expect100Continue = true;

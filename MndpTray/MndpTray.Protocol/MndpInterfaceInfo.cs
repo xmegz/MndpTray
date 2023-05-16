@@ -1,4 +1,9 @@
-﻿namespace MndpTray.Protocol
+﻿/*-----------------------------------------------------------------------------
+ * Project:    MndpTray
+ * Repository: https://github.com/xmegz/MndpTray
+ * Author:     Pádár Tamás
+ -----------------------------------------------------------------------------*/
+namespace MndpTray.Protocol
 {
     /// <summary>
     /// Mikrotik discovery message host interface information.

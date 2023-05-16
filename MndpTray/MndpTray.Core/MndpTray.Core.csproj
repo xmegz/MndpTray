@@ -2,9 +2,9 @@
   <PropertyGroup>
     <TargetFramework>net6.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>Data\key.snk</AssemblyOriginatorKeyFile>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
@@ -13,34 +13,43 @@
     <PackageLicenseUrl />
     <RepositoryUrl>https://github.com/xmegz/MndpTray</RepositoryUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <IncludeSymbols>true</IncludeSymbols>    
+    <IncludeSymbols>true</IncludeSymbols>
     <PackageIcon>favicon.jpg</PackageIcon>
-    <PackageTags>mikrotik discovery protocol tray application</PackageTags>
+    <PackageTags>MNDP - Mikrotik Neighbor Discovery Protocol - Tray Application Tool</PackageTags>
+    <Description>MNDP - Mikrotik Neighbor Discovery Protocol - Tray Application Tool</Description>
     <PackageProjectUrl>https://github.com/xmegz/MndpTray</PackageProjectUrl>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <AnalysisLevel>6.0-minimum</AnalysisLevel>
     <Title>MndpTray.Core</Title>
-	<DebugType>embedded</DebugType>
-	<ApplicationIcon>Images\favicon.ico</ApplicationIcon>
+    <DebugType>embedded</DebugType>
+    <ApplicationIcon>Images\favicon.ico</ApplicationIcon>
+    <NeutralLanguage>hu-HU</NeutralLanguage>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;IDE0090;SYSLIB0014;IDE0063</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;IDE0090;SYSLIB0014</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Install\**" />
+    <EmbeddedResource Remove="Install\**" />
+    <None Remove="Install\**" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Images\favicon.ico" />
   </ItemGroup>
-  <ItemGroup>    
+  <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     <ProjectReference Include="..\MndpTray.Protocol\MndpTray.Protocol.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\MndpTray\Images\favicon.jpg" Link="Images\favicon.jpg">
+    <None Include="Images\favicon.jpg" Link="Images\favicon.jpg">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Install\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,9 @@
-﻿namespace MndpTray.Core.Update
+﻿/*-----------------------------------------------------------------------------
+ * Project:    MndpTray
+ * Repository: https://github.com/xmegz/MndpTray
+ * Author:     Pádár Tamás
+ -----------------------------------------------------------------------------*/
+namespace MndpTray.Core.Update
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
