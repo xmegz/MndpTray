@@ -3,6 +3,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <SignAssembly>true</SignAssembly>
@@ -35,11 +36,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <NoWarn>1701;1702;IDE0090;SYSLIB0014</NoWarn>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="Install\**" />
-    <EmbeddedResource Remove="Install\**" />
-    <None Remove="Install\**" />
-  </ItemGroup>
   <ItemGroup>
     <Content Include="Images\favicon.ico" />
   </ItemGroup>

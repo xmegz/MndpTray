@@ -31,7 +31,7 @@ namespace MndpService
             {
                 Log.SetInfoAction((format, param) =>
                     {
-                        this._logger?.LogInformation(format, param);
+                        this._logger?.LogInformation(string.Format(format, param));
                     });
             }
 
