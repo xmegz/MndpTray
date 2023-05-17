@@ -19,13 +19,13 @@
     <Authors>Pádár Tamás</Authors>
     <Company>Pádár Tamás</Company>
     <Copyright>2018-2023</Copyright>
-    <PackageTags>MNDP - Mikrotik Neighbor Discovery Protocol - Tray Application Tool</PackageTags>
+    <Title>MndpTray.Core</Title>
+    <PackageTags>windows mikrotik tool network udp discovery broadcast cpd lldp network-discovery routeros net-framework mikrotik-router mndp</PackageTags>
     <Description>MNDP - Mikrotik Neighbor Discovery Protocol - Tray Application Tool</Description>
     <PackageProjectUrl>https://github.com/xmegz/MndpTray</PackageProjectUrl>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <AnalysisLevel>6.0-minimum</AnalysisLevel>
-    <Title>MndpTray.Core</Title>
     <DebugType>embedded</DebugType>
     <ApplicationIcon>Images\favicon.ico</ApplicationIcon>
     <NeutralLanguage>hu-HU</NeutralLanguage>

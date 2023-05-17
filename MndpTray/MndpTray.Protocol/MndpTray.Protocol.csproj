@@ -17,12 +17,12 @@
     <Authors>Pádár Tamás</Authors>
     <Company>Pádár Tamás</Company>
     <Copyright>2018-2023</Copyright>
-    <Description>Mikrotik Neighbor Discovery Protocol - Network Discovery</Description>
     <Copyright>Copyright ©  2018-2023</Copyright>
     <PackageProjectUrl>https://github.com/xmegz/MndpTray</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xmegz/MndpTray</RepositoryUrl>
     <PackageIcon>favicon.jpg</PackageIcon>
-    <PackageTags>Mikrotik Discovery Protocol Network Udp Broadcast Windows Routeros Mndp Network Beacon Cdp Lldp</PackageTags>
+    <Description>Mikrotik Neighbor Discovery Protocol - Network Discovery</Description>
+    <PackageTags>windows mikrotik tool network udp discovery broadcast cpd lldp network-discovery routeros net-framework mikrotik-router mndp</PackageTags>
     <ApplicationIcon>Images\favicon.ico</ApplicationIcon>
     <Title>MndpTray.Protocol</Title>
     <PackageReleaseNotes>Multi targeting .net 4.6.2 .net standard 2.0</PackageReleaseNotes>
