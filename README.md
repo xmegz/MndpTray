@@ -15,14 +15,14 @@ MNDP similar to CDP and LLDP, but Mikrotik specific, typically includes the foll
 * MAC Address: The MAC address of the device's network interface.
 * Uptime: The amount of time the device has been running.
 
-### Functions
+### Download [Latest](https://github.com/xmegz/MndpTray/releases/download/v2.0.0/MndpTray.Core.exe)
+
+### More Functions
 * Includes integration with external tools like WINBOX, SSH, VNC, RDP, HTTP, PING
 * Send message over windows message service (Remote RPC)
 * IPv4 & IPv6 support
 * Self update from GitHub
 * Blocking winbox discovery function when running
-
-### Download [Latest](https://github.com/xmegz/MndpTray/releases/download/v2.0.0/MndpTray.Core.exe)
 
 ### Screenshots
 ![alt text](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray.Core/Images/screenshot6.png)
