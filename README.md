@@ -22,7 +22,7 @@ MNDP similar to CDP and LLDP, but Mikrotik specific, typically includes the foll
 * Self update from GitHub
 * Blocking winbox discovery function when running
 
-### Download [Latest](https://github.com/xmegz/MndpTray/releases/download/v1.8.0/MndpTray.exe)
+### Download [Latest](https://github.com/xmegz/MndpTray/releases/download/v2.0.0/MndpTray.Core.exe)
 
 ### Screenshots
 ![alt text](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray.Core/Images/screenshot6.png)
