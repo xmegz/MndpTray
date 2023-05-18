@@ -22,8 +22,8 @@ jobs:
         dotnet-version: 6.0.x
     
     - name: Restore dependencies
-      run: dotnet restore MndpTray\Mndptray.sln
+      run: dotnet restore MndpTray\MndpTray.sln
     
     - name: Build
-      run: dotnet build --no-restore MndpTray\Mndptray.sln
+      run: dotnet build --no-restore MndpTray\MndpTray.sln
     
