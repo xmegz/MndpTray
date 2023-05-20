@@ -139,8 +139,7 @@ namespace MndpTray.Core
                 {
                     FileName = "http://" + ip,
                     UseShellExecute = true
-                });
-               
+                });               
             }
             catch (Exception ex)
             {

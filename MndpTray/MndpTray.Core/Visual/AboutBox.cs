@@ -26,7 +26,7 @@ namespace MndpTray.Core
             this.labelCopyright.Text = AssemblyCopyright;
             this.labelCompanyName.Text = AssemblyCompany;
             this.textBoxDescription.Text = AssemblyDescription;
-            this.labelWeb.Text = "https://github.com/xmegz/MndpTray";
+            this.labelWeb.Text = AssemblyMetadataRepositoryUrl;
         }
 
         #region Assembly Attribute Accessors
@@ -45,7 +45,7 @@ namespace MndpTray.Core
                     }
                 }
 
-                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location);
+                return Process.GetCurrentProcess().ProcessName;
             }
         }
 
@@ -62,10 +62,9 @@ namespace MndpTray.Core
             get
             {
                 object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
+
                 if (attributes.Length == 0)
-                {
                     return string.Empty;
-                }
 
                 return ((AssemblyDescriptionAttribute)attributes[0]).Description;
             }
@@ -76,10 +75,9 @@ namespace MndpTray.Core
             get
             {
                 object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
+
                 if (attributes.Length == 0)
-                {
                     return string.Empty;
-                }
 
                 return ((AssemblyProductAttribute)attributes[0]).Product;
             }
@@ -90,10 +88,9 @@ namespace MndpTray.Core
             get
             {
                 object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+
                 if (attributes.Length == 0)
-                {
                     return string.Empty;
-                }
 
                 return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
             }
@@ -104,23 +101,40 @@ namespace MndpTray.Core
             get
             {
                 object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
+
                 if (attributes.Length == 0)
-                {
                     return string.Empty;
-                }
 
                 return ((AssemblyCompanyAttribute)attributes[0]).Company;
             }
         }
 
+        public static string AssemblyMetadataRepositoryUrl
+        {
+            get
+            {
+                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyMetadataAttribute), false);
+
+                foreach (object attribute in attributes)
+                {
+                    AssemblyMetadataAttribute titleAttribute = (AssemblyMetadataAttribute)attribute;
+                    if (titleAttribute.Key == "RepositoryUrl")
+                    {
+                        return titleAttribute.Value;
+                    }
+                }
+                return string.Empty;
+            }
+        }
+
         #endregion Assembly Attribute Accessors
 
+        #region Event handlers
         private void LabelWeb_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             try
             {
-
-                System.Diagnostics.Process.Start(new ProcessStartInfo
+                Process.Start(new ProcessStartInfo
                 {
                     FileName = this.labelWeb.Text,
                     UseShellExecute = true
@@ -130,5 +144,6 @@ namespace MndpTray.Core
             {
             }
         }
+        #endregion
     }
 }

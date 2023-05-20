@@ -23,7 +23,7 @@ namespace MndpTray.Protocol
         /// <summary>
         /// Set Debug Format string style delegate.
         /// </summary>
-        /// <param name="infoAction"></param>
+        /// <param name="infoAction">Logging action</param>
         public static void SetInfoAction(Action<string, object[]> infoAction)
         {
             _infoAction = infoAction;
@@ -32,9 +32,9 @@ namespace MndpTray.Protocol
         /// <summary>
         /// Log Exception
         /// </summary>
-        /// <param name="className"></param>
-        /// <param name="methodName"></param>
-        /// <param name="ex"></param>
+        /// <param name="className">Called class</param>
+        /// <param name="methodName">Called method</param>
+        /// <param name="ex">Exception</param>
         internal static void Exception(string className, string methodName, Exception ex)
         {
             try
@@ -47,15 +47,15 @@ namespace MndpTray.Protocol
         }
 
         /// <summary>
-        /// Log Info
+        /// Log information
         /// </summary>
-        /// <param name="format"></param>
-        /// <param name="args"></param>
-        internal static void Info(string format, params object[] args)
+        /// <param name="message">Message format</param>
+        /// <param name="args">format args</param>
+        internal static void Info(string message, params object[] args)
         {
             try
             {
-                _infoAction?.Invoke(format, args);
+                _infoAction?.Invoke(message, args);
             }
             catch
             {

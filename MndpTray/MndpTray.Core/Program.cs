@@ -6,6 +6,7 @@
 namespace MndpTray.Core
 {
     using System;
+    using System.Diagnostics;
     using System.IO;
     using System.Reflection;
     using System.Windows.Forms;
@@ -77,12 +78,8 @@ namespace MndpTray.Core
         #endregion Event Handlers
 
         private static string GetLogFileName(string extension)
-        {
-            Assembly assembly = Assembly.GetEntryAssembly();
-            string dir = Path.GetDirectoryName(assembly.Location);
-            string file = Path.GetFileNameWithoutExtension(assembly.Location);
-
-            file = Path.Combine(dir, file);
+        {            
+            string file = Environment.ProcessPath;
             return file + "." + extension;
         }
     }

@@ -17,8 +17,8 @@ namespace MndpTray.Protocol
         /// <summary>
         /// Write UInt16 value reversed byte order
         /// </summary>
-        /// <param name="self"></param>
-        /// <param name="data"></param>
+        /// <param name="self">self object</param>
+        /// <param name="data">ushort data</param>
         internal static void WriteUInt16Reverse(this BinaryWriter self, ushort data)
         {
             byte[] b = BitConverter.GetBytes(data);
@@ -29,6 +29,8 @@ namespace MndpTray.Protocol
 
         /// <summary>
         /// Write UInt32 value reversed byte order
+        /// <param name="self">self object</param>
+        /// <param name="data">uint data</param>
         /// </summary>
         internal static void WriteUInt32Reverse(this BinaryWriter self, uint data)
         {

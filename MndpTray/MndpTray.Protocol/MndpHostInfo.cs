@@ -9,17 +9,13 @@ namespace MndpTray.Protocol
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
-#if NET462_OR_GREATER
-    using System.Management;
-#endif
     using System.Net;
     using System.Net.NetworkInformation;
-    using Microsoft.Win32;
 
     /// <summary>
     /// Mikrotik discovery message host information provider.
     /// </summary>
-    public class MndpHostInfo : IMndpHostInfo
+    public partial class MndpHostInfo : IMndpHostInfo
     {
         #region Static
 
@@ -122,134 +118,6 @@ namespace MndpTray.Protocol
         }
 
         /// <summary>
-        /// Gets host platform (From management object ComputerSystem.Manufacturer).
-        /// </summary>
-        public string Platform
-        {
-            get
-            {
-                try
-                {
-#if NET462_OR_GREATER
-                    ManagementClass mc = new ManagementClass("Win32_ComputerSystem");
-                    ManagementObjectCollection moc = mc.GetInstances();
-                    if (moc.Count != 0)
-                    {
-                        foreach (ManagementObject mo in mc.GetInstances())
-                        {
-                            return mo["Manufacturer"].ToString();
-                        }
-                    }
-#elif NETSTANDARD2_0_OR_GREATER
-                    return PlatformSpec.GetManufacturer();
-#else
-                    return "";
-#endif
-                }
-                catch (Exception ex)
-                {
-                    Log.Exception(nameof(MndpHostInfo), nameof(this.Platform), ex);
-                }
-
-                return string.Empty;
-            }
-        }
-
-        /// <summary>
-        /// Gets logged In user name.
-        /// </summary>
-        public string SoftwareId
-        {
-            get
-            {
-
-#if NET462_OR_GREATER
-                {
-                    try
-                    {
-                        using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT UserName FROM Win32_ComputerSystem"))
-                        {
-                            foreach (ManagementObject queryObj in searcher.Get())
-                            {
-                                string userName = null;
-
-                                var obj = queryObj["UserName"];
-
-                                if (obj == null)
-                                {
-                                    continue;
-                                }
-
-                                userName = obj.ToString();
-
-                                if (string.IsNullOrEmpty(userName))
-                                {
-                                    continue;
-                                }
-
-                                userName = userName.Substring(userName.LastIndexOf('\\') + 1);
-
-                                if (string.IsNullOrEmpty(userName))
-                                {
-                                    continue;
-                                }
-
-                                return userName;
-                            }
-                        }
-
-                        using (ManagementObjectSearcher searcher = new ManagementObjectSearcher(new SelectQuery(@"Select * from Win32_Process")))
-                        {
-                            foreach (ManagementObject obj in searcher.Get())
-                            {
-                                string path = obj["ExecutablePath"] as string;
-
-                                if (string.IsNullOrEmpty(path))
-                                {
-                                    continue;
-                                }
-
-                                if (!path.EndsWith("explorer.exe", StringComparison.InvariantCultureIgnoreCase))
-                                {
-                                    continue;
-                                }
-
-                                string[] ownerInfo = new string[2];
-                                obj.InvokeMethod("GetOwner", (object[])ownerInfo);
-
-                                if (ownerInfo == null)
-                                {
-                                    continue;
-                                }
-
-                                if (string.IsNullOrEmpty(ownerInfo[0]))
-                                {
-                                    continue;
-                                }
-
-                                return ownerInfo[0];
-                            }
-                        }
-
-                        return string.Empty;
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Exception(nameof(MndpHostInfo), nameof(this.SoftwareId), ex);
-                    }
-
-                    return string.Empty;
-                }
-#else
-                {
-                    return String.Empty;
-                }
-#endif
-
-            }
-        }
-
-        /// <summary>
         /// Gets host uptime (From 64-bit TickCount).
         /// </summary>
         public TimeSpan UpTime
@@ -262,31 +130,6 @@ namespace MndpTray.Protocol
             }
         }
 
-        /// <summary>
-        /// Gets host software version (From Registry ProductName).
-        /// </summary>
-        public string Version
-        {
-            get
-            {
-                try
-                {
-#if NET462_OR_GREATER
-                return Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName", string.Empty).ToString();
-#elif NETSTANDARD2_0_OR_GREATER
-                return PlatformSpec.GetOsVersion();
-#else
-                return "";
-#endif
-                }
-                catch (Exception ex)
-                {
-                    Log.Exception(nameof(MndpHostInfo), nameof(this.Version), ex);
-                }
-
-                return string.Empty;
-            }
-        }
         #endregion Props
     }
 }

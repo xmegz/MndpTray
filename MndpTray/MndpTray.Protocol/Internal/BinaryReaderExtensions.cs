@@ -17,8 +17,8 @@ namespace MndpTray.Protocol
         /// <summary>
         /// Read UIn16 value reversed byte order
         /// </summary>
-        /// <param name="self"></param>
-        /// <returns></returns>
+        /// <param name="self">self object</param>
+        /// <returns>UInt16 value</returns>
         internal static ushort ReadUInt16Reverse(this BinaryReader self)
         {
             byte[] b = self.ReadBytes(2);
@@ -30,8 +30,8 @@ namespace MndpTray.Protocol
         /// <summary>
         /// Read UInt32 value reversed byte order
         /// </summary>
-        /// <param name="self"></param>
-        /// <returns></returns>
+        /// <param name="self">self object</param>
+        /// <returns>uint value</returns>
         internal static uint ReadUInt32Reverse(this BinaryReader self)
         {
             byte[] b = self.ReadBytes(4);
