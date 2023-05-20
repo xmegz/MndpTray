@@ -10,7 +10,9 @@ MNDP similar to CDP and LLDP, but Mikrotik specific, typically includes the foll
 
 * MikroTik RouterOS Version: The version of MikroTik RouterOS running on the device.
 * IP Address: The IP address of the device's network interface.
+* Interface: The name of the device's network interface.
 * Board Name: The name of the device's board.
+* Identity: The name of the device
 * Software ID: A unique identifier for the device's software.
 * MAC Address: The MAC address of the device's network interface.
 * Uptime: The amount of time the device has been running.
