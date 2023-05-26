@@ -26,7 +26,6 @@ namespace MndpTray.Core.Update
         /// <returns>target content.</returns>
         public static byte[] DownloadBinary(string url)
         {
-            //ServicePointManager.SecurityProtocol = Sec  SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             HttpWebRequest webRequest = System.Net.WebRequest.Create(url) as HttpWebRequest;
 
             webRequest.Method = "GET";
@@ -178,7 +177,6 @@ namespace MndpTray.Core.Update
         {
             string url = "https://api.github.com/repos/" + author + "/" + repositoryName + "/releases";
 
-            //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             HttpWebRequest webRequest = System.Net.WebRequest.Create(url) as HttpWebRequest;
 
             webRequest.Method = "GET";
