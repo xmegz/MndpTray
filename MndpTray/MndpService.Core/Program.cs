@@ -9,7 +9,7 @@ namespace MndpService
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using System;
-    public class Program
+    public static class Program
     {
         public static IHostBuilder CreateHostBuilder(string[] args)
         {

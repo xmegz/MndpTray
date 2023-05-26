@@ -11,7 +11,7 @@ namespace MndpTray.Protocol.Test
     /// <summary>
     /// Startup Class.
     /// </summary>
-    public class Program
+    public static class Program
     {
         private static readonly Timer Timer = new Timer(Timer_Callback, null, Timeout.Infinite, Timeout.Infinite);
 
