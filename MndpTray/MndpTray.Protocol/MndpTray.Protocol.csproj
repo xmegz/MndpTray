@@ -22,7 +22,7 @@
     <RepositoryUrl>https://github.com/xmegz/MndpTray</RepositoryUrl>
     <PackageIcon>Images\favicon.jpg</PackageIcon>
     <Description>Mikrotik Neighbor Discovery Protocol - Network Discovery</Description>
-    <PackageTags>windows mikrotik tool network udp discovery broadcast cpd lldp network-discovery routeros net-framework mikrotik-router mndp</PackageTags>
+    <PackageTags>mikrotik windows linux tool network udp discovery broadcast beacon cpd lldp network-discovery routeros net-framework mikrotik-router mndp</PackageTags>
     <ApplicationIcon>Images\favicon.ico</ApplicationIcon>
     <Title>MndpTray.Protocol</Title>
     <PackageReleaseNotes>Multi targeting .net 4.6.2 .net standard 2.0</PackageReleaseNotes>
