@@ -1,4 +1,4 @@
-# MndpTray [![Build status](https://ci.appveyor.com/api/projects/status/decjg2rq0hwn77rq?svg=true)](https://ci.appveyor.com/project/xmegz/mndptray) [![CodeFactor](https://www.codefactor.io/repository/github/xmegz/mndptray/badge)](https://www.codefactor.io/repository/github/xmegz/mndptray) ![GitHub All Releases](https://img.shields.io/github/downloads/xmegz/MndpTray/total) ![Nuget](https://img.shields.io/nuget/v/MndpTray.Protocol)
+# MndpTray [![Build status](https://ci.appveyor.com/api/projects/status/decjg2rq0hwn77rq?svg=true)](https://ci.appveyor.com/project/xmegz/mndptray) [![CodeFactor](https://www.codefactor.io/repository/github/xmegz/mndptray/badge)](https://www.codefactor.io/repository/github/xmegz/mndptray) ![GitHub All Releases](https://img.shields.io/github/downloads/xmegz/MndpTray/total) ![NuGet](https://img.shields.io/nuget/v/MndpTray.Protocol?label=NuGet) ![MyGet](https://img.shields.io/myget/mndptray/v/MndpTray.Protocol?label=MyGet)
 
 MndpTray is a Windows utility that allows you to monitor and manage MikroTik devices on your network from the system tray.
 
@@ -34,6 +34,14 @@ MNDP similar to CDP and LLDP, but Mikrotik specific, typically includes the foll
 * Windows 11, Windows 10 Os
 * Single and multiple NIC
 * .NET 6.0 runtime
+* Various Mikrotik devices with 6.x or 7.x OS
+
+### Install via WinGet (PowerShell as Administrator)
+
+```powershell
+winget install --accept-source-agreements mndptray.core
+mndptray
+```
 
 # MndpService
 
@@ -44,11 +52,22 @@ MndpService is a background service, which is send information about running hos
 * **Developement in progress**
 
 # MndpProtocol
+
+Standalone package for intergation and testing
+
 * .NET 4.6.2, .NET 6.0 support
-* Install via Nuget: [https://www.nuget.org/packages/MndpTray.Protocol/](https://www.nuget.org/packages/MndpTray.Protocol/)
+* Linux and Windows support
+* Separate listener and sender thread
+
+### Package feeds
+
+* NuGet: [https://www.nuget.org/packages/MndpTray.Protocol/](https://www.nuget.org/packages/MndpTray.Protocol/)
+* MyGet: [https://www.myget.org/feed/mndptray/package/nuget/MndpTray.Protocol](https://www.myget.org/feed/mndptray/package/nuget/MndpTray.Protocol)
 
 ### Usage
+
 * Try it on .Net Fiddle: [https://dotnetfiddle.net/vMF42n/](https://dotnetfiddle.net/vMF42n/)
+
 ```C#
 using System;
 using System.Threading;
