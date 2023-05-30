@@ -7,12 +7,12 @@ MndpTray is a Windows utility that allows you to monitor and manage MikroTik dev
 
 The information is broadcast using the MikroTik Discovery Protocol (MNDP), which allows MikroTik RouterOS devices to discover other MikroTik RouterOS devices on the same network segment. This makes it possible for Mndptray to provide information about the host to other MikroTik RouterOS devices and for other MikroTik RouterOS devices to retrieve this information and display it in their own management interfaces.
 
-By providing this information, Mndptray makes it easier for network administrators to monitor and manage their MikroTik RouterOS devices, as they can quickly see the status of all the devices on their network without having to log in to each device individually.
+By providing this information, **MndpTray** makes it easier for network administrators to monitor and manage their MikroTik RouterOS devices, as they can quickly see the status of all the devices on their network without having to log in to each device individually.
 
 ![windows application list window](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray.Core/Images/screenshot6.png)
 ![mikrotik winbox neighbor interface](https://raw.githubusercontent.com/xmegz/MndpTray/master/MndpTray/MndpTray.Core/Images/screenshot5.png)
 
-### Download 
+### Downloads 
 
 * Download from GitHub [**Latest**](https://github.com/xmegz/MndpTray/releases/download/v2.0.0/MndpTray.Core.exe)
 * Install via WinGet (as administrator)
@@ -35,6 +35,7 @@ MNDP similar to CDP and LLDP, but Mikrotik specific, typically includes the foll
 * Uptime: The amount of time the device has been running.
 
 ### More functions
+
 * Includes integration with external tools like WINBOX, SSH, VNC, RDP, HTTP, PING
 * Send message over windows message service (Remote RPC)
 * IPv4 & IPv6 support
@@ -42,6 +43,7 @@ MNDP similar to CDP and LLDP, but Mikrotik specific, typically includes the foll
 * Blocking winbox discovery function when running
 
 ### Tested
+
 * Windows 11, Windows 10 Os
 * Single and multiple NIC
 * .NET 6.0 runtime
