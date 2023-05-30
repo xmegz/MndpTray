@@ -302,6 +302,7 @@ namespace MndpTray.Protocol
 
         #endregion Methods
 
+        #region Internal
         /// <summary>
         /// T=Type , L=Length , V=Value .
         /// </summary>
@@ -612,5 +613,6 @@ namespace MndpTray.Protocol
 
             #endregion Methods
         }
+        #endregion
     }
 }
