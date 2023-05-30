@@ -18,7 +18,7 @@
     <Company>Pádár Tamás</Company>
     <Copyright>2018-2023</Copyright>
     <Title>MndpService.Core</Title>
-    <PackageTags>windows mikrotik tool network udp discovery broadcast cpd lldp network-discovery routeros net-framework mikrotik-router mndp</PackageTags>
+    <PackageTags>windows mikrotik tool network udp discovery broadcast cpd lldp network-discovery routeros dotnet net-framework mikrotik-router mndp</PackageTags>
     <Description>MNDP - Mikrotik Neighbor Discovery Protocol - Service Tool</Description>
     <PackageProjectUrl>https://github.com/xmegz/MndpTray</PackageProjectUrl>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
