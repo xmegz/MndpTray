@@ -14,7 +14,7 @@ namespace MndpTray.Protocol
     using System.Text;
 
     /// <summary>
-    /// Mikrotik discovery message .
+    /// Mikrotik discovery message
     /// </summary>
     public class MndpMessage
     {
@@ -423,7 +423,7 @@ namespace MndpTray.Protocol
                     valueStr = Encoding.GetEncoding(28591).GetString(this.Value);
                 }
 
-                return string.Format(CultureInfo.InvariantCulture,"T:{0}, L:{1}, V:{2}, VS:{3}", this.Type, this.Length, valueHex, valueStr);
+                return string.Format(CultureInfo.InvariantCulture, "T:{0}, L:{1}, V:{2}, VS:{3}", this.Type, this.Length, valueHex, valueStr);
             }
 
             /// <summary>
@@ -548,7 +548,7 @@ namespace MndpTray.Protocol
             /// <returns>Debug string.</returns>
             public override string ToString()
             {
-                return string.Format(CultureInfo.CurrentCulture,"Ver:{0}, Ttl:{1}, Seq:{2}", this.Type, this.Ttl, this.Sequence);
+                return string.Format(CultureInfo.CurrentCulture, "Ver:{0}, Ttl:{1}, Seq:{2}", this.Type, this.Ttl, this.Sequence);
             }
 
             /// <summary>

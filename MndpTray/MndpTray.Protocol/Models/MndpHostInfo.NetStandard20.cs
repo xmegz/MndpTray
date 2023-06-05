@@ -107,7 +107,7 @@ namespace MndpTray.Protocol
         {
             get
             {
-                return string.Empty;
+                return Environment.UserName;
             }
         }
 
