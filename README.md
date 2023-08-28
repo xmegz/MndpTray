@@ -75,34 +75,40 @@ Standalone package for intergation and testing
 * Try it on .Net Fiddle: [https://dotnetfiddle.net/vMF42n/](https://dotnetfiddle.net/vMF42n/)
 
 ```C#
-using System;
-using System.Threading;
-
 namespace MndpTray.Protocol.Test
 {
-    public class Program
-    {
-        private static readonly Timer Timer = new Timer(Timer_Callback, null, Timeout.Infinite, Timeout.Infinite);
+    using System;
+    using System.Threading;
 
-        public static void Main(string[] args)
+    /// <summary>
+    /// Startup Class.
+    /// </summary>
+    public static class Program
+    {
+        /// <summary>
+        /// Startup Method.
+        /// </summary>
+        public static void Main()
         {
             MndpListener.Instance.Start();
+            MndpListener.Instance.OnDeviceDiscovered += Instance_OnDeviceDiscovered;
             MndpSender.Instance.Start(MndpHostInfo.Instance);
-            Timer.Change(0, 5000);
 
             Console.WriteLine("--- Start ---");
-            while (!Console.KeyAvailable) { Thread.Sleep(100); }
+            Console.WriteLine("Press any key to stop");
+
+            while (!Console.KeyAvailable)
+                Thread.Sleep(100);
+
             Console.WriteLine("--- Stop ---");
 
-            Timer.Change(Timeout.Infinite, Timeout.Infinite);
             MndpListener.Instance.Stop();
             MndpSender.Instance.Stop();
         }
 
-        private static void Timer_Callback(object state)
+        private static void Instance_OnDeviceDiscovered(object sender, MndpListener.DeviceDiscoveredEventArgs e)
         {
-            foreach (var i in MndpListener.Instance.GetMessages()) Console.WriteLine(i.Value.ToString());
-            Console.WriteLine("--- Message List End ---");
+            Console.WriteLine(e.Message.ToString());
         }
     }
 }
