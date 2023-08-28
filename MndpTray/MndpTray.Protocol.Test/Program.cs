@@ -13,38 +13,30 @@ namespace MndpTray.Protocol.Test
     /// </summary>
     public static class Program
     {
-        private static readonly Timer Timer = new Timer(Timer_Callback, null, Timeout.Infinite, Timeout.Infinite);
-
         /// <summary>
         /// Startup Method.
         /// </summary>
         public static void Main()
         {
             MndpListener.Instance.Start();
+            MndpListener.Instance.OnDeviceDiscovered += Instance_OnDeviceDiscovered;
             MndpSender.Instance.Start(MndpHostInfo.Instance);
-            Timer.Change(0, 5000);
 
             Console.WriteLine("--- Start ---");
+            Console.WriteLine("Press any key to stop");
+
             while (!Console.KeyAvailable)
-            {
                 Thread.Sleep(100);
-            }
 
             Console.WriteLine("--- Stop ---");
 
-            Timer.Change(Timeout.Infinite, Timeout.Infinite);
             MndpListener.Instance.Stop();
             MndpSender.Instance.Stop();
         }
 
-        private static void Timer_Callback(object state)
+        private static void Instance_OnDeviceDiscovered(object sender, MndpListener.DeviceDiscoveredEventArgs e)
         {
-            foreach (var i in MndpListener.Instance.GetMessages())
-            {
-                Console.WriteLine(i.Value.ToString());
-            }
-
-            Console.WriteLine("--- Message List End ---");
+            Console.WriteLine(e.Message.ToString());
         }
     }
 }

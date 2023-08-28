@@ -176,6 +176,7 @@ namespace MndpTray.Protocol
                     if (msg.Read(bytes))
                     {
                         this._dictMessages[msg.MacAddress] = msg;
+                        this.RaiseOnDeviceDiscovered((MndpMessageEx)msg.Clone());
                     }
                 }
             }
@@ -186,10 +187,7 @@ namespace MndpTray.Protocol
 
             try
             {
-                if (this._udpClient != null)
-                {
-                    this._udpClient.BeginReceive(this.Receive, new object());
-                }
+                this._udpClient?.BeginReceive(this.Receive, new object());
             }
             catch (Exception ex)
             {
@@ -197,5 +195,39 @@ namespace MndpTray.Protocol
             }
         }
         #endregion Methods
+
+        #region Events
+        /// <summary>
+        /// New device discovered event
+        /// </summary>
+        public class DeviceDiscoveredEventArgs
+        {
+            /// <summary>
+            /// Constuct
+            /// </summary>
+            /// <param name="message">New device discovered event</param>
+            public DeviceDiscoveredEventArgs(MndpMessageEx message)
+            {
+                this.Message = message;
+            }
+
+            /// <summary>
+            /// Discovery message
+            /// </summary>
+            public MndpMessageEx Message { get; private set; }
+        }
+
+        /// <summary>
+        /// New device discovery event
+        /// </summary>
+        public event EventHandler<DeviceDiscoveredEventArgs> OnDeviceDiscovered;
+
+        private void RaiseOnDeviceDiscovered(MndpMessageEx message) 
+        { 
+            OnDeviceDiscovered?.Invoke(this, new DeviceDiscoveredEventArgs(message));
+        }
+        #endregion
     }
+
+   
 }
