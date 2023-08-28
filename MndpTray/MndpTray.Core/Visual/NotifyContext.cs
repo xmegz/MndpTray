@@ -95,7 +95,7 @@ namespace MndpTray.Core
                 if (res == DialogResult.Yes)
                 {
                     byte[] data = Update.Methods.DownloadBinary(url);
-                    Update.Methods.UpdateProgram(Path.GetFullPath(System.AppContext.BaseDirectory), data);
+                    Update.Methods.UpdateProgram(Path.GetFullPath(Environment.ProcessPath), data);
 
                     MessageBox.Show("Update successful, please restart application!", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
