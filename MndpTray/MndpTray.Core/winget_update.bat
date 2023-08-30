@@ -1,0 +1,1 @@
+wingetcreate.exe update --submit --urls https://github.com/xmegz/MndpTray/releases/download/v2.1.0/MndpTray.Core.Full.exe --version 2.1.0.0 MndpTray.Core
