@@ -3,9 +3,9 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/decjg2rq0hwn77rq?svg=true)](https://ci.appveyor.com/project/xmegz/mndptray) [![CodeFactor](https://www.codefactor.io/repository/github/xmegz/mndptray/badge)](https://www.codefactor.io/repository/github/xmegz/mndptray) ![GitHub All Releases](https://img.shields.io/github/downloads/xmegz/MndpTray/total) ![NuGet](https://img.shields.io/nuget/v/MndpTray.Protocol?label=NuGet) ![NuGetDownload](https://img.shields.io/nuget/dt/MndpTray.Protocol?label=%20) ![MyGet](https://img.shields.io/myget/mndptray/v/MndpTray.Protocol?label=MyGet)
 
 # MndpTray
-MndpTray is a Windows utility that allows you to monitor and manage MikroTik devices on your network from the system tray.
+MndpTray is a Windows utility that allows you, to monitor and manage MikroTik devices, on your network from the system tray.
 
-The information is broadcast using the MikroTik Discovery Protocol (MNDP), which allows MikroTik RouterOS devices to discover other MikroTik RouterOS devices on the same network segment. This makes it possible for Mndptray to provide information about the host to other MikroTik RouterOS devices and for other MikroTik RouterOS devices to retrieve this information and display it in their own management interfaces.
+The information is broadcast using the MikroTik Discovery Protocol (MNDP), which allows MikroTik RouterOS devices to discover other MikroTik RouterOS devices on the same network segment. This makes it possible for **MndpTray** to provide information about the host, to other MikroTik RouterOS devices and for other MikroTik RouterOS devices, to retrieve this information and display it in their own management interfaces.
 
 By providing this information, **MndpTray** makes it easier for network administrators to monitor and manage their MikroTik RouterOS devices, as they can quickly see the status of all the devices on their network without having to log in to each device individually.
 
@@ -72,7 +72,7 @@ Standalone package for intergation and testing
 
 ### Usage
 
-* Try it on .Net Fiddle: [https://dotnetfiddle.net/vMF42n/](https://dotnetfiddle.net/vMF42n/)
+* Try it on .Net Fiddle: [https://dotnetfiddle.net/PkMVEC/](https://dotnetfiddle.net/PkMVEC/)
 
 ```C#
 namespace MndpTray.Protocol.Test
