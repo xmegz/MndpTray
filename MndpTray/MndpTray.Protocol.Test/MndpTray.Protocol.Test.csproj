@@ -10,10 +10,13 @@
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\MndpTray.Protocol\MndpTray.Protocol.csproj" />
+    <PackageReference Include="MndpTray.Protocol" Version="2.2.0" />
   </ItemGroup>
+
+  <!--<ItemGroup>
+    <ProjectReference Include="..\MndpTray.Protocol\MndpTray.Protocol.csproj" />
+  </ItemGroup>-->
 
 </Project>
 
