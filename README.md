@@ -54,7 +54,7 @@ MNDP similar to CDP and LLDP, but Mikrotik specific, typically includes the foll
 MndpService is a background service, which is send information about running host
 
 * Systemd or Windows service support
-* .NET 6.0 and Ubuntu Linux support
+* .NET 8.0 and Ubuntu Linux support
 * **Developement in progress**
 
 # MndpProtocol
