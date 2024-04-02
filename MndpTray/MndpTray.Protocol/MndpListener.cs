@@ -228,6 +228,4 @@ namespace MndpTray.Protocol
         }
         #endregion
     }
-
-
 }
