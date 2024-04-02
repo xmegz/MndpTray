@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>    
+    <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
     <AssemblyVersion>2.2.0.0</AssemblyVersion>
     <FileVersion>2.2.0.0</FileVersion>
     <Version>2.2.0</Version>
@@ -16,7 +16,6 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <Authors>Pádár Tamás</Authors>
     <Company>Pádár Tamás</Company>
-    <Copyright>2018-2024</Copyright>
     <Copyright>Copyright ©  2018-2024</Copyright>
     <PackageProjectUrl>https://github.com/xmegz/MndpTray</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xmegz/MndpTray</RepositoryUrl>
