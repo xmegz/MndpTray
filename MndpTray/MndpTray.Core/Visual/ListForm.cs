@@ -176,7 +176,7 @@ namespace MndpTray.Core
             {
                 List<MndpMessageEx> listMsg = MndpListener.Instance.GetMessages().Select(a => a.Value).ToList();
 
-                Dictionary<string, DataGridViewRow> dictRow = new Dictionary<string, DataGridViewRow>();
+                Dictionary<string, DataGridViewRow> dictRow = [];
 
                 foreach (DataGridViewRow i in this.dgvGrid.Rows)
                 {
@@ -190,9 +190,9 @@ namespace MndpTray.Core
 
                 foreach (MndpMessageEx i in listMsg)
                 {
-                    if (dictRow.ContainsKey(i.MacAddress))
+                    if (dictRow.TryGetValue(i.MacAddress, out DataGridViewRow value))
                     {
-                        var row = dictRow[i.MacAddress];
+                        var row = value;
                         row.SetValues(i.UnicastAddress, i.MacAddressDelimited, i.Identity, i.Platform, i.Version, i.BoardName, i.InterfaceName, i.SoftwareId, i.Age.ToString("F0"), i.Uptime, i.UnicastIPv6Address);
                         dictRow.Remove(i.MacAddress);
                     }
@@ -242,11 +242,11 @@ namespace MndpTray.Core
 
         private static string GetMsgExePath()
         {
-            string[] paths = new string[]
-            {
+            string[] paths =
+            [
                 Environment.ExpandEnvironmentVariables(@"%windir%\system32\msg.exe"),
                 Environment.ExpandEnvironmentVariables(@"%windir%\sysnative\msg.exe"),
-            };
+            ];
 
             foreach (string i in paths)
             {
@@ -283,6 +283,7 @@ namespace MndpTray.Core
             try
             {
                 string ip = this.GetSelectedIpAddress();
+
                 if (ip == null)
                 {
                     return;

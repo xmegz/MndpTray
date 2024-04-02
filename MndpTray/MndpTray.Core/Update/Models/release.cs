@@ -14,7 +14,9 @@ namespace MndpTray.Core.Update
     /// </summary>
     [DataContract]
     [SuppressMessage("Microsoft.Design", "IDE1006", Justification = "<Pending>")]
+#pragma warning disable CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
     public class release
+#pragma warning restore CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
     {
         [DataMember]
         public string url { get; set; }

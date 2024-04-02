@@ -48,7 +48,7 @@ namespace MndpTray.Protocol
             if (osPlatform == OSPlatform.OSX)
                 return "OSX";
 
-            return String.Empty;
+            return string.Empty;
         }
         private static OSPlatform GetOsPlatform()
         {
@@ -89,7 +89,7 @@ namespace MndpTray.Protocol
                             return "Linux";
                     }
 
-                    return String.Empty;
+                    return string.Empty;
                 }
                 catch (Exception ex)
                 {

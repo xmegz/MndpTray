@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>    
-    <AssemblyVersion>2.1.0.0</AssemblyVersion>
-    <FileVersion>2.1.0.0</FileVersion>
-    <Version>2.1.0</Version>
+    <AssemblyVersion>2.2.0.0</AssemblyVersion>
+    <FileVersion>2.2.0.0</FileVersion>
+    <Version>2.2.0</Version>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
@@ -16,7 +16,7 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <Authors>Pádár Tamás</Authors>
     <Company>Pádár Tamás</Company>
-    <Copyright>2018-2023</Copyright>
+    <Copyright>2018-2024</Copyright>
     <Copyright>Copyright ©  2018-2023</Copyright>
     <PackageProjectUrl>https://github.com/xmegz/MndpTray</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xmegz/MndpTray</RepositoryUrl>
@@ -31,7 +31,7 @@
     <AssemblyOriginatorKeyFile>Data\key.snk</AssemblyOriginatorKeyFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <AnalysisLevel>6.0</AnalysisLevel>
+    <AnalysisLevel>8.0</AnalysisLevel>
   </PropertyGroup>
 
   <ItemGroup>
@@ -40,7 +40,7 @@
 
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <None Include="Images\favicon.jpg" Pack="true" PackagePath="Images\" />
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>

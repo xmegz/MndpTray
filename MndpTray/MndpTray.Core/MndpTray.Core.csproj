@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
@@ -8,9 +8,9 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>Data\key.snk</AssemblyOriginatorKeyFile>
-    <AssemblyVersion>2.1.0.0</AssemblyVersion>
-    <FileVersion>2.1.0.0</FileVersion>
-    <Version>2.1.0</Version>
+    <AssemblyVersion>2.2.0.0</AssemblyVersion>
+    <FileVersion>2.2.0.0</FileVersion>
+    <Version>2.2.0</Version>
     <PackageLicenseUrl />
     <RepositoryUrl>https://github.com/xmegz/MndpTray</RepositoryUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -18,14 +18,14 @@
     <PackageIcon>favicon.jpg</PackageIcon>
     <Authors>Pádár Tamás</Authors>
     <Company>Pádár Tamás</Company>
-    <Copyright>2018-2023</Copyright>
+    <Copyright>2018-2024</Copyright>
     <Title>MndpTray.Core</Title>
     <PackageTags>windows mikrotik tool network udp discovery broadcast cpd lldp network-discovery routeros dotnet net-framework mikrotik-router mndp</PackageTags>
     <Description>MNDP - Mikrotik Neighbor Discovery Protocol - Tray Application Tool</Description>
     <PackageProjectUrl>https://github.com/xmegz/MndpTray</PackageProjectUrl>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-    <AnalysisLevel>6.0-minimum</AnalysisLevel>
+    <AnalysisLevel>8.0-minimum</AnalysisLevel>
     <DebugType>embedded</DebugType>
     <ApplicationIcon>Images\favicon.ico</ApplicationIcon>
     <NeutralLanguage>hu-HU</NeutralLanguage>
@@ -40,7 +40,7 @@
     <Content Include="Images\favicon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <ProjectReference Include="..\MndpTray.Protocol\MndpTray.Protocol.csproj" />
   </ItemGroup>
 

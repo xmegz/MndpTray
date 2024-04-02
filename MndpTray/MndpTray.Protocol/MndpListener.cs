@@ -222,12 +222,12 @@ namespace MndpTray.Protocol
         /// </summary>
         public event EventHandler<DeviceDiscoveredEventArgs> OnDeviceDiscovered;
 
-        private void RaiseOnDeviceDiscovered(MndpMessageEx message) 
-        { 
+        private void RaiseOnDeviceDiscovered(MndpMessageEx message)
+        {
             OnDeviceDiscovered?.Invoke(this, new DeviceDiscoveredEventArgs(message));
         }
         #endregion
     }
 
-   
+
 }

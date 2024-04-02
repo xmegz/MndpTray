@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <OutputType>Exe</OutputType>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>Data\key.snk</AssemblyOriginatorKeyFile>
-    <AssemblyVersion>2.1.0.0</AssemblyVersion>
-    <FileVersion>2.1.0.0</FileVersion>
-    <Version>2.1.0</Version>
+    <AssemblyVersion>2.2.0.0</AssemblyVersion>
+    <FileVersion>2.2.0.0</FileVersion>
+    <Version>2.2.0</Version>
     <PackageLicenseUrl />
     <RepositoryUrl>https://github.com/xmegz/MndpTray</RepositoryUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -16,14 +16,14 @@
     <PackageIcon>favicon.jpg</PackageIcon>
     <Authors>Pádár Tamás</Authors>
     <Company>Pádár Tamás</Company>
-    <Copyright>2018-2023</Copyright>
+    <Copyright>2018-2024</Copyright>
     <Title>MndpService.Core</Title>
     <PackageTags>windows mikrotik tool network udp discovery broadcast cpd lldp network-discovery routeros dotnet net-framework mikrotik-router mndp</PackageTags>
     <Description>MNDP - Mikrotik Neighbor Discovery Protocol - Service Tool</Description>
     <PackageProjectUrl>https://github.com/xmegz/MndpTray</PackageProjectUrl>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-    <AnalysisLevel>6.0-minimum</AnalysisLevel>
+    <AnalysisLevel>8.0-minimum</AnalysisLevel>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -33,11 +33,11 @@
     <NoWarn>1701;1702;IDE0063;CA2254</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="6.0.0" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="8.0.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <ProjectReference Include="..\MndpTray.Protocol\MndpTray.Protocol.csproj" />
   </ItemGroup>
 

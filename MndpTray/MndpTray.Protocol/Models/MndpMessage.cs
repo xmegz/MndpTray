@@ -31,6 +31,8 @@ namespace MndpTray.Protocol
         private const ushort TLV_TYPE_UPTIME = 10;
         private const ushort TLV_TYPE_VERSION = 7;
 
+        private const int ENCODING_CODE_PAGE = 28591;
+
         #endregion Consts
 
         #region Props
@@ -121,7 +123,7 @@ namespace MndpTray.Protocol
                     return false;
                 }
 
-                var enc = Encoding.GetEncoding(28591);
+                var enc = Encoding.GetEncoding(ENCODING_CODE_PAGE);
 
                 this.Type = tlvMessage.Type;
                 this.Ttl = tlvMessage.Ttl;
@@ -229,7 +231,7 @@ namespace MndpTray.Protocol
                     Sequence = this.Sequence,
                 };
 
-                var enc = Encoding.GetEncoding(28591);
+                var enc = Encoding.GetEncoding(ENCODING_CODE_PAGE);
 
                 for (ushort i = 0; i <= 16; i++)
                 {
@@ -420,7 +422,7 @@ namespace MndpTray.Protocol
                 if (this.Value != null)
                 {
                     valueHex = BitConverter.ToString(this.Value).Replace("-", ",");
-                    valueStr = Encoding.GetEncoding(28591).GetString(this.Value);
+                    valueStr = Encoding.GetEncoding(ENCODING_CODE_PAGE).GetString(this.Value);
                 }
 
                 return string.Format(CultureInfo.InvariantCulture, "T:{0}, L:{1}, V:{2}, VS:{3}", this.Type, this.Length, valueHex, valueStr);
