@@ -6,6 +6,7 @@
 namespace MndpTray.Core
 {
     using System;
+    using System.Diagnostics;
     using System.IO;
     using System.Reflection;
     using System.Threading;
@@ -80,6 +81,7 @@ namespace MndpTray.Core
             MndpSender.Instance.SendHostInfoNow();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1839:Use 'Environment.ProcessPath'", Justification = "<Pending>")]
         private void Update_Click(object sender, System.EventArgs e)
         {
             string repositoryName = "MndpTray";
@@ -95,7 +97,8 @@ namespace MndpTray.Core
                 if (res == DialogResult.Yes)
                 {
                     byte[] data = Update.Methods.DownloadBinary(url);
-                    Update.Methods.UpdateProgram(Path.GetFullPath(Environment.ProcessPath), data);
+                    string processFileName = Process.GetCurrentProcess().MainModule.FileName;
+                    Update.Methods.UpdateProgram(Path.GetFullPath(processFileName), data);
 
                     MessageBox.Show("Update successful, please restart application!", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

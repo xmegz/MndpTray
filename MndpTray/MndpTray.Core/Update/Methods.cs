@@ -101,11 +101,10 @@ namespace MndpTray.Core.Update
         private static T DeserializeResponse<T>(string data)
         {
             var instance = Activator.CreateInstance<T>();
-            using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(data)))
-            {
-                var serializer = new DataContractJsonSerializer(instance.GetType());
-                return (T)serializer.ReadObject(ms);
-            }
+            using var ms = new MemoryStream(Encoding.Unicode.GetBytes(data));
+
+            var serializer = new DataContractJsonSerializer(instance.GetType());
+            return (T)serializer.ReadObject(ms);
         }
 
         private static release GetMaxRelease(List<release> list)
@@ -194,7 +193,7 @@ namespace MndpTray.Core.Update
 
         private static List<int> GetReleaseVersion(release data)
         {
-            List<int> ret = new List<int>();
+            List<int> ret = [];
 
             if (data == null)
             {
