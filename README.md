@@ -14,7 +14,7 @@ By providing this information, **MndpTray** makes it easier for network administ
 
 ### Downloads 
 
-* Download from GitHub [**Latest**](https://github.com/xmegz/MndpTray/releases/download/v2.1.0/MndpTray.Core.exe)
+* Download from GitHub [**Latest**](https://github.com/xmegz/MndpTray/releases/download/v2.2.0/MndpTray.Core.exe)
 * Install via WinGet (as administrator)
 
 ```powershell
@@ -46,7 +46,7 @@ MNDP similar to CDP and LLDP, but Mikrotik specific, typically includes the foll
 
 * Windows 11, Windows 10 Os
 * Single and multiple NIC
-* .NET 6.0 runtime
+* .NET 8.0 runtime
 * Various Mikrotik devices with 6.x or 7.x OS
 
 # MndpService
@@ -61,7 +61,7 @@ MndpService is a background service, which is send information about running hos
 
 Standalone package for intergation and testing
 
-* .NET 4.6.2, .NET 6.0 support
+* .NET 4.6.2, .NET 8.0 support
 * Linux and Windows support
 * Separate listener and sender thread
 
