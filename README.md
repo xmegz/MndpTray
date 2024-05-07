@@ -57,6 +57,11 @@ MndpService is a background service, which is send information about running hos
 * .NET 8.0 and Ubuntu Linux support
 * **Developement in progress**
 
+Ubuntu Linux install one-liner
+```
+sudo su -c "bash <(wget -qO- https://github.com/xmegz/MndpTray/releases/download/v2.2.0/install.sh)" root
+```
+
 # MndpProtocol
 
 Standalone package for intergation and testing
