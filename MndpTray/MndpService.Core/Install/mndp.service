@@ -1,13 +1,14 @@
 [Unit]
-Description=mndpservice core
+Description=MikroTik Neighbor Discovery Protocol Service
+After=network.target
 
 [Service]
-WorkingDirectory=/root
-ExecStart=/root/MndpService.Core
+WorkingDirectory=/root/MndpService.Core
+ExecStart=/root/MndpService.Core/MndpService.Core.Full
 Restart=always
 RestartSec=15
 KillSignal=SIGINT
-SyslogIdentifier=mndpservice
+SyslogIdentifier=mndp
 User=root
 Group=root
 Environment=ASPNETCORE_ENVIRONMENT=Production
