@@ -63,6 +63,11 @@ Linux install one-liner
 sudo su -c "bash <(wget -qO- https://github.com/xmegz/MndpTray/releases/download/v2.2.0/install.sh)" root
 ```
 
+Windows install one-liner
+```
+powershell -ExecutionPolicy Bypass -NoProfile -Command "iwr 'https://github.com/xmegz/MndpTray/releases/download/v2.2.0/install.ps1' | iex"
+```
+
 # MndpProtocol
 
 Standalone package for intergation and testing
