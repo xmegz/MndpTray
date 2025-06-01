@@ -65,7 +65,7 @@ sudo su -c "bash <(wget -qO- https://github.com/xmegz/MndpTray/releases/download
 
 Windows install one-liner
 ```
-powershell -ExecutionPolicy Bypass -NoProfile -Command "iwr 'https://github.com/xmegz/MndpTray/releases/download/v2.2.0/install.ps1' | iex"
+powershell -ExecutionPolicy Bypass -NoProfile -Command "iwr -UseBasicParsing 'https://github.com/xmegz/MndpTray/releases/download/v2.2.0/install.ps1' | iex"
 ```
 
 # MndpProtocol
