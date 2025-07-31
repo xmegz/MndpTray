@@ -26,13 +26,14 @@ mndptray
 MNDP similar to CDP and LLDP, but Mikrotik specific, typically includes the following information:
 
 * MikroTik RouterOS Version: The version of MikroTik RouterOS running on the device.
-* IP Address: The IP address of the device's network interface.
+* IP Address: The IP address of the device's network interface. (IPv4 and IPv6)
 * Interface: The name of the device's network interface.
 * Board Name: The name of the device's board.
 * Identity: The name of the device
 * Software ID: A unique identifier for the device's software.
 * MAC Address: The MAC address of the device's network interface.
 * Uptime: The amount of time the device has been running.
+* Platform: The type of the device's processor arch
 
 ### More functions
 
@@ -53,18 +54,20 @@ MNDP similar to CDP and LLDP, but Mikrotik specific, typically includes the foll
 
 MndpService is a background service, which is send information about running host
 
-* Systemd or Windows service support
+* Systemd or Windows service hosting support
 * Ubuntu 20.04, 22.04, Debian 10, 12 Linux support
+* Windows 10,11 support
 * Release package self contained .Net runtime (.Net runtime installation isn't necessary)
-* **Developement in progress**
 
-Linux install one-liner
-```
+### Install
+
+Linux one-liner script
+```bash
 sudo su -c "bash <(wget -qO- https://github.com/xmegz/MndpTray/releases/download/v2.2.0/install.sh)" root
 ```
 
-Windows install one-liner
-```
+Windows one-liner script 
+```powershell
 powershell -ExecutionPolicy Bypass -NoProfile -Command "iwr -UseBasicParsing 'https://github.com/xmegz/MndpTray/releases/download/v2.2.0/install.ps1' | iex"
 ```
 
@@ -76,7 +79,9 @@ Standalone package for intergation and testing
 * Linux and Windows support
 * Separate listener and sender thread
 
-### Package feeds
+### Download
+
+Available package feeds
 
 * NuGet: [https://www.nuget.org/packages/MndpTray.Protocol/](https://www.nuget.org/packages/MndpTray.Protocol/)
 * MyGet: [https://www.myget.org/feed/mndptray/package/nuget/MndpTray.Protocol](https://www.myget.org/feed/mndptray/package/nuget/MndpTray.Protocol)
