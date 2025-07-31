@@ -25,12 +25,16 @@ namespace MndpTray.Core
         public NotifyContext()
         {
             this.InizializeComponets();
+
             this._listForm = new ListForm();
             this._aboutBox = new AboutBox();
 
             Log.SetInfoAction(Program.Log);
 
             MndpListener.Instance.Start();
+
+            MndpHostInfo.Instance.SetSoftwareIdFromAssemblyName(Assembly.GetExecutingAssembly());
+
             MndpSender.Instance.Start(MndpHostInfo.Instance);
         }
 
@@ -39,13 +43,9 @@ namespace MndpTray.Core
         private void About_Click(object sender, System.EventArgs e)
         {
             if (!this._aboutBox.Visible)
-            {
                 this._aboutBox.ShowDialog();
-            }
             else
-            {
                 this._aboutBox.WindowState = FormWindowState.Normal;
-            }
 
             this._aboutBox.BringToFront();
         }
@@ -58,20 +58,16 @@ namespace MndpTray.Core
             this._notifyIcon.Dispose();
             this._listForm.Close();
 
-            Thread.Sleep(100);
+            Thread.Sleep(300);
             Application.Exit();
         }
 
         private void List_Click(object sender, EventArgs e)
         {
             if (!this._listForm.Visible)
-            {
                 this._listForm.ShowDialog();
-            }
             else
-            {
                 this._listForm.WindowState = FormWindowState.Normal;
-            }
 
             this._listForm.BringToFront();
         }

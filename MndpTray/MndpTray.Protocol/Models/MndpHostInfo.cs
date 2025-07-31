@@ -11,6 +11,7 @@ namespace MndpTray.Protocol
     using System.Linq;
     using System.Net;
     using System.Net.NetworkInformation;
+    using System.Reflection;
 
     /// <summary>
     /// Mikrotik discovery message host information provider.
@@ -31,6 +32,15 @@ namespace MndpTray.Protocol
 
         #endregion Static
 
+        #region Fields
+
+        /// <summary>
+        /// software id (e.g. MndpTray - 2.2.0).
+        /// </summary>
+        protected string _softwareId = "";
+
+        #endregion
+
         #region Props
 
         /// <summary>
@@ -46,7 +56,8 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    Log.Exception(nameof(MndpHostInfo), nameof(this.BoardName), ex);
+                    if (Log.IsEnabled)
+                        Log.Exception(nameof(MndpHostInfo), nameof(this.BoardName), ex);
                 }
 
                 return string.Empty;
@@ -66,12 +77,19 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    Log.Exception(nameof(MndpHostInfo), nameof(this.Identity), ex);
+                    if (Log.IsEnabled)
+                        Log.Exception(nameof(MndpHostInfo), nameof(this.Identity), ex);
                 }
 
                 return Environment.MachineName;
             }
         }
+
+        /// <summary>
+        /// Custom software id (e.g. MndpTray - 2.2.0).
+        /// </summary>
+        public string SoftwareId { get { return this._softwareId; } }
+
 
         /// <summary>
         /// Gets host interface info.
@@ -109,7 +127,8 @@ namespace MndpTray.Protocol
                     }
                     catch (Exception ex)
                     {
-                        Log.Exception(nameof(MndpHostInfo), nameof(this.InterfaceInfos), ex);
+                        if (Log.IsEnabled)
+                            Log.Exception(nameof(MndpHostInfo), nameof(this.InterfaceInfos), ex);
                     }
 
                     return new List<IMndpInterfaceInfo>(ret);
@@ -126,10 +145,30 @@ namespace MndpTray.Protocol
             {
                 var ticks = Stopwatch.GetTimestamp();
                 var uptime = ((double)ticks) / Stopwatch.Frequency;
+
                 return TimeSpan.FromSeconds(uptime);
             }
         }
 
         #endregion Props
+
+        #region Methods
+
+        /// <summary>
+        /// Sets custom software id from assembly name and version.
+        /// </summary>
+        /// <param name="assembly"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public void SetSoftwareIdFromAssemblyName(Assembly assembly)
+        {
+            if (assembly == null)
+                throw new ArgumentNullException(nameof(assembly));
+
+            var assemblyName = assembly.GetName();
+
+            this._softwareId = string.Concat(assemblyName.Name, " - ", assemblyName.Version.ToString(3));
+        }
+
+        #endregion
     }
 }

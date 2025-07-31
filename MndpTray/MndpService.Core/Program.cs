@@ -3,7 +3,6 @@
  * Repository: https://github.com/xmegz/MndpTray
  * Author:     Pádár Tamás
  -----------------------------------------------------------------------------*/
-
 namespace MndpService
 {
     using Microsoft.Extensions.DependencyInjection;
@@ -14,13 +13,13 @@ namespace MndpService
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
             var hostBuilder = Host.CreateDefaultBuilder(args)
-            .UseWindowsService()
-            .UseSystemd()
-            .ConfigureServices(services =>
-            {
-                services.AddLogging();
-                services.AddHostedService<MndpBackgroundService>();
-            });
+                .UseWindowsService()
+                .UseSystemd()
+                .ConfigureServices(services =>
+                {
+                    services.AddLogging();
+                    services.AddHostedService<MndpBackgroundService>();
+                });
 
             return hostBuilder;
         }
@@ -28,6 +27,7 @@ namespace MndpService
         public static void Main(string[] args)
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            
             CreateHostBuilder(args).Build().Run();
         }
 

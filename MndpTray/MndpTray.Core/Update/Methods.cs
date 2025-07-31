@@ -80,16 +80,14 @@ namespace MndpTray.Core.Update
             string newName = fileName + ".new";
 
             if (File.Exists(newName))
-            {
                 File.Delete(newName);
-            }
+
 
             if (File.Exists(oldName))
-            {
                 File.Delete(oldName);
-            }
 
             File.WriteAllBytes(newName, data);
+
             File.Move(curName, oldName);
             File.Move(newName, curName);
         }
@@ -130,9 +128,7 @@ namespace MndpTray.Core.Update
                     for (int i = 0; (i < max.Count) && (i < cur.Count); i++)
                     {
                         if (cur[i] < max[i])
-                        {
                             break;
-                        }
 
                         if (cur[i] > max[i])
                         {
@@ -149,14 +145,10 @@ namespace MndpTray.Core.Update
         private static string GetReleaseDownloadUrl(release data, string assetName)
         {
             if (data == null)
-            {
                 return null;
-            }
 
             if (data.assets == null)
-            {
                 return null;
-            }
 
             foreach (var i in data.assets)
             {
@@ -196,23 +188,17 @@ namespace MndpTray.Core.Update
             List<int> ret = [];
 
             if (data == null)
-            {
                 return ret;
-            }
 
             if (data.tag_name == null)
-            {
                 return ret;
-            }
 
             string[] parts = data.tag_name.ToLower().TrimStart('v').Split('.');
 
             foreach (var i in parts)
             {
                 if (!int.TryParse(i, out int j))
-                {
                     break;
-                }
 
                 ret.Add(j);
             }
@@ -223,35 +209,26 @@ namespace MndpTray.Core.Update
         private static bool ReleaseIsNewer(release data, Version curVersion)
         {
             if (data == null)
-            {
                 return false;
-            }
 
             var nextVersion = GetReleaseVersion(data);
 
             if (nextVersion.Count < 3)
-            {
                 return false;
-            }
 
             if (nextVersion[0] > curVersion.Major)
-            {
                 return true;
-            }
+
 
             if (nextVersion[0] == curVersion.Major)
             {
                 if (nextVersion[1] > curVersion.Minor)
-                {
                     return true;
-                }
 
                 if (nextVersion[1] == curVersion.Minor)
                 {
                     if (nextVersion[2] > curVersion.Build)
-                    {
                         return true;
-                    }
                 }
             }
 

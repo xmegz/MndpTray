@@ -49,25 +49,20 @@ namespace MndpTray.Protocol
             get
             {
                 if (this.MacAddress == null)
-                {
                     return null;
-                }
 
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new StringBuilder(this.MacAddress.Length*2);
 
                 for (int i = 0; i < this.MacAddress.Length; i++)
                 {
                     sb.Append(this.MacAddress[i]);
+
                     if (i % 2 == 1)
-                    {
                         sb.Append(':');
-                    }
                 }
 
                 if (sb.Length > 0)
-                {
                     sb.Remove(sb.Length - 1, 1);
-                }
 
                 return sb.ToString();
             }
@@ -92,11 +87,12 @@ namespace MndpTray.Protocol
         /// <returns>Debug string.</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            var sb = new StringBuilder(128);
 
             sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.ReceiveDateTime), this.ReceiveDateTime);
             sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.UnicastAddress), this.UnicastAddress);
             sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.BroadcastAddress), this.BroadcastAddress);
+            
             sb.Append(base.ToString());
 
             return sb.ToString();

@@ -85,7 +85,8 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Log.Exception(nameof(MndpSender), nameof(this.Send), ex);
+                if (Log.IsEnabled)
+                    Log.Exception(nameof(MndpSender), nameof(this.Send), ex);
             }
 
             return false;
@@ -110,13 +111,16 @@ namespace MndpTray.Protocol
             {
                 Thread t = new Thread(this.SendHostInfoWork);
                 this._sendHostInfoIsRunning = true;
+                
                 t.Start();
+
                 this._sendHostInfoThread = t;
                 this._hostInfo = hostInfo;
             }
             catch (Exception ex)
             {
-                Log.Exception(nameof(MndpSender), nameof(this.Start), ex);
+                if (Log.IsEnabled)
+                    Log.Exception(nameof(MndpSender), nameof(this.Start), ex);
             }
 
             return false;
@@ -157,7 +161,8 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Log.Exception(nameof(MndpSender), nameof(this.Stop), ex);
+                if (Log.IsEnabled)
+                    Log.Exception(nameof(MndpSender), nameof(this.Stop), ex);
             }
 
             return false;
@@ -168,7 +173,7 @@ namespace MndpTray.Protocol
             try
             {
                 ulong sequence = 0;
-                DateTime nextSendDateTime = DateTime.Now;
+                DateTime nextSendDateTime = DateTime.UtcNow;
 
                 MndpMessageEx msg = new MndpMessageEx
                 {
@@ -184,11 +189,11 @@ namespace MndpTray.Protocol
 
                 while (this._sendHostInfoIsRunning)
                 {
-                    Thread.Sleep(100);
+                    Thread.Sleep(250);
 
-                    if ((nextSendDateTime < DateTime.Now) || this._sendHostInfoNow)
+                    if ((nextSendDateTime < DateTime.UtcNow) || this._sendHostInfoNow)
                     {
-                        nextSendDateTime = DateTime.Now.AddSeconds(HOST_INFO_SEND_INTERVAL);
+                        nextSendDateTime = DateTime.UtcNow.AddSeconds(HOST_INFO_SEND_INTERVAL);
                         this._sendHostInfoNow = false;
 
                         System.Collections.Generic.List<IMndpInterfaceInfo> interfaces = this._hostInfo.InterfaceInfos;
@@ -211,7 +216,8 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Log.Exception(nameof(MndpSender), nameof(this.SendHostInfoWork), ex);
+                if (Log.IsEnabled)
+                    Log.Exception(nameof(MndpSender), nameof(this.SendHostInfoWork), ex);
             }
         }
 

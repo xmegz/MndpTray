@@ -6,9 +6,7 @@
 namespace MndpTray.Core
 {
     using System;
-    using System.Diagnostics;
     using System.IO;
-    using System.Reflection;
     using System.Windows.Forms;
 
     public static class Program
@@ -17,10 +15,9 @@ namespace MndpTray.Core
         public static void Main()
         {
             string processName = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
+
             if (System.Diagnostics.Process.GetProcessesByName(processName).Length > 1)
-            {
                 return;
-            }
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
@@ -78,7 +75,7 @@ namespace MndpTray.Core
         #endregion Event Handlers
 
         private static string GetLogFileName(string extension)
-        {            
+        {
             string file = Environment.ProcessPath;
             return file + "." + extension;
         }

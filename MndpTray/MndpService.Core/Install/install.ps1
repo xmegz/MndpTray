@@ -1,10 +1,16 @@
+#-----------------------------------------------------------------------------
+# * Project:    MndpTray
+# * Repository: https://github.com/xmegz/MndpTray
+# * Author:     Pádár Tamás
+# ----------------------------------------------------------------------------
+
 #
 # Switch to admin user
 #
 $CurrentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
 if ($CurrentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator) -eq $false) {
-Start-Process powershell.exe -Verb RunAs -ArgumentList ('-noprofile -noexit -file "{0}" -elevated' -f ($myinvocation.MyCommand.Definition))
-exit $LASTEXITCODE
+    Start-Process powershell.exe -Verb RunAs -ArgumentList ('-noprofile -noexit -file "{0}" -elevated' -f ($myinvocation.MyCommand.Definition))
+    exit $LASTEXITCODE
 }
 
 #
@@ -13,6 +19,7 @@ exit $LASTEXITCODE
 $ProgramPath    = "C:\Program Files\MndpService"
 $ProgramName    = "MndpService.Core.Full.exe"
 $ServiceName    = "MndpService.Core"
+$ServiceDesc    = "MndpService is a background service, which is send information about running host"
 $ServiceVersion = "2.2.0"
 
 $DownloadUrl    = "https://github.com/xmegz/MndpTray/releases/download/v$ServiceVersion/MndpService.Core.Full.exe"
@@ -34,7 +41,6 @@ function Write-Log {
 # Create installation folder
 #
 md -Force $ProgramPath | Out-Null
-
 
 #
 # Remove existing service if it exists
@@ -74,6 +80,7 @@ if (-Not (Test-Path "$ProgramFile")) {
 #
 Write-Log "Creating Windows service: $ServiceName"
 sc.exe create $ServiceName binPath= "`"$ProgramFile`"" start= auto DisplayName= "$ServiceName" | Out-Null
+sc.exe description $ServiceName $ServiceDesc
 
 #
 # Start the service

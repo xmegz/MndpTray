@@ -18,6 +18,12 @@ namespace MndpTray.Protocol
 
         #endregion Fields
 
+        #region Properies
+
+        internal static bool IsEnabled { get { return _infoAction != null; } }
+
+        #endregion
+
         #region Methods
 
         /// <summary>
@@ -61,7 +67,7 @@ namespace MndpTray.Protocol
             {
             }
         }
-
+     
         #endregion Methods
     }
 }

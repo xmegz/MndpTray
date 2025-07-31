@@ -1,29 +1,46 @@
+#-----------------------------------------------------------------------------
+# * Project:    MndpTray
+# * Repository: https://github.com/xmegz/MndpTray
+# * Author:     Pádár Tamás
+# * File:       build.ps1
+# ----------------------------------------------------------------------------
+
 #
 # To enable script execution, run at admin powershell prompt
 # 'set-executionpolicy remotesigned'
 #
 
+#
+# Configuration
+#
+
 $SolutionFolderPath=$PSScriptRoot
 $BuildFolderPath="$SolutionFolderPath\Build"
 
-echo "SolutionFolderPath: $SolutionFolderPath";
-echo "BuildFolderPath: $BuildFolderPath";
-
+Write-Host ""
+Write-Host "Script: [$PSCommandPath]" -ForegroundColor Blue
+Write-Host ""
+Write-Host "Config:"
+Write-Host "SolutionFolderPath: $SolutionFolderPath";
+Write-Host "BuildFolderPath: $BuildFolderPath";
+Write-Host ""
+Write-Host ""
 
 #
-# Remove & Clean Output Folder
+# Clean or Create Output Folder
 #
 
 if (Test-Path -LiteralPath $BuildFolderPath) 
 {
     Remove-Item -LiteralPath $BuildFolderPath -Verbose -Recurse -WhatIf
 }
-md -Force $BuildFolderPath
-
-
+else
+{
+	New-Item -ItemType Directory -Path $BuildFolderPath -Verbose -Force
+}
 
 #
-# Publish Console
+# Build & Publish Console
 #
 
 $ProjectsConsole = @(    
@@ -38,19 +55,20 @@ $ProfilesConsole = @(
 )
 
 
-foreach ( $Project in $ProjectsLinux )
+foreach ( $Project in $ProjectsConsole )
 {
-    echo ""
-    echo "Project: [$Project]"
-    echo ""
+    Write-Host ""
+    Write-Host "Project: [$Project]" -ForegroundColor Blue
+    Write-Host ""
+
     dotnet clean -c Release $SolutionFolderPath\$Project
     dotnet build -c Release $SolutionFolderPath\$Project
 
     foreach ( $Profile in $ProfilesConsole )
     {
-        echo ""
-        echo "Profile: [$Profile]"
-        echo ""
+        Write-Host ""
+        Write-Host "Profile: [$Profile]"  -ForegroundColor Blue
+        Write-Host ""
         
         dotnet publish -c Release $SolutionFolderPath\$Project /p:PublishProfile=$Profile        
     }
@@ -62,9 +80,9 @@ foreach ( $Project in $ProjectsLinux )
 #
 foreach ( $Project in $ProjectsConsole )
 {
-    echo ""
-    echo "Copy: [$Project]"
-    echo ""
+    Write-Host ""
+    Write-Host "Copy: [$Project]"  -ForegroundColor Blue
+    Write-Host ""
 
     Copy-Item -Verbose -Path $SolutionFolderPath\$Project\bin\Release\net8.0\publish\win-x64\$Project.exe -Destination $BuildFolderPath\$Project.exe
     Copy-Item -Verbose -Path $SolutionFolderPath\$Project\bin\Release\net8.0\publish\win-x64-full\$Project.exe -Destination $BuildFolderPath\$Project.Full.exe
@@ -74,7 +92,7 @@ foreach ( $Project in $ProjectsConsole )
 
 
 #
-# Publish Windows
+# Build & Publish Windows
 #
 
 $ProjectsWindows = @(    
@@ -89,17 +107,18 @@ $ProfilesWindows = @(
 
 foreach ( $Project in $ProjectsWindows )
 {
-    echo ""
-    echo "Project: [$Project]"
-    echo ""
+    Write-Host ""
+    Write-Host "Project: [$Project]" -ForegroundColor Blue
+    Write-Host ""
+    
     dotnet clean -c Release $SolutionFolderPath\$Project
     dotnet build -c Release $SolutionFolderPath\$Project
 
     foreach ( $Profile in $ProfilesWindows )
     {
-        echo ""
-        echo "Profile: [$Profile]"
-        echo ""
+        Write-Host ""
+        Write-Host "Profile: [$Profile]" -ForegroundColor Blue
+        Write-Host ""
         
         dotnet publish -c Release $SolutionFolderPath\$Project /p:PublishProfile=$Profile        
     }
@@ -110,9 +129,9 @@ foreach ( $Project in $ProjectsWindows )
 #
 foreach ( $Project in $ProjectsWindows )
 {
-    echo ""
-    echo "Copy: [$Project]"
-    echo ""
+    Write-Host ""
+    Write-Host "Copy: [$Project]" -ForegroundColor Blue
+    Write-Host ""
 
     Copy-Item -Verbose -Path $SolutionFolderPath\$Project\bin\Release\net8.0-windows\publish\win-x64\$Project.exe -Destination $BuildFolderPath\$Project.exe
     Copy-Item -Verbose -Path $SolutionFolderPath\$Project\bin\Release\net8.0-windows\publish\win-x64-full\$Project.exe -Destination $BuildFolderPath\$Project.Full.exe

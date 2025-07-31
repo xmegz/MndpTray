@@ -10,21 +10,16 @@ namespace MndpService
     using Microsoft.Extensions.Logging;
     using MndpTray.Protocol;
     using System;
+    using System.Reflection;
     using System.Threading;
     using System.Threading.Tasks;
-    public class MndpBackgroundService : BackgroundService
+    public class MndpBackgroundService(ILogger<MndpBackgroundService> logger, IConfiguration configuration) : BackgroundService
     {
-        private readonly ILogger<MndpBackgroundService> _logger;
-        private readonly IConfiguration _configuration;
-
-        public MndpBackgroundService(ILogger<MndpBackgroundService> logger, IConfiguration configuration)
-        {
-            this._logger = logger;
-            this._configuration = configuration;
-        }
+        private readonly ILogger<MndpBackgroundService> _logger = logger;
+        private readonly IConfiguration _configuration = configuration;
 
         public override Task StartAsync(CancellationToken cancellationToken)
-        {
+        {            
             this._logger?.LogInformation("Starting...");
 
             if (this._configuration.GetValue<bool>("isLogging", false))
@@ -35,8 +30,10 @@ namespace MndpService
                     });
             }
 
+
+            MndpHostInfo.Instance.SetSoftwareIdFromAssemblyName(Assembly.GetExecutingAssembly());
+
             MndpSender.Instance.Start(MndpHostInfo.Instance);
-            MndpListener.Instance.Start();
 
             return Task.CompletedTask;
         }
@@ -46,7 +43,6 @@ namespace MndpService
             this._logger?.LogInformation("Stopping...");
 
             MndpSender.Instance.Stop();
-            MndpListener.Instance.Stop();
 
             return Task.CompletedTask;
         }

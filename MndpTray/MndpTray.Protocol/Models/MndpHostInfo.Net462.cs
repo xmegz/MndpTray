@@ -42,98 +42,14 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    Log.Exception(nameof(MndpHostInfo), nameof(this.Platform), ex);
+                    if (Log.IsEnabled)
+                        Log.Exception(nameof(MndpHostInfo), nameof(this.Platform), ex);
                 }
 
                 return string.Empty;
             }
         }
-
-        /// <summary>
-        /// Gets logged In user name.
-        /// </summary>
-        public string SoftwareId
-        {
-            get
-            {
-                try
-                {
-                    using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT UserName FROM Win32_ComputerSystem"))
-                    {
-                        foreach (ManagementObject queryObj in searcher.Get())
-                        {
-                            string userName = null;
-
-                            var obj = queryObj["UserName"];
-
-                            if (obj == null)
-                            {
-                                continue;
-                            }
-
-                            userName = obj.ToString();
-
-                            if (string.IsNullOrEmpty(userName))
-                            {
-                                continue;
-                            }
-
-                            userName = userName.Substring(userName.LastIndexOf('\\') + 1);
-
-                            if (string.IsNullOrEmpty(userName))
-                            {
-                                continue;
-                            }
-
-                            return userName;
-                        }
-                    }
-
-                    using (ManagementObjectSearcher searcher = new ManagementObjectSearcher(new SelectQuery(@"Select * from Win32_Process")))
-                    {
-                        foreach (ManagementObject obj in searcher.Get())
-                        {
-                            string path = obj["ExecutablePath"] as string;
-
-                            if (string.IsNullOrEmpty(path))
-                            {
-                                continue;
-                            }
-
-                            if (!path.EndsWith("explorer.exe", StringComparison.InvariantCultureIgnoreCase))
-                            {
-                                continue;
-                            }
-
-                            string[] ownerInfo = new string[2];
-                            obj.InvokeMethod("GetOwner", (object[])ownerInfo);
-
-                            if (ownerInfo == null)
-                            {
-                                continue;
-                            }
-
-                            if (string.IsNullOrEmpty(ownerInfo[0]))
-                            {
-                                continue;
-                            }
-
-                            return ownerInfo[0];
-                        }
-                    }
-
-                    return string.Empty;
-                }
-                catch (Exception ex)
-                {
-                    Log.Exception(nameof(MndpHostInfo), nameof(this.SoftwareId), ex);
-                }
-
-                return string.Empty;
-
-            }
-        }
-
+       
         /// <summary>
         /// Gets host software version (From Registry ProductName).
         /// </summary>
@@ -148,7 +64,8 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    Log.Exception(nameof(MndpHostInfo), nameof(this.Version), ex);
+                    if (Log.IsEnabled)
+                        Log.Exception(nameof(MndpHostInfo), nameof(this.Version), ex);
                 }
 
                 return string.Empty;

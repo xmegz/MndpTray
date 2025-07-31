@@ -33,6 +33,12 @@ namespace MndpTray.Protocol
 
         private const int ENCODING_CODE_PAGE = 28591;
 
+        #region Fields
+
+        private static readonly Encoding ENCODING = Encoding.GetEncoding(ENCODING_CODE_PAGE);
+
+        #endregion
+
         #endregion Consts
 
         #region Props
@@ -115,75 +121,82 @@ namespace MndpTray.Protocol
         {
             try
             {
-                var tlvMessage = new TlvMessage();
-                bool ok = tlvMessage.Read(data);
-
-                if (!ok)
+                if (data == null || data.Length < 8)
                 {
+                    if (Log.IsEnabled)
+                        Log.Info($"{nameof(MndpMessage)} Read, Message Too Short");
+                    
                     return false;
                 }
 
-                var enc = Encoding.GetEncoding(ENCODING_CODE_PAGE);
+                var tlvMessage = new TlvMessage();
+
+                if (!tlvMessage.Read(data))
+                    return false;
 
                 this.Type = tlvMessage.Type;
                 this.Ttl = tlvMessage.Ttl;
                 this.Sequence = tlvMessage.Sequence;
 
-                foreach (var i in tlvMessage.Items)
+                foreach (var item in tlvMessage.Items)
                 {
-                    switch (i.Type)
+                    switch (item.Type)
                     {
                         case TLV_TYPE_MAC_ADDRESS:
-                            this.MacAddress = new PhysicalAddress(i.Value).ToString();
+                            this.MacAddress = new PhysicalAddress(item.Value).ToString();
                             break;
 
                         case TLV_TYPE_IDENTITY:
-                            this.Identity = enc.GetString(i.Value);
+                            this.Identity = ENCODING.GetString(item.Value);
                             break;
 
                         case TLV_TYPE_VERSION:
-                            this.Version = enc.GetString(i.Value);
+                            this.Version = ENCODING.GetString(item.Value);
                             break;
 
                         case TLV_TYPE_PLATFORM:
-                            this.Platform = enc.GetString(i.Value);
+                            this.Platform = ENCODING.GetString(item.Value);
                             break;
 
                         case TLV_TYPE_UPTIME:
-                            this.Uptime = TimeSpan.FromSeconds(BitConverter.ToUInt32(i.Value, 0));
+                            this.Uptime = item.Value.Length >= 4
+                               ? TimeSpan.FromSeconds(BitConverter.ToUInt32(item.Value, 0))
+                               : TimeSpan.Zero;
                             break;
 
                         case TLV_TYPE_SOFTWAREID:
-                            this.SoftwareId = enc.GetString(i.Value);
+                            this.SoftwareId = ENCODING.GetString(item.Value);
                             break;
 
                         case TLV_TYPE_BOARD_NAME:
-                            this.BoardName = enc.GetString(i.Value);
+                            this.BoardName = ENCODING.GetString(item.Value);
                             break;
 
                         case TLV_TYPE_UNPACK:
-                            this.Unpack = i.Value[0];
+                            this.Unpack = item.Value.Length > 0 ? item.Value[0] : (byte)0;
                             break;
 
                         case TLV_TYPE_INTERFACE_NAME:
-                            this.InterfaceName = enc.GetString(i.Value);
+                            this.InterfaceName = ENCODING.GetString(item.Value);
                             break;
 
                         case TLV_TYPE_IPV6:
-                            this.UnicastIPv6Address = new IPAddress(i.Value).ToString();
+                            this.UnicastIPv6Address = new IPAddress(item.Value).ToString();
                             break;
 
                         default: break;
                     }
                 }
 
-                Log.Info("{0} Read,{2}{1}{2}", nameof(MndpMessage), this.ToString(), Environment.NewLine);
+                if (Log.IsEnabled)
+                    Log.Info($"{nameof(MndpMessage)} Read,{Environment.NewLine}{this}{Environment.NewLine}");
 
                 return true;
             }
             catch (Exception ex)
             {
-                Log.Exception(nameof(MndpMessage), nameof(this.Read), ex);
+                if (Log.IsEnabled)
+                    Log.Exception(nameof(MndpMessage), nameof(this.Read), ex);
             }
 
             return false;
@@ -195,21 +208,21 @@ namespace MndpTray.Protocol
         /// <returns>Debug string.</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            var sb = new StringBuilder(512);
 
-            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.Type), this.Type);
-            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.Ttl), this.Ttl);
-            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.Sequence), this.Sequence);
-            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.MacAddress), this.MacAddress);
-            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.Identity), this.Identity);
-            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.Version), this.Version);
-            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.Platform), this.Platform);
-            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.Uptime), this.Uptime.ToString());
-            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.SoftwareId), this.SoftwareId);
-            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.BoardName), this.BoardName);
-            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.Unpack), this.Unpack);
-            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.InterfaceName), this.InterfaceName);
-            sb.AppendFormat("\t{0}:{1}," + Environment.NewLine, nameof(this.UnicastIPv6Address), this.UnicastIPv6Address);
+            sb.AppendLine($"\t{nameof(Type)}:{Type},");
+            sb.AppendLine($"\t{nameof(Ttl)}:{Ttl},");
+            sb.AppendLine($"\t{nameof(Sequence)}:{Sequence},");
+            sb.AppendLine($"\t{nameof(MacAddress)}:{MacAddress},");
+            sb.AppendLine($"\t{nameof(Identity)}:{Identity},");
+            sb.AppendLine($"\t{nameof(Version)}:{Version},");
+            sb.AppendLine($"\t{nameof(Platform)}:{Platform},");
+            sb.AppendLine($"\t{nameof(Uptime)}:{Uptime},");
+            sb.AppendLine($"\t{nameof(SoftwareId)}:{SoftwareId},");
+            sb.AppendLine($"\t{nameof(BoardName)}:{BoardName},");
+            sb.AppendLine($"\t{nameof(Unpack)}:{Unpack},");
+            sb.AppendLine($"\t{nameof(InterfaceName)}:{InterfaceName},");
+            sb.AppendLine($"\t{nameof(UnicastIPv6Address)}:{UnicastIPv6Address},");
 
             return sb.ToString();
         }
@@ -222,7 +235,8 @@ namespace MndpTray.Protocol
         {
             try
             {
-                Log.Info("{0} Write,{2}{1}{2}", nameof(MndpMessage), this.ToString(), Environment.NewLine);
+                if (Log.IsEnabled)
+                    Log.Info($"{nameof(MndpMessage)} Write,{Environment.NewLine}{this}{Environment.NewLine}");
 
                 var tlvMessage = new TlvMessage()
                 {
@@ -231,7 +245,6 @@ namespace MndpTray.Protocol
                     Sequence = this.Sequence,
                 };
 
-                var enc = Encoding.GetEncoding(ENCODING_CODE_PAGE);
 
                 for (ushort i = 0; i <= 16; i++)
                 {
@@ -242,15 +255,15 @@ namespace MndpTray.Protocol
                             break;
 
                         case TLV_TYPE_IDENTITY:
-                            tlvMessage.Items.Add(new Tlv(i, this.Identity, enc));
+                            tlvMessage.Items.Add(new Tlv(i, this.Identity, ENCODING));
                             break;
 
                         case TLV_TYPE_VERSION:
-                            tlvMessage.Items.Add(new Tlv(i, this.Version, enc));
+                            tlvMessage.Items.Add(new Tlv(i, this.Version, ENCODING));
                             break;
 
                         case TLV_TYPE_PLATFORM:
-                            tlvMessage.Items.Add(new Tlv(i, this.Platform, enc));
+                            tlvMessage.Items.Add(new Tlv(i, this.Platform, ENCODING));
                             break;
 
                         case TLV_TYPE_UPTIME:
@@ -258,11 +271,11 @@ namespace MndpTray.Protocol
                             break;
 
                         case TLV_TYPE_SOFTWAREID:
-                            tlvMessage.Items.Add(new Tlv(i, this.SoftwareId, enc));
+                            tlvMessage.Items.Add(new Tlv(i, this.SoftwareId, ENCODING));
                             break;
 
                         case TLV_TYPE_BOARD_NAME:
-                            tlvMessage.Items.Add(new Tlv(i, this.BoardName, enc));
+                            tlvMessage.Items.Add(new Tlv(i, this.BoardName, ENCODING));
                             break;
 
                         case TLV_TYPE_UNPACK:
@@ -270,14 +283,12 @@ namespace MndpTray.Protocol
                             break;
 
                         case TLV_TYPE_INTERFACE_NAME:
-                            tlvMessage.Items.Add(new Tlv(i, this.InterfaceName, enc));
+                            tlvMessage.Items.Add(new Tlv(i, this.InterfaceName, ENCODING));
                             break;
 
                         case TLV_TYPE_IPV6:
                             if (this.UnicastIPv6Address != null)
-                            {
                                 tlvMessage.Items.Add(new Tlv(i, IPAddress.Parse(this.UnicastIPv6Address).GetAddressBytes()));
-                            }
 
                             break;
 
@@ -285,18 +296,16 @@ namespace MndpTray.Protocol
                     }
                 }
 
-                bool ok = tlvMessage.Write(out byte[] data);
-
-                if (!ok)
-                {
+                if (tlvMessage.Write(out byte[] data))
+                    return data;
+                else
                     return null;
-                }
 
-                return data;
             }
             catch (Exception ex)
             {
-                Log.Exception(nameof(MndpMessage), nameof(this.Write), ex);
+                if (Log.IsEnabled)
+                    Log.Exception(nameof(MndpMessage), nameof(this.Write), ex);
             }
 
             return null;
@@ -396,15 +405,14 @@ namespace MndpTray.Protocol
                     this.Value = br.ReadBytes(this.Length);
 
                     if (this.Length > 1400)
-                    {
                         throw new Exception("Tlv too long!");
-                    }
 
                     return true;
                 }
                 catch (Exception ex)
                 {
-                    Log.Exception(nameof(Tlv), nameof(this.Read), ex);
+                    if (Log.IsEnabled)
+                        Log.Exception(nameof(Tlv), nameof(this.Read), ex);
                 }
 
                 return false;
@@ -422,7 +430,7 @@ namespace MndpTray.Protocol
                 if (this.Value != null)
                 {
                     valueHex = BitConverter.ToString(this.Value).Replace("-", ",");
-                    valueStr = Encoding.GetEncoding(ENCODING_CODE_PAGE).GetString(this.Value);
+                    valueStr = MndpMessage.ENCODING.GetString(this.Value);
                 }
 
                 return string.Format(CultureInfo.InvariantCulture, "T:{0}, L:{1}, V:{2}, VS:{3}", this.Type, this.Length, valueHex, valueStr);
@@ -445,7 +453,8 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    Log.Exception(nameof(Tlv), nameof(this.Write), ex);
+                    if (Log.IsEnabled)
+                        Log.Exception(nameof(Tlv), nameof(this.Write), ex);
                 }
 
                 return false;
@@ -499,11 +508,9 @@ namespace MndpTray.Protocol
                 while (br.BaseStream.Length > br.BaseStream.Position)
                 {
                     var item = new Tlv();
-                    bool ok = item.Read(br);
-                    if (!ok)
-                    {
+
+                    if (!item.Read(br))
                         return false;
-                    }
 
                     this.Items.Add(item);
                 }
@@ -522,7 +529,9 @@ namespace MndpTray.Protocol
                 {
                     if (data.Length < 8)
                     {
-                        Log.Info("{0} Read, Message Too Short", nameof(TlvMessage));
+                        if (Log.IsEnabled)
+                            Log.Info("{0} Read, Message Too Short", nameof(TlvMessage));
+                        
                         return false;
                     }
 
@@ -530,7 +539,7 @@ namespace MndpTray.Protocol
                     {
                         using (BinaryReader br = new BinaryReader(ms))
                         {
-                            bool ok = this.Read(br);
+                            this.Read(br);
                         }
                     }
 
@@ -538,7 +547,8 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    Log.Exception(nameof(TlvMessage), nameof(this.Read), ex);
+                    if (Log.IsEnabled)
+                        Log.Exception(nameof(TlvMessage), nameof(this.Read), ex);
                 }
 
                 return false;
@@ -568,11 +578,8 @@ namespace MndpTray.Protocol
                     {
                         using (var bw = new BinaryWriter(ms))
                         {
-                            bool ok = this.Write(bw);
-                            if (!ok)
-                            {
+                            if (!this.Write(bw))
                                 return false;
-                            }
 
                             data = ms.ToArray();
                         }
@@ -582,7 +589,8 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    Log.Exception(nameof(TlvMessage), nameof(this.Write), ex);
+                    if (Log.IsEnabled)
+                        Log.Exception(nameof(TlvMessage), nameof(this.Write), ex);
                 }
 
                 return false;
@@ -604,9 +612,7 @@ namespace MndpTray.Protocol
                     foreach (var i in this.Items)
                     {
                         if (!i.Write(bw))
-                        {
                             return false;
-                        }
                     }
                 }
 

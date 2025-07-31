@@ -27,6 +27,7 @@ namespace MndpTray.Core
         public ListForm()
         {
             this.InitializeComponent();
+            
             SetDoubleBuffering(this.dgvGrid);
 
             this.Text = string.Concat(this.Text, " Version: ", Assembly.GetEntryAssembly().GetName().Version.ToString());
@@ -99,21 +100,17 @@ namespace MndpTray.Core
             {
                 string ip = this.GetSelectedIpAddress();
                 if (ip == null)
-                {
                     return;
-                }
 
                 string path = GetMsgExePath();
                 if (path == null)
-                {
                     return;
-                }
 
                 MsgBoxForm form = new MsgBoxForm();
+
                 if (form.ShowDialog() != DialogResult.OK)
-                {
                     return;
-                }
+
 
                 string message = form.MsgText;
 
@@ -131,15 +128,13 @@ namespace MndpTray.Core
             {
                 string ip = this.GetSelectedIpAddress();
                 if (ip == null)
-                {
                     return;
-                }
 
                 System.Diagnostics.Process.Start(new ProcessStartInfo
                 {
                     FileName = "http://" + ip,
                     UseShellExecute = true
-                });               
+                });
             }
             catch (Exception ex)
             {
@@ -158,9 +153,7 @@ namespace MndpTray.Core
             {
                 string ip = this.GetSelectedIpAddress();
                 if (ip == null)
-                {
                     return;
-                }
 
                 System.Diagnostics.Process.Start("mstsc", "/v:" + ip);
             }
@@ -174,16 +167,15 @@ namespace MndpTray.Core
         {
             try
             {
-                List<MndpMessageEx> listMsg = MndpListener.Instance.GetMessages().Select(a => a.Value).ToList();
+                List<MndpMessageEx> listMsg = [.. MndpListener.Instance.GetMessages().Select(a => a.Value)];
 
                 Dictionary<string, DataGridViewRow> dictRow = [];
 
                 foreach (DataGridViewRow i in this.dgvGrid.Rows)
                 {
                     if (i.Tag != null)
-                    {
                         dictRow[(string)i.Tag] = i;
-                    }
+
                 }
 
                 this.dgvGrid.SuspendLayout();
@@ -193,7 +185,9 @@ namespace MndpTray.Core
                     if (dictRow.TryGetValue(i.MacAddress, out DataGridViewRow value))
                     {
                         var row = value;
+
                         row.SetValues(i.UnicastAddress, i.MacAddressDelimited, i.Identity, i.Platform, i.Version, i.BoardName, i.InterfaceName, i.SoftwareId, i.Age.ToString("F0"), i.Uptime, i.UnicastIPv6Address);
+
                         dictRow.Remove(i.MacAddress);
                     }
                     else
@@ -202,6 +196,7 @@ namespace MndpTray.Core
 
                         row.CreateCells(this.dgvGrid, i.UnicastAddress, i.MacAddressDelimited, i.Identity, i.Platform, i.Version, i.BoardName, i.InterfaceName, i.SoftwareId, i.Age.ToString("F0"), i.Uptime, i.UnicastIPv6Address);
                         row.Tag = i.MacAddress;
+
                         this.dgvGrid.Rows.Add(row);
                     }
                 }
@@ -251,9 +246,7 @@ namespace MndpTray.Core
             foreach (string i in paths)
             {
                 if (File.Exists(i))
-                {
                     return i;
-                }
             }
 
             return null;
@@ -262,9 +255,7 @@ namespace MndpTray.Core
         private string GetSelectedIpAddress()
         {
             if (this.dgvGrid.SelectedRows.Count > 0)
-            {
                 return this.dgvGrid.SelectedRows[0].Cells[0].Value as string;
-            }
 
             return null;
         }

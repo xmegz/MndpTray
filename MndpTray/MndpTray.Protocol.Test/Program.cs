@@ -6,6 +6,7 @@
 namespace MndpTray.Protocol.Test
 {
     using System;
+    using System.Reflection;
     using System.Threading;
 
     /// <summary>
@@ -20,6 +21,9 @@ namespace MndpTray.Protocol.Test
         {
             MndpListener.Instance.Start();
             MndpListener.Instance.OnDeviceDiscovered += Instance_OnDeviceDiscovered;
+
+            MndpHostInfo.Instance.SetSoftwareIdFromAssemblyName(Assembly.GetExecutingAssembly());
+
             MndpSender.Instance.Start(MndpHostInfo.Instance);
 
             Console.WriteLine("--- Start ---");
@@ -32,6 +36,8 @@ namespace MndpTray.Protocol.Test
 
             MndpListener.Instance.Stop();
             MndpSender.Instance.Stop();
+
+            Thread.Sleep(100);
         }
 
         private static void Instance_OnDeviceDiscovered(object sender, MndpListener.DeviceDiscoveredEventArgs e)

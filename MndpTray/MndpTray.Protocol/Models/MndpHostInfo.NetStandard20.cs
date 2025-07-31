@@ -35,21 +35,7 @@ namespace MndpTray.Protocol
 
             return String.Empty;
         }
-        private static string GetOsName()
-        {
-            var osPlatform = GetOsPlatform();
-
-            if (osPlatform == OSPlatform.Windows)
-                return "Windows";
-
-            if (osPlatform == OSPlatform.Linux)
-                return GetDataFromOsRelease("NAME") + " Linux";
-
-            if (osPlatform == OSPlatform.OSX)
-                return "OSX";
-
-            return string.Empty;
-        }
+        
         private static OSPlatform GetOsPlatform()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return OSPlatform.Windows;
@@ -81,10 +67,8 @@ namespace MndpTray.Protocol
 
                     if (osPlatform == OSPlatform.Linux)
                     {
-                        if (File.Exists("/sys/devices/virtual/dmi/id/product_name"))
-                        {
-                            return File.ReadAllText("/sys/devices/virtual/dmi/id/product_name");
-                        }
+                        if (File.Exists("/sys/devices/virtual/dmi/id/product_name"))                        
+                            return File.ReadAllText("/sys/devices/virtual/dmi/id/product_name");                        
                         else
                             return "Linux";
                     }
@@ -93,24 +77,14 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    Log.Exception(nameof(MndpHostInfo), nameof(this.Platform), ex);
+                    if (Log.IsEnabled)
+                        Log.Exception(nameof(MndpHostInfo), nameof(this.Platform), ex);
                 }
 
                 return string.Empty;
             }
         }
-
-        /// <summary>
-        /// Gets logged In user name.
-        /// </summary>
-        public string SoftwareId
-        {
-            get
-            {
-                return Environment.UserName;
-            }
-        }
-
+        
         /// <summary>
         /// Gets host software version (From Registry ProductName).
         /// </summary>
@@ -134,7 +108,8 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    Log.Exception(nameof(MndpHostInfo), nameof(this.Version), ex);
+                    if (Log.IsEnabled)
+                        Log.Exception(nameof(MndpHostInfo), nameof(this.Version), ex);
                 }
 
                 return string.Empty;

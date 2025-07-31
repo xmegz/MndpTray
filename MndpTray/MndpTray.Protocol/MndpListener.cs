@@ -66,7 +66,8 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Log.Exception(nameof(MndpListener), nameof(this.Start), ex);
+                if (Log.IsEnabled)
+                    Log.Exception(nameof(MndpListener), nameof(this.Start), ex);
             }
 
             return ret;
@@ -97,7 +98,8 @@ namespace MndpTray.Protocol
                 }
                 catch (Exception ex)
                 {
-                    Log.Exception(nameof(MndpListener), nameof(this.Start), ex);
+                    if (Log.IsEnabled)
+                        Log.Exception(nameof(MndpListener), nameof(this.Start), ex);
 
                     try
                     {
@@ -132,7 +134,8 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Log.Exception(nameof(MndpListener), nameof(this.Stop), ex);
+                if (Log.IsEnabled)
+                    Log.Exception(nameof(MndpListener), nameof(this.Stop), ex);
             }
 
             return false;
@@ -182,7 +185,8 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Log.Exception(nameof(MndpListener), nameof(this.Receive), ex);
+                if (Log.IsEnabled)
+                    Log.Exception(nameof(MndpListener), nameof(this.Receive), ex);
             }
 
             try
@@ -191,7 +195,8 @@ namespace MndpTray.Protocol
             }
             catch (Exception ex)
             {
-                Log.Exception(nameof(MndpListener), nameof(this.Receive), ex);
+                if (Log.IsEnabled)
+                    Log.Exception(nameof(MndpListener), nameof(this.Receive), ex);
             }
         }
         #endregion Methods
