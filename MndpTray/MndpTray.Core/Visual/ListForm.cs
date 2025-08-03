@@ -175,7 +175,6 @@ namespace MndpTray.Core
                 {
                     if (i.Tag != null)
                         dictRow[(string)i.Tag] = i;
-
                 }
 
                 this.dgvGrid.SuspendLayout();

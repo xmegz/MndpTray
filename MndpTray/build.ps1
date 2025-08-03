@@ -64,13 +64,13 @@ foreach ( $Project in $ProjectsConsole )
     dotnet clean -c Release $SolutionFolderPath\$Project
     dotnet build -c Release $SolutionFolderPath\$Project
 
-    foreach ( $Profile in $ProfilesConsole )
+    foreach ( $Prof in $ProfilesConsole )
     {
         Write-Host ""
-        Write-Host "Profile: [$Profile]"  -ForegroundColor Blue
+        Write-Host "Profile: [$Prof]"  -ForegroundColor Blue
         Write-Host ""
         
-        dotnet publish -c Release $SolutionFolderPath\$Project /p:PublishProfile=$Profile        
+        dotnet publish -c Release $SolutionFolderPath\$Project /p:PublishProfile=$Prof
     }
 }
 
@@ -114,13 +114,13 @@ foreach ( $Project in $ProjectsWindows )
     dotnet clean -c Release $SolutionFolderPath\$Project
     dotnet build -c Release $SolutionFolderPath\$Project
 
-    foreach ( $Profile in $ProfilesWindows )
+    foreach ( $Prof in $ProfilesWindows )
     {
         Write-Host ""
-        Write-Host "Profile: [$Profile]" -ForegroundColor Blue
+        Write-Host "Profile: [$Prof]" -ForegroundColor Blue
         Write-Host ""
         
-        dotnet publish -c Release $SolutionFolderPath\$Project /p:PublishProfile=$Profile        
+        dotnet publish -c Release $SolutionFolderPath\$Project /p:PublishProfile=$Prof
     }
 }
 

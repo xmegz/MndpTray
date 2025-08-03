@@ -125,7 +125,7 @@ namespace MndpTray.Protocol
                 {
                     if (Log.IsEnabled)
                         Log.Info($"{nameof(MndpMessage)} Read, Message Too Short");
-                    
+
                     return false;
                 }
 
@@ -295,12 +295,10 @@ namespace MndpTray.Protocol
                         default: break;
                     }
                 }
-
                 if (tlvMessage.Write(out byte[] data))
                     return data;
                 else
                     return null;
-
             }
             catch (Exception ex)
             {
@@ -531,7 +529,7 @@ namespace MndpTray.Protocol
                     {
                         if (Log.IsEnabled)
                             Log.Info("{0} Read, Message Too Short", nameof(TlvMessage));
-                        
+
                         return false;
                     }
 
