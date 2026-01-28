@@ -8,6 +8,7 @@ namespace MndpTray.Protocol
 {
     using System;
     using System.IO;
+    using System.Linq;
     using System.Runtime.InteropServices;
 
     /// <summary>
@@ -18,7 +19,7 @@ namespace MndpTray.Protocol
         #region Static
         private static string GetDataFromOsRelease(string key)
         {
-            key = key.ToUpper(System.Globalization.CultureInfo.InvariantCulture);
+            key = key.ToUpperInvariant();
             key += "=";
 
             if (File.Exists("/etc/os-release"))
@@ -35,7 +36,7 @@ namespace MndpTray.Protocol
 
             return String.Empty;
         }
-        
+       
         private static OSPlatform GetOsPlatform()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return OSPlatform.Windows;
@@ -67,8 +68,8 @@ namespace MndpTray.Protocol
 
                     if (osPlatform == OSPlatform.Linux)
                     {
-                        if (File.Exists("/sys/devices/virtual/dmi/id/product_name"))                        
-                            return File.ReadAllText("/sys/devices/virtual/dmi/id/product_name");                        
+                        if (File.Exists("/sys/devices/virtual/dmi/id/product_name"))
+                            return File.ReadAllText("/sys/devices/virtual/dmi/id/product_name");
                         else
                             return "Linux";
                     }
@@ -84,9 +85,9 @@ namespace MndpTray.Protocol
                 return string.Empty;
             }
         }
-        
+
         /// <summary>
-        /// Gets host software version (From Registry ProductName).
+        /// Gets host software version (From Runtime information, environment, files).
         /// </summary>
         public string Version
         {
@@ -98,10 +99,14 @@ namespace MndpTray.Protocol
                     var osPlatform = GetOsPlatform();
 
                     if (osPlatform == OSPlatform.Windows)
+                    {
                         return RuntimeInformation.OSDescription;
+                    }
 
                     if (osPlatform == OSPlatform.Linux)
-                        return GetDataFromOsRelease("VERSION");
+                    {
+                        return String.Concat(GetDataFromOsRelease("VERSION"), " - ", Environment.OSVersion);
+                    }
 
                     return String.Empty;
 
