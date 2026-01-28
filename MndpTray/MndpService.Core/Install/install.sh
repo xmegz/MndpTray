@@ -20,7 +20,7 @@ echo
 
 systemctl disable $SERVICE_NAME
 systemctl stop $SERVICE_NAME
-systemctl status $SERVICE_NAME
+systemctl --no-pager status $SERVICE_NAME
 
 fi
 
