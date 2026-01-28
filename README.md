@@ -14,7 +14,7 @@ By providing this information, **MndpTray** makes it easier for network administ
 
 ### Downloads 
 
-* Download from GitHub [**Latest**](https://github.com/xmegz/MndpTray/releases/download/v2.2.0/MndpTray.Core.exe)
+* Download from GitHub [**Latest**](https://github.com/xmegz/MndpTray/releases/download/v2.3.0/MndpTray.Core.exe)
 * Install via WinGet (as administrator)
 
 ```powershell
