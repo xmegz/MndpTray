@@ -63,12 +63,12 @@ MndpService is a background service, which is send information about running hos
 
 Linux one-liner script
 ```bash
-sudo su -c "bash <(wget -qO- https://github.com/xmegz/MndpTray/releases/download/v2.2.0/install.sh)" root
+sudo su -c "bash <(wget -qO- https://github.com/xmegz/MndpTray/releases/download/v2.3.0/install.sh)" root
 ```
 
 Windows one-liner script 
 ```powershell
-powershell -ExecutionPolicy Bypass -NoProfile -Command "iwr -UseBasicParsing 'https://github.com/xmegz/MndpTray/releases/download/v2.2.0/install.ps1' | iex"
+powershell -ExecutionPolicy Bypass -NoProfile -Command "iwr -UseBasicParsing 'https://github.com/xmegz/MndpTray/releases/download/v2.3.0/install.ps1' | iex"
 ```
 
 # MndpProtocol
