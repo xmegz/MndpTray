@@ -25,7 +25,7 @@ namespace MndpTray.Core
             Application.SetCompatibleTextRenderingDefault(false);
 
             Log("------------------< START >------------------");
-            Application.Run(new NotifyContext());
+            Application.Run(new Visual.NotifyContext());
             Log("-------------------< END >-------------------");
         }
 

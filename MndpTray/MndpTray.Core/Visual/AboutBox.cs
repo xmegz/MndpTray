@@ -3,7 +3,7 @@
  * Repository: https://github.com/xmegz/MndpTray
  * Author:     Pádár Tamás
  -----------------------------------------------------------------------------*/
-namespace MndpTray.Core
+namespace MndpTray.Core.Visual
 {
     using System.Diagnostics;
     using System.Reflection;

@@ -3,7 +3,7 @@
  * Repository: https://github.com/xmegz/MndpTray
  * Author:     Pádár Tamás
  -----------------------------------------------------------------------------*/
-namespace MndpService
+namespace MndpService.Core
 {
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;

@@ -5,6 +5,7 @@
  -----------------------------------------------------------------------------*/
 namespace MndpTray.Protocol
 {
+    using MndpTray.Protocol.Internal;
     using System;
     using System.Collections.Generic;
     using System.Globalization;

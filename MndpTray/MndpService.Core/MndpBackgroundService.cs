@@ -3,8 +3,9 @@
  * Repository: https://github.com/xmegz/MndpTray
  * Author:     Pádár Tamás
  -----------------------------------------------------------------------------*/
-namespace MndpService
+namespace MndpService.Core
 {
+    using MndpTray.Protocol.Internal;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
@@ -18,8 +19,8 @@ namespace MndpService
         private readonly ILogger<MndpBackgroundService> _logger = logger;
         private readonly IConfiguration _configuration = configuration;
 
-        public override Task StartAsync(CancellationToken cancellationToken)
-        {            
+        public override async Task StartAsync(CancellationToken cancellationToken)
+        {
             this._logger?.LogInformation("Starting...");
 
             if (this._configuration.GetValue<bool>("isLogging", false))
@@ -35,16 +36,16 @@ namespace MndpService
 
             MndpSender.Instance.Start(MndpHostInfo.Instance);
 
-            return Task.CompletedTask;
+            await Task.CompletedTask;
         }
 
-        public override Task StopAsync(CancellationToken cancellationToken)
+        public override async Task StopAsync(CancellationToken cancellationToken)
         {
             this._logger?.LogInformation("Stopping...");
 
             MndpSender.Instance.Stop();
 
-            return Task.CompletedTask;
+            await Task.CompletedTask;
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)

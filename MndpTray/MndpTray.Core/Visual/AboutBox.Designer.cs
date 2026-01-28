@@ -1,4 +1,4 @@
-﻿namespace MndpTray.Core
+﻿namespace MndpTray.Core.Visual
 {
     partial class AboutBox
     {

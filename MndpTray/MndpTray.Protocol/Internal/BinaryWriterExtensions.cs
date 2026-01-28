@@ -3,9 +3,8 @@
  * Repository: https://github.com/xmegz/MndpTray
  * Author:     Pádár Tamás
  -----------------------------------------------------------------------------*/
-namespace MndpTray.Protocol
+namespace MndpTray.Protocol.Internal
 {
-    using System;
     using System.IO;
 
     /// <summary>

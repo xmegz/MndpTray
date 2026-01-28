@@ -7,6 +7,7 @@
 namespace MndpTray.Protocol
 {
     using Microsoft.Win32;
+    using MndpTray.Protocol.Internal;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -34,7 +35,7 @@ namespace MndpTray.Protocol
                     ManagementObjectCollection moc = mc.GetInstances();
                     if (moc.Count != 0)
                     {
-                        foreach (ManagementObject mo in mc.GetInstances())
+                        foreach (ManagementBaseObject mo in mc.GetInstances())
                         {
                             return mo["Manufacturer"].ToString();
                         }

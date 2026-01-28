@@ -6,6 +6,7 @@
 #if NETSTANDARD2_0_OR_GREATER
 namespace MndpTray.Protocol
 {
+    using MndpTray.Protocol.Internal;
     using System;
     using System.IO;
     using System.Linq;

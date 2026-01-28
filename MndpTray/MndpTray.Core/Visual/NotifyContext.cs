@@ -3,8 +3,9 @@
  * Repository: https://github.com/xmegz/MndpTray
  * Author:     Pádár Tamás
  -----------------------------------------------------------------------------*/
-namespace MndpTray.Core
+namespace MndpTray.Core.Visual
 {
+    using MndpTray.Protocol.Internal;
     using System;
     using System.Diagnostics;
     using System.IO;
