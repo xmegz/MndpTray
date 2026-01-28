@@ -20,7 +20,7 @@ $ProgramPath    = "C:\Program Files\MndpService"
 $ProgramName    = "MndpService.Core.Full.exe"
 $ServiceName    = "MndpService.Core"
 $ServiceDesc    = "MndpService is a background service, which is send information about running host"
-$ServiceVersion = "2.2.0"
+$ServiceVersion = "2.3.0"
 
 $DownloadUrl    = "https://github.com/xmegz/MndpTray/releases/download/v$ServiceVersion/MndpService.Core.Full.exe"
 $LogFile        = "$ProgramPath\install.txt"

@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
-    <AssemblyVersion>2.2.0.0</AssemblyVersion>
-    <FileVersion>2.2.0.0</FileVersion>
-    <Version>2.2.0</Version>
+    <AssemblyVersion>2.3.0.0</AssemblyVersion>
+    <FileVersion>2.3.0.0</FileVersion>
+    <Version>2.3.0</Version>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
@@ -16,7 +16,7 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <Authors>Pádár Tamás</Authors>
     <Company>Pádár Tamás</Company>
-    <Copyright>Copyright ©  2018-2024</Copyright>
+    <Copyright>Copyright ©  2018-2026</Copyright>
     <PackageProjectUrl>https://github.com/xmegz/MndpTray</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xmegz/MndpTray</RepositoryUrl>
     <PackageIcon>Images\favicon.jpg</PackageIcon>

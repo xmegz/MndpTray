@@ -10,7 +10,7 @@
 PROGRAM_PATH="/root/MndpService.Core"
 PROGRAM_NAME="MndpService.Core.Full"
 SERVICE_NAME="mndp"
-SERVICE_VERSION="2.2.0"
+SERVICE_VERSION="2.3.0"
 
 IS_ACTIVE=$(sudo systemctl is-active $SERVICE_NAME)
 if [ "$IS_ACTIVE" == "active" ]; then
