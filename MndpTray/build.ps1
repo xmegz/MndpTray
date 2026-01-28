@@ -40,8 +40,27 @@ else
 }
 
 #
+# Build & Publish & Copy Libs
+#
+$ProjectsLibs = @(    
+    'MndpTray.Protocol'    
+)
+
+foreach ( $Project in $ProjectsLibs )
+{
+    Write-Host ""
+    Write-Host "Project: [$Project]" -ForegroundColor Blue
+    Write-Host ""
+    
+    dotnet clean -c Release $SolutionFolderPath\$Project
+    dotnet build -c Release $SolutionFolderPath\$Project
+    dotnet pack $SolutionFolderPath\$Project -o $BuildFolderPath
+}
+
+#
 # Build & Publish Console
 #
+
 
 $ProjectsConsole = @(    
     'MndpService.Core'    
