@@ -1,4 +1,10 @@
+$FolderPath=$PSScriptRoot
+
 Write-Host "dont remember sync https://github.com/xmegz/winget-pkgs/tree/master"
-wingetcreate.exe update --urls https://github.com/xmegz/MndpTray/releases/download/v2.2.0/MndpTray.Core.Full.exe --version 2.2.0.0 MndpTray.Core
-Write-Host "only submit"
-#wingetcreate submit C:\Projects\PadarCom\Source\MndpTray\MndpTray\MndpTray.Core\manifests\m\MndpTray\Core\2.2.0.0
+Write-Host "dont remember wingetcreate token -s "
+
+Write-Host "create or update manifest"
+wingetcreate.exe update --urls https://github.com/xmegz/MndpTray/releases/download/v2.3.0/MndpTray.Core.Full.exe --version 2.3.0.0 MndpTray.Core
+
+Write-Host "submit manifest"
+wingetcreate submit $FolderPath\manifests\m\MndpTray\Core\2.3.0.0
