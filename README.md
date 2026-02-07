@@ -1,6 +1,11 @@
 # MikroTik Neighbor Discovery Protocol Tools
 
-[![Build status](https://ci.appveyor.com/api/projects/status/decjg2rq0hwn77rq?svg=true)](https://ci.appveyor.com/project/xmegz/mndptray) [![CodeFactor](https://www.codefactor.io/repository/github/xmegz/mndptray/badge)](https://www.codefactor.io/repository/github/xmegz/mndptray) ![GitHub All Releases](https://img.shields.io/github/downloads/xmegz/MndpTray/total) ![NuGet](https://img.shields.io/nuget/v/MndpTray.Protocol?label=NuGet) ![NuGetDownload](https://img.shields.io/nuget/dt/MndpTray.Protocol?label=%20) ![MyGet](https://img.shields.io/myget/mndptray/v/MndpTray.Protocol?label=MyGet)
+[![Build status](https://ci.appveyor.com/api/projects/status/decjg2rq0hwn77rq?svg=true)](https://ci.appveyor.com/project/xmegz/mndptray) 
+[![CodeFactor](https://www.codefactor.io/repository/github/xmegz/mndptray/badge)](https://www.codefactor.io/repository/github/xmegz/mndptray) 
+[![GitHub All Releases](https://img.shields.io/github/downloads/xmegz/MndpTray/total)](https://github.com/xmegz/MndpTray/releases) 
+[![NuGet](https://img.shields.io/nuget/v/MndpTray.Protocol?label=NuGet)](https://www.nuget.org/packages/MndpTray.Protocol)
+[![NuGetDownload](https://img.shields.io/nuget/dt/MndpTray.Protocol?label=%20)](https://www.nuget.org/packages/MndpTray.Protocol) 
+[![MyGet](https://img.shields.io/myget/mndptray/v/MndpTray.Protocol?label=MyGet)](https://www.myget.org/feed/Packages/mndptray)
 
 # MndpTray
 MndpTray is a Windows utility that allows you, to monitor and manage MikroTik devices, on your network from the system tray.
