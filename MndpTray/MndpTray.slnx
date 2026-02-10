@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/SolutionItems/">
+    <File Path="../.gitattributes" />
+    <File Path="../.gitignore" />
+    <File Path="../CODE_OF_CONDUCT.md" />
+    <File Path="../CONTRIBUTING.md" />
+    <File Path="../LICENSE" />
+    <File Path="../README.md" />
+    <File Path="../_config.yml" />
+    <File Path="build.ps1" />
+  </Folder>
+  <Project Path="MndpService.Core/MndpService.Core.csproj" />
+  <Project Path="MndpTray.Core/MndpTray.Core.csproj" />
+  <Project Path="MndpTray.Protocol.Test/MndpTray.Protocol.Test.csproj" />
+  <Project Path="MndpTray.Protocol/MndpTray.Protocol.csproj" />
+</Solution>

@@ -34,7 +34,6 @@ namespace MndpTray.Protocol
 
         private const int HOST_INFO_SEND_INTERVAL = 30;
         private const int UDP_PORT = 5678;
-        private static readonly IPAddress IP_ADDRESS = IPAddress.Broadcast;
 
         #endregion Const
 
@@ -42,8 +41,9 @@ namespace MndpTray.Protocol
 
         private Thread _sendHostInfoThread;
         private IMndpHostInfo _hostInfo;
-        private bool _sendHostInfoIsRunning;
-        private bool _sendHostInfoNow;
+
+        private volatile bool _sendHostInfoThreadIsRunning;
+        private volatile bool _sendHostInfoNow;
 
         #endregion Fields
 
@@ -58,30 +58,25 @@ namespace MndpTray.Protocol
         {
             try
             {
-                EndPoint ep;
-                Socket s;
-
-                IPAddress broadcastAddress = IP_ADDRESS;
+                IPAddress broadcastAddress = IPAddress.Broadcast;
 
                 if (msg.BroadcastAddress != null)
                 {
-                    broadcastAddress = IPAddress.Parse(msg.BroadcastAddress);
+                    if (IPAddress.TryParse(msg.BroadcastAddress, out IPAddress parsedBroadcastAddress) == true)
+                        broadcastAddress = parsedBroadcastAddress;
                 }
 
-                using (s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp))
+                using (var s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp))
                 {
                     s.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-                    s.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.NoDelay, 1);
                     s.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, 1);
                     s.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.DontRoute, true);
 
-                    ep = new IPEndPoint(broadcastAddress, UDP_PORT);
-
+                    var ep = new IPEndPoint(broadcastAddress, UDP_PORT);
                     byte[] data = msg.Write();
+                    int sent = s.SendTo(data, ep);
 
-                    s.SendTo(data, ep);
-
-                    return true;
+                    return sent == data.Length;
                 }
             }
             catch (Exception ex)
@@ -110,13 +105,25 @@ namespace MndpTray.Protocol
         {
             try
             {
-                Thread t = new Thread(this.SendHostInfoWork);
-                this._sendHostInfoIsRunning = true;
-                
-                t.Start();
+                lock (this)
+                {
+                    if (hostInfo == null)
+                        return false;
 
-                this._sendHostInfoThread = t;
-                this._hostInfo = hostInfo;
+                    if (this._sendHostInfoThread == null)
+                    {
+                        Thread thread = new Thread(this.SendHostInfoWork);
+
+                        this._sendHostInfoThreadIsRunning = true;
+                        this._hostInfo = hostInfo;
+
+                        thread.Start();
+
+                        this._sendHostInfoThread = thread;
+                    }
+                }
+
+                return true;
             }
             catch (Exception ex)
             {
@@ -135,30 +142,34 @@ namespace MndpTray.Protocol
         {
             try
             {
-                if (this._sendHostInfoThread != null)
+                lock (this)
                 {
-                    this._sendHostInfoIsRunning = false;
+                    Thread thread = this._sendHostInfoThread;
 
-                    if (this._sendHostInfoThread.IsAlive == true)
+                    if (thread == null)
+                        return true;
+
+                    this._sendHostInfoThreadIsRunning = false;
+
+
+                    if (thread.IsAlive)
+                        thread.Join(1000);
+
+                    if (thread.IsAlive)
                     {
-                        this._sendHostInfoIsRunning = false;
-                        this._sendHostInfoThread.Join(1000);
+                        thread.Interrupt();
+                        thread.Join(1000);
                     }
 
-                    if (this._sendHostInfoThread.IsAlive == true)
-                    {
-                        this._sendHostInfoThread.Interrupt();
-                        this._sendHostInfoThread.Join(1000);
-                    }
-
-                    if (this._sendHostInfoThread.IsAlive == true)
-                    {
-                        this._sendHostInfoThread.Abort();
-                    }
+                    if (thread.IsAlive)
+                        thread.Abort();
 
                     this._sendHostInfoThread = null;
                     this._hostInfo = null;
                 }
+
+                return true;
+
             }
             catch (Exception ex)
             {
@@ -188,7 +199,7 @@ namespace MndpTray.Protocol
                     Unpack = 0,
                 };
 
-                while (this._sendHostInfoIsRunning)
+                while (this._sendHostInfoThreadIsRunning)
                 {
                     Thread.Sleep(250);
 
@@ -197,20 +208,28 @@ namespace MndpTray.Protocol
                         nextSendDateTime = DateTime.UtcNow.AddSeconds(HOST_INFO_SEND_INTERVAL);
                         this._sendHostInfoNow = false;
 
-                        System.Collections.Generic.List<IMndpInterfaceInfo> interfaces = this._hostInfo.InterfaceInfos;
-
-                        msg.Sequence = (ushort)(sequence++);
-                        msg.Uptime = this._hostInfo.UpTime;
-
-                        foreach (IMndpInterfaceInfo i in interfaces)
+                        try
                         {
-                            msg.BroadcastAddress = i.BroadcastAddress;
-                            msg.InterfaceName = i.InterfaceName;
-                            msg.MacAddress = i.MacAddress;
-                            msg.UnicastAddress = i.UnicastAddress;
-                            msg.UnicastIPv6Address = i.UnicastIPv6Address;
+                            System.Collections.Generic.List<IMndpInterfaceInfo> interfaces = this._hostInfo.InterfaceInfos;
 
-                            this.Send((MndpMessageEx)msg.Clone());
+                            msg.Sequence = (ushort)(sequence++);
+                            msg.Uptime = this._hostInfo.UpTime;
+
+                            foreach (IMndpInterfaceInfo i in interfaces)
+                            {
+                                msg.BroadcastAddress = i.BroadcastAddress;
+                                msg.InterfaceName = i.InterfaceName;
+                                msg.MacAddress = i.MacAddress;
+                                msg.UnicastAddress = i.UnicastAddress;
+                                msg.UnicastIPv6Address = i.UnicastIPv6Address;
+
+                                this.Send((MndpMessageEx)msg.Clone());
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            if (Log.IsEnabled)
+                                Log.Exception(nameof(MndpSender), nameof(this.SendHostInfoWork), ex);
                         }
                     }
                 }
