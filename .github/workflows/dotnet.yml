@@ -28,4 +28,4 @@ jobs:
       run: dotnet restore MndpTray/MndpTray.slnx
 
     - name: Build
-      run: dotnet build --no-restore MndpTray/MndpTray.sln
+      run: dotnet build --no-restore MndpTray/MndpTray.slnx
