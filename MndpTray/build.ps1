@@ -10,6 +10,7 @@
 # 'set-executionpolicy remotesigned'
 #
 
+
 #
 # Configuration
 #
@@ -25,6 +26,9 @@ Write-Host "SolutionFolderPath: $SolutionFolderPath";
 Write-Host "BuildFolderPath: $BuildFolderPath";
 Write-Host ""
 Write-Host ""
+
+$stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
+
 
 #
 # Clean or Create Output Folder
@@ -155,3 +159,9 @@ foreach ( $Project in $ProjectsWindows )
     Copy-Item -Verbose -Path $SolutionFolderPath\$Project\bin\Release\net8.0-windows\publish\win-x64\$Project.exe -Destination $BuildFolderPath\$Project.exe
     Copy-Item -Verbose -Path $SolutionFolderPath\$Project\bin\Release\net8.0-windows\publish\win-x64-full\$Project.exe -Destination $BuildFolderPath\$Project.Full.exe
 }
+
+$stopwatch.Stop()
+
+Write-Host ""
+Write-Host ("Total elapsed: {0} ms" -f $stopwatch.ElapsedMilliseconds) -ForegroundColor Green
+Write-Host ""
